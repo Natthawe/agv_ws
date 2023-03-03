@@ -17,7 +17,7 @@ class odom_wheel_node(Node):
 
         # Initial Port
         self.serial_port = SerialPort
-        self.baudrate = Baudrate
+        self.baud_rate = Baudrate
         self._serial = self.serial_connect(self.serial_port, self.baud_rate)
 
         # Internal Data Variable
