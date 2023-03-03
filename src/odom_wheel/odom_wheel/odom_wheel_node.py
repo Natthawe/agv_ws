@@ -68,7 +68,7 @@ class odom_wheel_node(Node):
         print(speed, angular)
         wheel_left_set = ((speed + angular) * self.ticks_meter)
         wheel_right_set = ((speed - angular) * self.ticks_meter)
-        str_send = str(wheel_left_set) + "|" + str(wheel_right_set) + '\n'
+        str_send = str(wheel_left_set) + "," + str(wheel_right_set) + '\n'
         self.serial_write(str_send)
 
     def update(self):
