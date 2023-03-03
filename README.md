@@ -19,3 +19,15 @@
 ## add packages
 - bno055
 - odom_wheel
+- joy_tester
+- nav2_bringup
+- omron_b5l_a
+- pointcloud_to_laserscan
+- robot_localization
+- ros2_laser_scan_matcher
+- rplidar_ros
+- rslidar_msg
+- rslidar_sdk
+- sam_bot_description
+- slam_toolbox
+- static_broadcaster
