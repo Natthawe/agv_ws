@@ -99,7 +99,7 @@ class odom_wheel_node(Node):
             y = -sin(th) * dist
             # Calculate the final position of the robot
             self.x = self.x + (cos(self.th) * x - sin(self.th) * y)
-            self.y = self.y + (cos(self.th) * x + sin(self.th) * y)
+            self.y = self.y + (sin(self.th) * x + cos(self.th) * y)
         if th != 0:
             self.th = self.th + th   
 
