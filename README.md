@@ -15,3 +15,7 @@
     colcon build --symlink-install
     colcon build --packages-select <name-of-pkg>
     colcon build --packages-select static_broadcaster
+
+## add packages
+- bno055
+- odom_wheel
