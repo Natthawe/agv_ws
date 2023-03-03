@@ -82,7 +82,7 @@ def generate_launch_description():
 
     # pointcloud_to_laserscan        
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(launch_pointcloud_to_laserscan_pkg, 'pc2l_launch.py'))
+            PythonLaunchDescriptionSource(os.path.join(launch_pointcloud_to_laserscan_pkg, 'omron2laser_launch.py'))
         ),
 
     # ros2_laser_scan_matcher
