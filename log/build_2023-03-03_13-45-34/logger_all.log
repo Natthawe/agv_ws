@@ -1,0 +1,185 @@
+[0.353s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.353s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_alias.argument_parser.alias.AliasArgumentDecorator object at 0x7f48f51faa70>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f48f53d6ef0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f48f53d6ef0>>, mixin_verb=('build',))
+[0.373s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.373s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.373s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.373s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.373s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.373s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.373s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/natthawe/agv_ws'
+[0.373s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.374s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.384s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extensions ['ignore', 'ignore_ament_install']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extension 'ignore'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extension 'ignore_ament_install'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extensions ['colcon_pkg']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extension 'colcon_pkg'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extensions ['colcon_meta']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extension 'colcon_meta'
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extensions ['ros']
+[0.385s] Level 1:colcon.colcon_core.package_identification:_identify(src/bno055) by extension 'ros'
+[0.387s] DEBUG:colcon.colcon_core.package_identification:Package 'src/bno055' with type 'ros.ament_python' and name 'bno055'
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extensions ['ignore', 'ignore_ament_install']
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extension 'ignore'
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extension 'ignore_ament_install'
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extensions ['colcon_pkg']
+[0.387s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extension 'colcon_pkg'
+[0.388s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extensions ['colcon_meta']
+[0.388s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extension 'colcon_meta'
+[0.388s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extensions ['ros']
+[0.388s] Level 1:colcon.colcon_core.package_identification:_identify(src/odom_wheel) by extension 'ros'
+[0.388s] DEBUG:colcon.colcon_core.package_identification:Package 'src/odom_wheel' with type 'ros.ament_python' and name 'odom_wheel'
+[0.388s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.388s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.388s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.388s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.388s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.411s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.411s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.416s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/natthawe/robot_differential_ws/install
+[0.417s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 4 installed packages in /home/natthawe/ros2_ws/install
+[0.418s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 44 installed packages in /home/natthawe/simulation_ws/install
+[0.419s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 16 installed packages in /home/natthawe/wheelchair_ws/install
+[0.420s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/natthawe/omron_b5l_a/src/install
+[0.421s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/natthawe/test_ws/install
+[0.422s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/natthawe/dev_ws/install
+[0.422s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/natthawe/path_planning/install
+[0.423s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 11 installed packages in /home/natthawe/turtlebot3_ws/install
+[0.425s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 368 installed packages in /opt/ros/humble
+[0.427s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'cmake_args' from command line to 'None'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'cmake_target' from command line to 'None'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'cmake_clean_cache' from command line to 'False'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'cmake_clean_first' from command line to 'False'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'cmake_force_configure' from command line to 'False'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'ament_cmake_args' from command line to 'None'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'catkin_cmake_args' from command line to 'None'
+[0.495s] Level 5:colcon.colcon_core.verb:set package 'bno055' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.495s] DEBUG:colcon.colcon_core.verb:Building package 'bno055' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/natthawe/agv_ws/build/bno055', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/natthawe/agv_ws/install/bno055', 'merge_install': False, 'path': '/home/natthawe/agv_ws/src/bno055', 'symlink_install': False, 'test_result_base': None}
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'cmake_args' from command line to 'None'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'cmake_target' from command line to 'None'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'cmake_clean_cache' from command line to 'False'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'cmake_clean_first' from command line to 'False'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'cmake_force_configure' from command line to 'False'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'ament_cmake_args' from command line to 'None'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'catkin_cmake_args' from command line to 'None'
+[0.496s] Level 5:colcon.colcon_core.verb:set package 'odom_wheel' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.496s] DEBUG:colcon.colcon_core.verb:Building package 'odom_wheel' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/natthawe/agv_ws/build/odom_wheel', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/natthawe/agv_ws/install/odom_wheel', 'merge_install': False, 'path': '/home/natthawe/agv_ws/src/odom_wheel', 'symlink_install': False, 'test_result_base': None}
+[0.497s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.499s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.500s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/natthawe/agv_ws/src/bno055' with build type 'ament_python'
+[0.500s] Level 1:colcon.colcon_core.shell:create_environment_hook('bno055', 'ament_prefix_path')
+[0.504s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.504s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/bno055/share/bno055/hook/ament_prefix_path.ps1'
+[0.504s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/natthawe/agv_ws/install/bno055/share/bno055/hook/ament_prefix_path.dsv'
+[0.505s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/bno055/share/bno055/hook/ament_prefix_path.sh'
+[0.506s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.506s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.520s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/natthawe/agv_ws/src/odom_wheel' with build type 'ament_python'
+[0.520s] Level 1:colcon.colcon_core.shell:create_environment_hook('odom_wheel', 'ament_prefix_path')
+[0.521s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/hook/ament_prefix_path.ps1'
+[0.522s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/hook/ament_prefix_path.dsv'
+[0.522s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/hook/ament_prefix_path.sh'
+[0.523s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.523s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.804s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/natthawe/agv_ws/src/bno055'
+[0.805s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.805s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.077s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/natthawe/agv_ws/src/odom_wheel'
+[1.078s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.078s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.434s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/natthawe/agv_ws/src/bno055': PYTHONPATH=/home/natthawe/agv_ws/build/bno055/prefix_override:/home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/bno055 build --build-base /home/natthawe/agv_ws/build/bno055/build install --record /home/natthawe/agv_ws/build/bno055/install.log --single-version-externally-managed
+[1.438s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/natthawe/agv_ws/src/odom_wheel': PYTHONPATH=/home/natthawe/agv_ws/build/odom_wheel/prefix_override:/home/natthawe/agv_ws/install/odom_wheel/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/odom_wheel build --build-base /home/natthawe/agv_ws/build/odom_wheel/build install --record /home/natthawe/agv_ws/build/odom_wheel/install.log --single-version-externally-managed
+[1.737s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/natthawe/agv_ws/src/odom_wheel' returned '0': PYTHONPATH=/home/natthawe/agv_ws/build/odom_wheel/prefix_override:/home/natthawe/agv_ws/install/odom_wheel/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/odom_wheel build --build-base /home/natthawe/agv_ws/build/odom_wheel/build install --record /home/natthawe/agv_ws/build/odom_wheel/install.log --single-version-externally-managed
+[1.741s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/odom_wheel' for CMake module files
+[1.741s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/odom_wheel' for CMake config files
+[1.742s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/odom_wheel/lib'
+[1.742s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/odom_wheel/bin'
+[1.742s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/odom_wheel/lib/pkgconfig/odom_wheel.pc'
+[1.742s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/odom_wheel/lib/python3.10/site-packages'
+[1.742s] Level 1:colcon.colcon_core.shell:create_environment_hook('odom_wheel', 'pythonpath')
+[1.743s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/hook/pythonpath.ps1'
+[1.743s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/hook/pythonpath.dsv'
+[1.744s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/hook/pythonpath.sh'
+[1.744s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/odom_wheel/bin'
+[1.744s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(odom_wheel)
+[1.745s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/package.ps1'
+[1.746s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/package.dsv'
+[1.746s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/package.sh'
+[1.747s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/package.bash'
+[1.747s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/odom_wheel/share/odom_wheel/package.zsh'
+[1.748s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/natthawe/agv_ws/install/odom_wheel/share/colcon-core/packages/odom_wheel)
+[1.750s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/bno055' for CMake module files
+[1.751s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/bno055' for CMake config files
+[1.751s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/natthawe/agv_ws/src/bno055' returned '0': PYTHONPATH=/home/natthawe/agv_ws/build/bno055/prefix_override:/home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/bno055 build --build-base /home/natthawe/agv_ws/build/bno055/build install --record /home/natthawe/agv_ws/build/bno055/install.log --single-version-externally-managed
+[1.752s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/bno055/lib'
+[1.752s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/bno055/bin'
+[1.752s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/bno055/lib/pkgconfig/bno055.pc'
+[1.752s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages'
+[1.752s] Level 1:colcon.colcon_core.shell:create_environment_hook('bno055', 'pythonpath')
+[1.753s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/bno055/share/bno055/hook/pythonpath.ps1'
+[1.753s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/natthawe/agv_ws/install/bno055/share/bno055/hook/pythonpath.dsv'
+[1.754s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/natthawe/agv_ws/install/bno055/share/bno055/hook/pythonpath.sh'
+[1.754s] Level 1:colcon.colcon_core.environment:checking '/home/natthawe/agv_ws/install/bno055/bin'
+[1.754s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(bno055)
+[1.755s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/bno055/share/bno055/package.ps1'
+[1.755s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/natthawe/agv_ws/install/bno055/share/bno055/package.dsv'
+[1.756s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/bno055/share/bno055/package.sh'
+[1.756s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/bno055/share/bno055/package.bash'
+[1.756s] INFO:colcon.colcon_core.shell:Creating package script '/home/natthawe/agv_ws/install/bno055/share/bno055/package.zsh'
+[1.756s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/natthawe/agv_ws/install/bno055/share/colcon-core/packages/bno055)
+[1.757s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[1.757s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[1.757s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[1.757s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[1.764s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[1.764s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[1.764s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[1.772s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[1.774s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/natthawe/agv_ws/install/local_setup.ps1'
+[1.774s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/natthawe/agv_ws/install/_local_setup_util_ps1.py'
+[1.775s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/natthawe/agv_ws/install/setup.ps1'
+[1.780s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/natthawe/agv_ws/install/local_setup.sh'
+[1.781s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/natthawe/agv_ws/install/_local_setup_util_sh.py'
+[1.781s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/natthawe/agv_ws/install/setup.sh'
+[1.785s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/natthawe/agv_ws/install/local_setup.bash'
+[1.786s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/natthawe/agv_ws/install/setup.bash'
+[1.789s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/natthawe/agv_ws/install/local_setup.zsh'
+[1.790s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/natthawe/agv_ws/install/setup.zsh'

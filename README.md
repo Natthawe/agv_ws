@@ -1,1 +1,23 @@
-# agv_ws
+# Create Packages cpp
+ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp
+<!-- example -->
+ros2 pkg create static_broadcaster --build-type ament_cmake --dependencies rclcpp
+
+<!-- Create Packages python -->
+ros2 pkg create <pkg-name> --dependencies [deps] --build-type ament_python
+<!-- example -->
+ros2 pkg create static_broadcaster --dependencies rclpy --build-type ament_python
+
+<!-- rosdep -->
+rosdep install -r -y --from-path src
+rosdep install --from-paths src -y --ignore-src
+
+<!-- colcon build -->
+colcon build
+colcon build --symlink-install
+colcon build --packages-select <name-of-pkg>
+<!-- example -->
+colcon build --packages-select static_broadcaster
+
+add BNO055
+add ODOM_WHEEL

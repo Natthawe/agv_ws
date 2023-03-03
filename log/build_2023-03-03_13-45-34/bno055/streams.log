@@ -1,0 +1,84 @@
+[0.933s] Invoking command in '/home/natthawe/agv_ws/src/bno055': PYTHONPATH=/home/natthawe/agv_ws/build/bno055/prefix_override:/home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/bno055 build --build-base /home/natthawe/agv_ws/build/bno055/build install --record /home/natthawe/agv_ws/build/bno055/install.log --single-version-externally-managed
+[1.181s] running egg_info
+[1.182s] creating ../../build/bno055/bno055.egg-info
+[1.182s] writing ../../build/bno055/bno055.egg-info/PKG-INFO
+[1.182s] writing dependency_links to ../../build/bno055/bno055.egg-info/dependency_links.txt
+[1.182s] writing entry points to ../../build/bno055/bno055.egg-info/entry_points.txt
+[1.182s] writing requirements to ../../build/bno055/bno055.egg-info/requires.txt
+[1.182s] writing top-level names to ../../build/bno055/bno055.egg-info/top_level.txt
+[1.183s] writing manifest file '../../build/bno055/bno055.egg-info/SOURCES.txt'
+[1.184s] reading manifest file '../../build/bno055/bno055.egg-info/SOURCES.txt'
+[1.184s] adding license file 'LICENSE'
+[1.184s] adding license file 'AUTHORS'
+[1.185s] writing manifest file '../../build/bno055/bno055.egg-info/SOURCES.txt'
+[1.185s] running build
+[1.186s] running build_py
+[1.186s] creating /home/natthawe/agv_ws/build/bno055/build
+[1.186s] creating /home/natthawe/agv_ws/build/bno055/build/lib
+[1.186s] creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+[1.186s] copying bno055/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+[1.186s] copying bno055/bno055.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+[1.186s] copying bno055/registers.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+[1.187s] creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling
+[1.187s] copying bno055/error_handling/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling
+[1.187s] copying bno055/error_handling/exceptions.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling
+[1.187s] creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params
+[1.187s] copying bno055/params/NodeParameters.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params
+[1.187s] copying bno055/params/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params
+[1.187s] creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+[1.187s] copying bno055/connectors/i2c.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+[1.188s] copying bno055/connectors/Connector.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+[1.188s] copying bno055/connectors/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+[1.188s] copying bno055/connectors/uart.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+[1.188s] creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor
+[1.188s] copying bno055/sensor/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor
+[1.188s] copying bno055/sensor/SensorService.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor
+[1.188s] running install
+[1.188s] running install_lib
+[1.189s] creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+[1.189s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/bno055.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+[1.189s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+[1.190s] creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling
+[1.190s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling
+[1.190s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling/exceptions.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling
+[1.190s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/registers.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+[1.190s] creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params
+[1.190s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params/NodeParameters.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params
+[1.190s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params
+[1.190s] creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+[1.191s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/i2c.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+[1.191s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/Connector.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+[1.191s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+[1.191s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/uart.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+[1.191s] creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor
+[1.191s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor
+[1.191s] copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor/SensorService.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor
+[1.191s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/bno055.py to bno055.cpython-310.pyc
+[1.192s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/__init__.py to __init__.cpython-310.pyc
+[1.192s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling/__init__.py to __init__.cpython-310.pyc
+[1.192s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling/exceptions.py to exceptions.cpython-310.pyc
+[1.192s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/registers.py to registers.cpython-310.pyc
+[1.193s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params/NodeParameters.py to NodeParameters.cpython-310.pyc
+[1.194s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params/__init__.py to __init__.cpython-310.pyc
+[1.194s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/i2c.py to i2c.cpython-310.pyc
+[1.194s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/Connector.py to Connector.cpython-310.pyc
+[1.194s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/__init__.py to __init__.cpython-310.pyc
+[1.194s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/uart.py to uart.cpython-310.pyc
+[1.195s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor/__init__.py to __init__.cpython-310.pyc
+[1.195s] byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor/SensorService.py to SensorService.cpython-310.pyc
+[1.197s] running install_data
+[1.197s] creating /home/natthawe/agv_ws/install/bno055/share/ament_index
+[1.197s] creating /home/natthawe/agv_ws/install/bno055/share/ament_index/resource_index
+[1.197s] creating /home/natthawe/agv_ws/install/bno055/share/ament_index/resource_index/packages
+[1.198s] copying resource/bno055 -> /home/natthawe/agv_ws/install/bno055/share/ament_index/resource_index/packages
+[1.198s] copying package.xml -> /home/natthawe/agv_ws/install/bno055/share/bno055
+[1.198s] creating /home/natthawe/agv_ws/install/bno055/share/bno055/launch
+[1.198s] copying launch/bno055.launch.py -> /home/natthawe/agv_ws/install/bno055/share/bno055/launch
+[1.198s] creating /home/natthawe/agv_ws/install/bno055/share/bno055/params
+[1.198s] copying bno055/params/bno055_params.yaml -> /home/natthawe/agv_ws/install/bno055/share/bno055/params
+[1.198s] running install_egg_info
+[1.199s] Copying ../../build/bno055/bno055.egg-info to /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055-0.2.0-py3.10.egg-info
+[1.200s] running install_scripts
+[1.218s] Installing bno055 script to /home/natthawe/agv_ws/install/bno055/lib/bno055
+[1.218s] writing list of installed files to '/home/natthawe/agv_ws/build/bno055/install.log'
+[1.250s] Invoked command in '/home/natthawe/agv_ws/src/bno055' returned '0': PYTHONPATH=/home/natthawe/agv_ws/build/bno055/prefix_override:/home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/bno055 build --build-base /home/natthawe/agv_ws/build/bno055/build install --record /home/natthawe/agv_ws/build/bno055/install.log --single-version-externally-managed

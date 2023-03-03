@@ -1,0 +1,82 @@
+running egg_info
+creating ../../build/bno055/bno055.egg-info
+writing ../../build/bno055/bno055.egg-info/PKG-INFO
+writing dependency_links to ../../build/bno055/bno055.egg-info/dependency_links.txt
+writing entry points to ../../build/bno055/bno055.egg-info/entry_points.txt
+writing requirements to ../../build/bno055/bno055.egg-info/requires.txt
+writing top-level names to ../../build/bno055/bno055.egg-info/top_level.txt
+writing manifest file '../../build/bno055/bno055.egg-info/SOURCES.txt'
+reading manifest file '../../build/bno055/bno055.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+adding license file 'AUTHORS'
+writing manifest file '../../build/bno055/bno055.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/natthawe/agv_ws/build/bno055/build
+creating /home/natthawe/agv_ws/build/bno055/build/lib
+creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+copying bno055/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+copying bno055/bno055.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+copying bno055/registers.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055
+creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling
+copying bno055/error_handling/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling
+copying bno055/error_handling/exceptions.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling
+creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params
+copying bno055/params/NodeParameters.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params
+copying bno055/params/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params
+creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+copying bno055/connectors/i2c.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+copying bno055/connectors/Connector.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+copying bno055/connectors/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+copying bno055/connectors/uart.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors
+creating /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor
+copying bno055/sensor/__init__.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor
+copying bno055/sensor/SensorService.py -> /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor
+running install
+running install_lib
+creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/bno055.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/error_handling/exceptions.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/registers.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055
+creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params/NodeParameters.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/params/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params
+creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/i2c.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/Connector.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/connectors/uart.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors
+creating /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor/__init__.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor
+copying /home/natthawe/agv_ws/build/bno055/build/lib/bno055/sensor/SensorService.py -> /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/bno055.py to bno055.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/error_handling/exceptions.py to exceptions.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/registers.py to registers.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params/NodeParameters.py to NodeParameters.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/params/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/i2c.py to i2c.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/Connector.py to Connector.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/connectors/uart.py to uart.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055/sensor/SensorService.py to SensorService.cpython-310.pyc
+running install_data
+creating /home/natthawe/agv_ws/install/bno055/share/ament_index
+creating /home/natthawe/agv_ws/install/bno055/share/ament_index/resource_index
+creating /home/natthawe/agv_ws/install/bno055/share/ament_index/resource_index/packages
+copying resource/bno055 -> /home/natthawe/agv_ws/install/bno055/share/ament_index/resource_index/packages
+copying package.xml -> /home/natthawe/agv_ws/install/bno055/share/bno055
+creating /home/natthawe/agv_ws/install/bno055/share/bno055/launch
+copying launch/bno055.launch.py -> /home/natthawe/agv_ws/install/bno055/share/bno055/launch
+creating /home/natthawe/agv_ws/install/bno055/share/bno055/params
+copying bno055/params/bno055_params.yaml -> /home/natthawe/agv_ws/install/bno055/share/bno055/params
+running install_egg_info
+Copying ../../build/bno055/bno055.egg-info to /home/natthawe/agv_ws/install/bno055/lib/python3.10/site-packages/bno055-0.2.0-py3.10.egg-info
+running install_scripts
+Installing bno055 script to /home/natthawe/agv_ws/install/bno055/lib/bno055
+writing list of installed files to '/home/natthawe/agv_ws/build/bno055/install.log'
