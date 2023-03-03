@@ -90,8 +90,8 @@ class StaticFramePublisher(Node):
             map_to_odom,
             # base_footprint_to_base_link,
             base_link_to_bno055,
-            base_link_to_rslidar,
-            # base_link_to_omron,
+            # base_link_to_rslidar,
+            base_link_to_omron,
             base_link_to_laser,
             
         )
