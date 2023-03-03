@@ -1,3 +1,0 @@
-[console_scripts]
-odom_wheel = odom_wheel.odom_wheel_node:main
-
