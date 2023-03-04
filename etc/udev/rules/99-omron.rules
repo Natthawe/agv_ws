@@ -1,0 +1,1 @@
+KERNEL=="ttyUSB*", KERNELS=="1-5", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", MODE:="0666", SYMLINK+="omron"
