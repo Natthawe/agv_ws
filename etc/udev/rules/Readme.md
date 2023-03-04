@@ -1,4 +1,4 @@
-# Assign a static USB port on Linux
+## Assign a static USB port on Linux
 
     lsusb
 
@@ -10,7 +10,7 @@
 
     Find {idProduct} and {idVendor}
 
-# Create Rules
+## Create Rules
 
     sudo nano 99-bno055.rules
     KERNEL=="ttyUSB*", KERNELS=="1-6.1", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666", SYMLINK+="bno055"
@@ -23,6 +23,6 @@
 
     sudo udevadm trigger
 
-# Create modprobe bash file for omron
+## Create modprobe bash file for omron
 
     touch modprobe_omron.sh
