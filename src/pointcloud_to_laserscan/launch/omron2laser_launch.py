@@ -13,10 +13,10 @@ def generate_launch_description():
                 'transform_tolerance': 0.01,
                 'min_height': 0.1,
                 'max_height': 1.0,
-                'angle_min': -0.75921822462, #-1.57,  # -M_PI/2
-                'angle_max': 0.75921822462,#1.57,  # M_PI/2
-                'angle_increment': 0.01745329238474369,  # M_PI/360.0
-                'scan_time': 0.1338348239660263,
+                'angle_min': -1.5708, #-0.75921822462, # -M_PI/2
+                'angle_max': 1.5708, #0.75921822462, # M_PI/2
+                'angle_increment': 0.0087, #0.01745329238474369,  # M_PI/360.0
+                'scan_time': 0.3333,
                 'range_min': 0.5,
                 'range_max': 4.0,
                 'use_inf': True,

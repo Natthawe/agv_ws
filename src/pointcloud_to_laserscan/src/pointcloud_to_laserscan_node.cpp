@@ -147,7 +147,7 @@ void PointCloudToLaserScanNode::cloudCallback(
   scan_msg->angle_min = angle_min_;
   scan_msg->angle_max = angle_max_;
   scan_msg->angle_increment = angle_increment_;
-  scan_msg->time_increment = 0.0003727989678736776;
+  scan_msg->time_increment = 0.0; //0.0003727989678736776;
   scan_msg->scan_time = scan_time_;
   scan_msg->range_min = range_min_;
   scan_msg->range_max = range_max_;
