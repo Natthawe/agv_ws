@@ -17,10 +17,12 @@
     colcon build --packages-select static_broadcaster
 
 ## add packages
+- accel_decel
 - bno055
-- odom_wheel
+- csm
 - joy_tester
 - nav2_bringup
+- odom_wheel
 - omron_b5l_a
 - pointcloud_to_laserscan
 - robot_localization
