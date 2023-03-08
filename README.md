@@ -9,6 +9,7 @@
 #### rosdep
     rosdep install -r -y --from-path src
     rosdep install --from-paths src -y --ignore-src
+    rosdep install -q -y -r --from-paths src --ignore-src
 
 #### colcon build
     colcon build
