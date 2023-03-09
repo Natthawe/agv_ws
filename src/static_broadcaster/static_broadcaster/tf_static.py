@@ -80,14 +80,14 @@ class StaticFramePublisher(Node):
         base_link_to_laser.child_frame_id = 'laser'
         base_link_to_laser.transform.translation.x = 0.3
         base_link_to_laser.transform.translation.y = 0.0
-        base_link_to_laser.transform.translation.z = 0.0 #0.215
+        base_link_to_laser.transform.translation.z = 0.215
         base_link_to_laser.transform.rotation.w = 1.0
         base_link_to_laser.transform.rotation.x = 0.0
         base_link_to_laser.transform.rotation.y = 0.0
         base_link_to_laser.transform.rotation.z = 0.0          
 
         return(
-            map_to_odom,
+            # map_to_odom,
             # base_footprint_to_base_link,
             base_link_to_bno055,
             # base_link_to_rslidar,

@@ -127,11 +127,11 @@ class odom_wheel_node(Node):
         odom = Odometry()
         odom.header.stamp = now.to_msg()
         odom.header.frame_id = self.odom_frame
+        odom.child_frame_id = self.base_frame        
         odom.pose.pose.position.x = self.x
         odom.pose.pose.position.y = self.y
         odom.pose.pose.position.z = 0.0
         odom.pose.pose.orientation = quaternion
-        odom.child_frame_id = self.base_frame
         odom.twist.twist.linear.x = self.dx
         odom.twist.twist.linear.y = 0.0
         odom.twist.twist.angular.z = self.dr
@@ -191,7 +191,7 @@ class odom_wheel_node(Node):
                 break
         return bytes(line)
 
-STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=1-6.2:1.0"
+STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=1-6.4:1.0"
 _baudrate = 9600
 
 def getControl_drivePort():

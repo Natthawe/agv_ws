@@ -1,23 +1,34 @@
-# Create Packages cpp
+# Getting Started
+    1) Clone this project to your colcon workspace src folder.
+    2) Build the package: ```colcon build --symlink-install```
+
+# Running the Package
+    ros2 launch launch/start.launch.py
+
+# Create Packages Cpp
     ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp
     ros2 pkg create static_broadcaster --build-type ament_cmake --dependencies rclcpp
 
-# Create Packages python
+# Create Packages Python
     ros2 pkg create <pkg-name> --dependencies [deps] --build-type ament_python
     ros2 pkg create static_broadcaster --dependencies rclpy --build-type ament_python
 
-#### rosdep
+#### ROSDEP
     rosdep install -r -y --from-path src
     rosdep install --from-paths src -y --ignore-src
     rosdep install -q -y -r --from-paths src --ignore-src
 
-#### colcon build
+#### COLCON BUILD
     colcon build
     colcon build --symlink-install
+    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
     colcon build --packages-select <name-of-pkg>
     colcon build --packages-select static_broadcaster
+    
 
-## add packages
+
+
+## All Packages
 - accel_decel
 - bno055
 - cartographer_ros
