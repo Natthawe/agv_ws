@@ -3,7 +3,7 @@
     2) Build the package: ```colcon build --symlink-install```
 
 ## Running the Package
-======================
+
 run all sensors
     
     Terminal1: ```ros2 launch launch/start.launch.py```
