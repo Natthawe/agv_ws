@@ -20,6 +20,7 @@
 ## add packages
 - accel_decel
 - bno055
+- cartographer_ros
 - csm
 - joy_tester
 - nav2_bringup

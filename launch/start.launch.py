@@ -40,8 +40,8 @@ def generate_launch_description():
     # )
 
     # robot localization node
-    robot_localization_dir = get_package_share_directory('robot_localization')
-    launch_robot_localization_pkg = os.path.join(robot_localization_dir, 'launch')
+    # robot_localization_dir = get_package_share_directory('robot_localization')
+    # launch_robot_localization_pkg = os.path.join(robot_localization_dir, 'launch')
 
     # static tf node
     static_tf_dir = get_package_share_directory('static_broadcaster')
@@ -103,10 +103,10 @@ def generate_launch_description():
         # ),
 
     # robot_localization
-        IncludeLaunchDescription(
-            # PythonLaunchDescriptionSource(os.path.join(launch_robot_localization_pkg, 'dual_ekf_navsat.launch.py'))
-            PythonLaunchDescriptionSource(os.path.join(launch_robot_localization_pkg, 'ekf.launch.py'))
-        ),
+        # IncludeLaunchDescription(
+        #     # PythonLaunchDescriptionSource(os.path.join(launch_robot_localization_pkg, 'dual_ekf_navsat.launch.py'))
+        #     PythonLaunchDescriptionSource(os.path.join(launch_robot_localization_pkg, 'ekf.launch.py'))
+        # ),
 
 
     # tf_static        
