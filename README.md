@@ -2,8 +2,16 @@
     1) Clone this project to your colcon workspace src folder.
     2) Build the package: ```colcon build --symlink-install```
 
-# Running the Package
+## Running the Package
+    Terminal1 : run all sensors
+    ```bash
     ros2 launch launch/start.launch.py
+    ```
+    Terminal2 : run navigation2
+    ```bash
+    ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml>    
+    ```    
+
 
 # Create Packages Cpp
     ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp
