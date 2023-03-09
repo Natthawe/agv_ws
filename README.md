@@ -3,13 +3,12 @@
     2) Build the package: ```colcon build --symlink-install```
 
 ## Running the Package
-
-    run all sensors
+======================
+run all sensors
     
     Terminal1: ```ros2 launch launch/start.launch.py```
 
-
-    run navigation2
+run navigation2
     
     Terminal2: ```ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml> ```    
 
