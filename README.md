@@ -4,16 +4,14 @@
 
 ## Running the Package
 
-    Terminal1 : run all sensors
+    run all sensors
     
-    ```bash
-    ros2 launch launch/start.launch.py
-    ```
-    Terminal2 : run navigation2
+    Terminal1: ```ros2 launch launch/start.launch.py```
+
+
+    run navigation2
     
-    ```bash
-    ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml>    
-    ```    
+    Terminal2: ```ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml> ```    
 
 
 # Create Packages Cpp
