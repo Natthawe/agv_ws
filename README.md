@@ -33,7 +33,8 @@ Run Navigation2
     colcon build --packages-select <name-of-pkg>
     colcon build --packages-select static_broadcaster
     
-
+# Teleop_Twist_Keyboard
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/cmd_vel/remap
 
 
 ## All Packages
@@ -54,3 +55,17 @@ Run Navigation2
 - sam_bot_description
 - slam_toolbox
 - static_broadcaster
+
+set up the API and then set the initial pose of the robot directly from code.
+
+1) sudo apt install ros-humble-nav2-simple-commander
+2) sudo apt install ros-humble-tf-transformations
+3) sudo apt install python3-transforms3d
+4) create nav2_poses.py & chmod +x nav2_poses.py
+5) ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+6) ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
+7) Run scripts ./nav2_poses.py
+
+<No GUI> 
+1) ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
+2) Run scripts ./nav2_poses.py
