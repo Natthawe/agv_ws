@@ -66,7 +66,7 @@ set up the API and then set the initial pose of the robot directly from code.
 6) ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
 7) Run scripts ./nav2_poses.py
 
-<No GUI> 
+#### No GUI
 1) ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
 2) Run scripts ./nav2_poses.py
 
