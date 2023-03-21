@@ -29,6 +29,7 @@
 - sam_bot_description
 - slam_toolbox
 - static_broadcaster
+- teb_local_planner
 
 # Create Packages Cpp
     ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp
