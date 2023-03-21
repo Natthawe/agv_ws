@@ -57,6 +57,7 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:
 - static_broadcaster
 
 #### set up the API and then set the initial pose of the robot directly from code.
+<<<<<<< HEAD
     1) sudo apt install ros-humble-nav2-simple-commander
     2) sudo apt install ros-humble-tf-transformations
     3) sudo apt install python3-transforms3d
@@ -75,3 +76,24 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:
     - sudo apt install ros-humble-joint-state-publisher-gui
     - sudo apt install ros-humble-xacro
     - ros2 pkg create --build-type ament_cmake agv_bot_description
+=======
+
+1) sudo apt install ros-humble-nav2-simple-commander
+2) sudo apt install ros-humble-tf-transformations
+3) sudo apt install python3-transforms3d
+4) create nav2_poses.py & chmod +x nav2_poses.py
+5) ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+6) ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
+7) Run scripts ./nav2_poses.py
+
+#### No GUI
+1) ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
+2) Run scripts ./nav2_poses.py
+
+# URDF
+#### Dependencies
+- sudo apt install ros-humble-urdf-tutorial
+- sudo apt install ros-humble-joint-state-publisher-gui
+- sudo apt install ros-humble-xacro
+- ros2 pkg create --build-type ament_cmake agv_bot_description
+>>>>>>> cbf7b4a0a50e0badca9dc6a60fc587ed03065740
