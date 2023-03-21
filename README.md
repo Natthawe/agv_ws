@@ -56,7 +56,7 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:
 - slam_toolbox
 - static_broadcaster
 
-set up the API and then set the initial pose of the robot directly from code.
+#### set up the API and then set the initial pose of the robot directly from code.
 
 1) sudo apt install ros-humble-nav2-simple-commander
 2) sudo apt install ros-humble-tf-transformations
