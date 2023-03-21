@@ -11,12 +11,12 @@ def main():
     nav = BasicNavigator()
 
     # Set Initial Pose
-    q_x, q_y, q_z, q_w = tf_transformations.quaternion_from_euler(0.0, 0.0, 0.0)
+    q_x, q_y, q_z, q_w = tf_transformations.quaternion_from_euler(0.0, 0.0, -0.165)
     initial_pose = PoseStamped()
     initial_pose.header.frame_id = 'map'
     initial_pose.header.stamp = nav.get_clock().now().to_msg()
-    initial_pose.pose.position.x = -2.0
-    initial_pose.pose.position.y = -0.6
+    initial_pose.pose.position.x = 0.017
+    initial_pose.pose.position.y = -0.102
     initial_pose.pose.position.z = 0.0
     initial_pose.pose.orientation.x = q_x
     initial_pose.pose.orientation.y = q_y
