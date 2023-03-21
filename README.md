@@ -11,6 +11,24 @@
     
     ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml>   
 
+## All Packages
+- accel_decel
+- bno055
+- cartographer_ros
+- csm
+- joy_tester
+- nav2_bringup
+- odom_wheel
+- omron_b5l_a
+- pointcloud_to_laserscan
+- robot_localization
+- ros2_laser_scan_matcher
+- rplidar_ros
+- rslidar_msg
+- rslidar_sdk
+- sam_bot_description
+- slam_toolbox
+- static_broadcaster
 
 # Create Packages Cpp
     ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp
@@ -33,27 +51,8 @@
     colcon build --packages-select static_broadcaster
     
 # Teleop_Twist_Keyboard
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/cmd_vel/remap
+    ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/cmd_vel/remap
 
-
-## All Packages
-- accel_decel
-- bno055
-- cartographer_ros
-- csm
-- joy_tester
-- nav2_bringup
-- odom_wheel
-- omron_b5l_a
-- pointcloud_to_laserscan
-- robot_localization
-- ros2_laser_scan_matcher
-- rplidar_ros
-- rslidar_msg
-- rslidar_sdk
-- sam_bot_description
-- slam_toolbox
-- static_broadcaster
 
 #### set up the API and then set the initial pose of the robot directly from code.
     1) sudo apt install ros-humble-nav2-simple-commander
