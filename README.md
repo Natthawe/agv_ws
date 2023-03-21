@@ -10,7 +10,7 @@ Run All Sensors
 
 Run Navigation2
     
-    Terminal2: ```ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml> ```    
+    Terminal2: ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml>   
 
 
 # Create Packages Cpp
@@ -75,7 +75,3 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:
     sudo apt install ros-humble-joint-state-publisher-gui
     sudo apt install ros-humble-xacro
     ros2 pkg create --build-type ament_cmake agv_bot_description
-
-#### No GUI
-    1) ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
-    2) Run scripts ./nav2_poses.py
