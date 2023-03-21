@@ -13,6 +13,7 @@
 
 ## All Packages
 - accel_decel
+- agv_bot_description
 - bno055
 - cartographer_ros
 - csm
