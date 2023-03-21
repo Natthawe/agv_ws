@@ -77,8 +77,8 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:
     - ros2 pkg create --build-type ament_cmake agv_bot_description
 
 #### No GUI
-1) ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
-2) Run scripts ./nav2_poses.py
+    1) ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
+    2) Run scripts ./nav2_poses.py
 
 # URDF
 #### Dependencies
