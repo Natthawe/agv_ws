@@ -71,7 +71,8 @@ set up the API and then set the initial pose of the robot directly from code.
 2) Run scripts ./nav2_poses.py
 
 # URDF
-sudo apt install ros-humble-urdf-tutorial
-sudo apt install ros-humble-joint-state-publisher-gui
-sudo apt install ros-humble-xacro
-ros2 pkg create --build-type ament_cmake agv_bot_description
+#### Dependencies
+- sudo apt install ros-humble-urdf-tutorial
+- sudo apt install ros-humble-joint-state-publisher-gui
+- sudo apt install ros-humble-xacro
+- ros2 pkg create --build-type ament_cmake agv_bot_description
