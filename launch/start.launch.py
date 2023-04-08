@@ -11,6 +11,10 @@ from launch.substitutions import LaunchConfiguration, PythonExpression
 
 def generate_launch_description():
 
+    # rviz2
+    rviz2_dir = get_package_share_directory('nav2_bringup')
+    launch_rviz2_pkg = os.path.join(rviz2_dir, 'launch')
+
     # bno055
     bno055_dir = get_package_share_directory('bno055')
     launch_bno055_pkg = os.path.join(bno055_dir, 'launch')
@@ -61,6 +65,11 @@ def generate_launch_description():
 
 
     return LaunchDescription([
+
+    # rviz2       
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(launch_rviz2_pkg, 'rviz2_launch.py'))
+        ),
 
     # bno055       
         IncludeLaunchDescription(

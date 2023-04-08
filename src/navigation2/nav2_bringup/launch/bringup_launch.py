@@ -43,6 +43,8 @@ def generate_launch_description():
     use_composition = LaunchConfiguration('use_composition')
     use_respawn = LaunchConfiguration('use_respawn')
     log_level = LaunchConfiguration('log_level')
+    rviz_config_file = LaunchConfiguration('rviz_config_file')
+    use_rviz = LaunchConfiguration('use_rviz')
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
@@ -112,6 +114,17 @@ def generate_launch_description():
         'log_level', default_value='info',
         description='log level')
 
+    declare_rviz_config_file_cmd = DeclareLaunchArgument(
+        'rviz_config_file',
+        default_value=os.path.join(
+            bringup_dir, 'rviz', 'nav2.rviz'),
+        description='Full path to the RVIZ config file to use')        
+
+    declare_use_rviz_cmd = DeclareLaunchArgument(
+        'use_rviz',
+        default_value='True',
+        description='Whether to start RVIZ')
+
     # Specify the actions
     bringup_cmd_group = GroupAction([
         PushRosNamespace(
@@ -161,6 +174,14 @@ def generate_launch_description():
                               'container_name': 'nav2_container'}.items()),
     ])
 
+    rviz_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(launch_dir, 'rviz_launch.py')),
+        condition=IfCondition(use_rviz),
+        launch_arguments={'namespace': namespace,
+                          'use_namespace': use_namespace,
+                          'rviz_config': rviz_config_file}.items())
+
     # Create the launch description and populate
     ld = LaunchDescription()
 
@@ -178,6 +199,11 @@ def generate_launch_description():
     ld.add_action(declare_use_composition_cmd)
     ld.add_action(declare_use_respawn_cmd)
     ld.add_action(declare_log_level_cmd)
+    # ld.add_action(declare_rviz_config_file_cmd)
+    # ld.add_action(declare_use_rviz_cmd)
+    # ld.add_action(rviz_cmd)
+
+
 
     # Add the actions to launch all of the navigation nodes
     ld.add_action(bringup_cmd_group)
