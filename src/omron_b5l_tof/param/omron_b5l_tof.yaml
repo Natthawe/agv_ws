@@ -7,7 +7,7 @@ omron_b5l_tof:
     IMAGE_PATH: "./"
     FOV_LIMITATION: 1
     OUTPUT_FORMAT: 258
-    OPERATION_MODE: 0
+    OPERATION_MODE: 1
     EXPOSURE_FPS: [850, 0]
     T3D_XYZ: [90, 270, 0]
     LED_FREQUENCY_ID: 0

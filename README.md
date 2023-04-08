@@ -75,3 +75,15 @@
     sudo apt install ros-humble-joint-state-publisher-gui
     sudo apt install ros-humble-xacro
     ros2 pkg create --build-type ament_cmake agv_bot_description
+
+# SLAM
+#### ALL Sensors
+    ros2 launch launch/start.launch.py
+
+#### cartographer_ros
+    ros2 launch cartographer_ros wc_2d.launch.py
+
+#### save map
+    ros2 run nav2_map_server map_saver_cli -f <map_name>
+
+# UDEV    

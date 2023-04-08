@@ -51,9 +51,9 @@ def generate_launch_description():
     # rplidar_ros_dir = get_package_share_directory('rplidar_ros')
     # launch_rplidar_ros_pkg = os.path.join(rplidar_ros_dir, 'launch')    
 
-    # control drive node
-    control_drive_dir = get_package_share_directory('odom_wheel')
-    launch_control_drive_pkg = os.path.join(control_drive_dir, 'launch')    
+    # odom_wheel node
+    odom_wheel_dir = get_package_share_directory('odom_wheel')
+    launch_odom_wheel_pkg = os.path.join(odom_wheel_dir, 'launch')    
 
     # accel_decel
     accel_decel_dir = get_package_share_directory('accel_decel')
@@ -119,9 +119,9 @@ def generate_launch_description():
         #     PythonLaunchDescriptionSource(os.path.join(launch_rplidar_ros_pkg, 'rplidar_a3.launch.py'))
         # ),
 
-    # control_node        
+    # odom_wheel        
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(launch_control_drive_pkg, 'odom_wheel_node.launch.py'))
+            PythonLaunchDescriptionSource(os.path.join(launch_odom_wheel_pkg, 'odom_wheel_node.launch.py'))
         ),
 
     # accel_decel        
