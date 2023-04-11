@@ -79,10 +79,12 @@
     sudo apt install ros-humble-urdf-tutorial
     sudo apt install ros-humble-joint-state-publisher-gui
     sudo apt install ros-humble-xacro
+    sudo apt install openssh-server
     sudo apt install libyaml-cpp-dev
     sudo apt install libpcap-dev
     sudo apt install python3-pip
     pip install setuptools==58.2.0
+    
 
 # SLAM
 #### ALL Sensors
