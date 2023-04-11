@@ -35,11 +35,12 @@
 # Create Packages Cpp
     ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp
     ros2 pkg create static_broadcaster --build-type ament_cmake --dependencies rclcpp
+    ros2 pkg create --build-type ament_cmake agv_bot_description
 
 # Create Packages Python
     ros2 pkg create <pkg-name> --dependencies [deps] --build-type ament_python
     ros2 pkg create static_broadcaster --dependencies rclpy --build-type ament_python
-
+    
 #### ROSDEP
     rosdep install -r -y --from-path src
     rosdep install --from-paths src -y --ignore-src
@@ -69,12 +70,14 @@
     1) ros2 launch nav2_bringup bringup_launch.py use_sim_time:=True map:=/home/natthawe/turtlebot3_ws/src/turtlebot3/turtlebot3_navigation2/map/map.yaml
     2) Run scripts ./nav2_poses.py
 
-# URDF
-#### Dependencies
+# Dependencies
     sudo apt install ros-humble-urdf-tutorial
     sudo apt install ros-humble-joint-state-publisher-gui
     sudo apt install ros-humble-xacro
-    ros2 pkg create --build-type ament_cmake agv_bot_description
+    sudo apt install libyaml-cpp-dev
+    sudo apt install libpcap-dev
+    sudo apt install python3-pip
+    pip install setuptools==58.2.0
 
 # SLAM
 #### ALL Sensors
@@ -91,3 +94,20 @@
     #KERNEL=="ttyUSB*", KERNELS=="1-6.1", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666", SYMLINK+="bno055"
 
     ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", RUN+="/sbin/modprobe usbserial vendor=0x0403 product=0x6001", MODE="0666", GROUP="dialout"
+
+#### 50-omron.rules
+    #SUBSYSTEMS=="tty", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", GROUP="dialout", MODE="0666"
+
+    #KERNEL=="ttyUSB*", KERNELS=="1-5", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", MODE:="0666", SYMLINK+="omron"
+
+    ACTION=="add", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", RUN+="/sbin/modprobe usbserial vendor=0x0590 product=0x00ca", MODE="0666", GROUP="dialout"    
+
+#### 50-teensy.rules
+    #KERNEL=="ttyACM*", KERNELS=="1-6.2", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="0483", MODE:="0666", SYMLINK+="teensy"
+
+    ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="0483", RUN+="/sbin/modprobe usbserial vendor=0x16c0 product=0x0483", MODE="0666", GROUP="dialout"
+
+#### 50-rplidar.rules
+    #KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="rplidar"
+
+    ACTION=="add", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="/sbin/modprobe usbserial vendor=0x10c4 product=0xea60", MODE="0666", GROUP="dialout"    
