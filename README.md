@@ -21,11 +21,13 @@
 - agv_bot_description
 - bno055
 - cartographer_ros
+- costmap_converter
 - csm
 - joy_tester
-- nav2_bringup
+- navigation2
 - odom_wheel
 - omron_b5l_a
+- omron_b5l_tof
 - pointcloud_to_laserscan
 - robot_localization
 - ros2_laser_scan_matcher
