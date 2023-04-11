@@ -3,12 +3,8 @@
 2) Setting [Remote Desktop](https://linuxhint.com/enable-remote-desktop-ubuntu-access-windows/) then remove password.
 3) Install [ROS HUMBLE](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
 4) Clone this project to your colcon workspace src folder.
-5) Run 
-
-    rosdep install -r -y --from-path src
-
-6) Build the package:
-    colcon build
+5) Run `rosdep install -r -y --from-path src`
+6) Build the package: `colcon build`
 7) if error Click [Dependencies](#Dependencies)
 
 ## Running the Package
