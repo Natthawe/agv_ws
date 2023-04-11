@@ -5,7 +5,11 @@
 4) Clone this project to your colcon workspace src folder.
 5) Run `rosdep install -r -y --from-path src`
 6) Build the package: `colcon build`
-7) if error Click [Dependencies](#Dependencies)
+7) Ff error Click [Dependencies](#Dependencies)
+8) In .bashrc file add command below file: 
+    `export ROS_DOMAIN_ID=102` 
+    `source /opt/ros/humble/setup.bash`
+    `export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`
 
 ## Running the Package
 
@@ -86,6 +90,7 @@
     sudo apt install libpcap-dev
     sudo apt install python3-pip
     pip install setuptools==58.2.0
+    sudo apt install ros-humble-rmw-cyclonedds-cpp
     
 
 # SLAM
