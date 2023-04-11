@@ -86,4 +86,8 @@
 #### save map
     ros2 run nav2_map_server map_saver_cli -f <map_name>
 
-# UDEV    
+# UDEV   
+#### 50-bno055.rules
+    #KERNEL=="ttyUSB*", KERNELS=="1-6.1", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666", SYMLINK+="bno055"
+
+    ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", RUN+="/sbin/modprobe usbserial vendor=0x0403 product=0x6001", MODE="0666", GROUP="dialout"
