@@ -23,7 +23,7 @@ def generate_launch_description():
             executable='teleop_node',
             name='teleop_node',
             parameters=[joy_params],
-            remappings=[('/cmd_vel','/turtle1/cmd_vel')]
+            # remappings=[('/cmd_vel','/turtle1/cmd_vel')]
          )
 
     # twist_stamper = Node(
