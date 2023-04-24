@@ -24,7 +24,7 @@ class MoteusControlNode(Node):
         # self.timer = self.create_timer(timer_period, self.callback_update)       
         
         # subscribe to cmd_vel
-        self.create_subscription(Twist, 'cmd_vel_accel_desel', self.cmd_vel_callback, 1)  #scurve_cmd_vel
+        self.create_subscription(Twist, 'cmd_vel_accel_decel', self.cmd_vel_callback, 1)  #scurve_cmd_vel
         
         # subscribe to moteusStates
         # self.create_subscription(MoteusStateStamped, 'moteus_feedback', self.callback_command, 10)   
