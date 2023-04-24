@@ -38,6 +38,11 @@ amcl:
     z_rand: 0.5
     z_short: 0.05
     scan_topic: scan
+    set_initial_pose: True
+    initial_pose.x: -2.02
+    initial_pose.y: 1.35
+    initial_pose.yaw: 0.0
+
 
 bt_navigator:
   ros__parameters:
@@ -136,27 +141,27 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.3
+      yaw_goal_tolerance: 0.3
 
     # TEB parameters
     FollowPath:
       plugin: "teb_local_planner::TebLocalPlannerROS"
       footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
         type: "polygon"
-      teb_autoresize: True
+        vertices: "[[-0.3,-0.275], [0.3,-0.275], [0.3,0.275], [-0.3,0.275]]"
 
       # // Trajectory
-
+      teb_autoresize: True
       dt_ref: 0.3
       dt_hysteresis: 0.1
       min_samples: 3
       max_samples: 20      
       global_plan_overwrite_orientation: true
-      allow_init_with_backwards_motion: true
+      allow_init_with_backwards_motion: true #(this is only recommended if the robot is equipped with rear sensors)
       global_plan_viapoint_sep: 1.0     
       # via_points_ordered: true
-      max_global_plan_lookahead_dist: 2.0      
+      max_global_plan_lookahead_dist: 1.0  
       # global_plan_prune_distance: 1.0
       # exact_arc_length: true
       feasibility_check_no_poses: 5
@@ -165,22 +170,22 @@ controller_server:
 
 
     # Robot
-      max_vel_x: 0.25
+      max_vel_x: 0.8
       max_vel_x_backwards: 0.125
       max_vel_theta: 0.125
-      acc_lim_x: 0.03
-      acc_lim_theta: 0.03
+      acc_lim_x: 0.5
+      acc_lim_theta: 0.5
       min_turning_radius: 0.0
       is_footprint_dynamic: true
 
     # GoalTolerance
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25  
+      xy_goal_tolerance: 0.3
+      yaw_goal_tolerance: 0.3
       free_goal_vel: false 
 
     # Obstacles
-      min_obstacle_dist: 0.15     
-      inflation_dist: 0.15
+      min_obstacle_dist: 0.1    
+      inflation_dist: 0.5
       dynamic_obstacle_inflation_dist: 0.6
       # include_dynamic_obstacles: true
       include_costmap_obstacles: true
@@ -199,7 +204,7 @@ controller_server:
       weight_acc_lim_x: 1.0
       weight_acc_lim_theta: 2.0
       weight_kinematics_nh: 2000.0
-      weight_kinematics_forward_drive: 0.0
+      weight_kinematics_forward_drive: 10000.0
       weight_obstacle: 1.0
       weight_inflation: 0.9
       # weight_dynamic_obstacle: 30.0
@@ -212,10 +217,10 @@ controller_server:
       enable_multithreading: false
       max_number_classes: 5
       selection_cost_hysteresis: 1.0
-      # selection_obst_cost_scale: 150.0
+      # selection_obst_cost_scale: 100.0
       selection_viapoint_cost_scale: 1.0
       roadmap_graph_no_samples: 15
-      roadmap_graph_area_width: 6.0 
+      roadmap_graph_area_width: 6.0
       roadmap_graph_area_length_scale: 1.0
       h_signature_prescaler: 0.6
       h_signature_threshold: 0.1
@@ -226,51 +231,6 @@ controller_server:
 costmap_converter:
   ros__parameters:
     use_sim_time: False
-
-
-
-    # DWB parameters
-    # FollowPath:
-    #   plugin: "dwb_core::DWBLocalPlanner"
-    #   debug_trajectory_details: True
-    #   min_vel_x: 0.0
-    #   min_vel_y: 0.0
-    #   max_vel_x: 0.26
-    #   max_vel_y: 0.0
-    #   max_vel_theta: 0.12
-    #   min_speed_xy: 0.0
-    #   max_speed_xy: 0.26
-    #   min_speed_theta: 0.0
-    #   # Add high threshold velocity for turtlebot 3 issue.
-    #   # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
-    #   acc_lim_x: 2.5
-    #   acc_lim_y: 0.0
-    #   acc_lim_theta: 3.2
-    #   decel_lim_x: -2.5
-    #   decel_lim_y: 0.0
-    #   decel_lim_theta: -3.2
-    #   vx_samples: 20
-    #   vy_samples: 5
-    #   vtheta_samples: 20
-    #   sim_time: 1.7
-    #   linear_granularity: 0.05
-    #   angular_granularity: 0.025
-    #   transform_tolerance: 1.2
-    #   xy_goal_tolerance: 0.25
-    #   trans_stopped_velocity: 0.25
-    #   short_circuit_trajectory_evaluation: True
-    #   stateful: True
-    #   critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
-    #   BaseObstacle.scale: 0.02
-    #   PathAlign.scale: 32.0
-    #   PathAlign.forward_point_distance: 0.1
-    #   GoalAlign.scale: 24.0
-    #   GoalAlign.forward_point_distance: 0.1
-    #   PathDist.scale: 32.0
-    #   GoalDist.scale: 24.0
-    #   RotateToGoal.scale: 32.0
-    #   RotateToGoal.slowing_factor: 5.0
-    #   RotateToGoal.lookahead_time: -1.0
 
 local_costmap:
   local_costmap:
@@ -290,7 +250,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.35
+        inflation_radius: 0.55
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -349,7 +309,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.35
+        inflation_radius: 0.55
       always_send_full_costmap: True
 
 map_server:
@@ -467,7 +427,7 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.25, 0.0, 0.125]
+    max_velocity: [1.0, 0.0, 0.125]
     min_velocity: [-0.125, 0.0, -0.125]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]

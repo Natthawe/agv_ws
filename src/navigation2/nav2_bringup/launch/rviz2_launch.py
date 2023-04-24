@@ -10,7 +10,7 @@ from launch import LaunchDescription
 def generate_launch_description():
  
    rviz_config_file = PathJoinSubstitution(
-           [FindPackageShare("nav2_bringup"), "rviz", "nav2.rviz"]
+           [FindPackageShare("nav2_bringup"), "rviz", "nav2_rplidar.rviz"]
    )
     
    return LaunchDescription([

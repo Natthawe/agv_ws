@@ -1,0 +1,6 @@
+scurve_twist:
+  ros__parameters:
+    frequency: 60.0
+    profile_step: 2.5
+    sprofile: 1000.0
+    use_sim_time: false
