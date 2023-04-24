@@ -62,17 +62,17 @@ class StaticFramePublisher(Node):
         # base_link_to_rslidar.transform.rotation.y = 0.0
         # base_link_to_rslidar.transform.rotation.z = 0.0     
 
-        base_link_to_omron = TransformStamped()
-        base_link_to_omron.header.frame_id = 'base_link'
-        base_link_to_omron.header.stamp = self.get_clock().now().to_msg()
-        base_link_to_omron.child_frame_id = 'omron'
-        base_link_to_omron.transform.translation.x = 0.3
-        base_link_to_omron.transform.translation.y = 0.0
-        base_link_to_omron.transform.translation.z = 0.215 #0.185
-        base_link_to_omron.transform.rotation.w = 0.976
-        base_link_to_omron.transform.rotation.x = 0.0
-        base_link_to_omron.transform.rotation.y = -0.216
-        base_link_to_omron.transform.rotation.z = 0.0 
+        # base_link_to_omron = TransformStamped()
+        # base_link_to_omron.header.frame_id = 'base_link'
+        # base_link_to_omron.header.stamp = self.get_clock().now().to_msg()
+        # base_link_to_omron.child_frame_id = 'omron'
+        # base_link_to_omron.transform.translation.x = 0.3
+        # base_link_to_omron.transform.translation.y = 0.0
+        # base_link_to_omron.transform.translation.z = 0.215 #0.185
+        # base_link_to_omron.transform.rotation.w = 0.976
+        # base_link_to_omron.transform.rotation.x = 0.0
+        # base_link_to_omron.transform.rotation.y = -0.22
+        # base_link_to_omron.transform.rotation.z = 0.0 
 
         base_link_to_laser = TransformStamped()
         base_link_to_laser.header.frame_id = 'base_link'
@@ -80,7 +80,7 @@ class StaticFramePublisher(Node):
         base_link_to_laser.child_frame_id = 'laser'
         base_link_to_laser.transform.translation.x = 0.3
         base_link_to_laser.transform.translation.y = 0.0
-        base_link_to_laser.transform.translation.z = 0.215
+        base_link_to_laser.transform.translation.z = 0.22
         base_link_to_laser.transform.rotation.w = 1.0
         base_link_to_laser.transform.rotation.x = 0.0
         base_link_to_laser.transform.rotation.y = 0.0
@@ -91,7 +91,7 @@ class StaticFramePublisher(Node):
             # base_footprint_to_base_link,
             base_link_to_bno055,
             # base_link_to_rslidar,
-            base_link_to_omron,
+            # base_link_to_omron,
             base_link_to_laser,
             
         )

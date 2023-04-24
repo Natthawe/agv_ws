@@ -10,6 +10,7 @@ options = {
   odom_frame = "odom",
   provide_odom_frame = false,
   publish_frame_projected_to_2d = true,
+  use_pose_extrapolator = false,
   use_odometry = false,
   use_nav_sat = false,
   use_landmarks = false,
@@ -37,6 +38,7 @@ TRAJECTORY_BUILDER_2D.missing_data_ray_length = 4.
 TRAJECTORY_BUILDER_2D.use_imu_data = false
 TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = true 
 TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = math.rad(0.1)
+-- TRAJECTORY_BUILDER_2D.num_accumulated_range_data = 10
 
 POSE_GRAPH.constraint_builder.min_score = 0.65
 POSE_GRAPH.constraint_builder.global_localization_min_score = 0.7

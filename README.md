@@ -125,3 +125,14 @@
     #KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="rplidar"
 
     ACTION=="add", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="/sbin/modprobe usbserial vendor=0x10c4 product=0xea60", MODE="0666", GROUP="dialout"    
+
+#### 50-stm32.rules
+    ACTION=="add", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", RUN+="/sbin/modprobe usbserial vendor=0x0483 product=0x374b", MODE="0666", GROUP="dialout"
+
+#### reload udev
+    udevadm control --reload-rules && udevadm trigger    
+
+
+wheelchair001@wheelchair001:~/ros2_bridge$ `ros2 launch rosbridge_server rosbridge_websocket_launch.xml`
+wheelchair001@wheelchair001:~/ros_web_interface$ `npm start`
+http://10.1.10.146:3000/
