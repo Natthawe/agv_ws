@@ -5,8 +5,8 @@ options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
   map_frame = "map",
-  tracking_frame = "odom",
-  published_frame = "base_link",
+  tracking_frame = "base_link",
+  published_frame = "odom",
   odom_frame = "odom",
   provide_odom_frame = false,
   publish_frame_projected_to_2d = true,
@@ -45,6 +45,9 @@ POSE_GRAPH.constraint_builder.global_localization_min_score = 0.7
 
 POSE_GRAPH.optimize_every_n_nodes = 1
 
+return options
+
+
 -- pure_localization
 -- POSE_GRAPH.optimize_every_n_nodes = 1
 -- MAP_BUILDER.num_background_threads = 8
@@ -67,5 +70,3 @@ POSE_GRAPH.optimize_every_n_nodes = 1
 -- TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.translation_delta_cost_weight = 10.0
 -- TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.rotation_delta_cost_weight = 1e-1
 -- POSE_GRAPH.optimization_problem.huber_scale = 1e2
-
-return options

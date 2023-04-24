@@ -1,0 +1,3 @@
+int32 device_id
+float64 velocity
+float64 maximum_torque

@@ -28,28 +28,6 @@ class AccelDecel(Node):
         self.sp.linear.x = round(self.sp.linear.x, 2)
         # self.get_logger().info(f"{self.sp.linear.x} SP")
 
-        # if self.sp.linear.x > 0.01 and self.sp.linear.x < 0.25:
-        #     self.sp.linear.x = 0.0
-        # elif self.sp.linear.x > 0.25 and self.sp.linear.x < 0.5:
-        #     self.sp.linear.x = 0.25
-        # elif self.sp.linear.x >= 0.5 and self.sp.linear.x < 0.75:
-        #     self.sp.linear.x = 0.5   
-        # elif self.sp.linear.x >= 0.75 and self.sp.linear.x < 1.0:
-        #     self.sp.linear.x = 0.75
-        # elif self.sp.linear.x > 1.0:
-        #     self.sp.linear.x = 1.0   
-        # elif self.sp.linear.x < -0.01 and self.sp.linear.x > -0.25:
-        #     self.sp.linear.x = 0.0
-        # elif self.sp.linear.x < -0.25 and self.sp.linear.x > -0.5:
-        #     self.sp.linear.x = -0.25    
-        # elif self.sp.linear.x < -0.5 and self.sp.linear.x > -0.75:
-        #     self.sp.linear.x = -0.5
-        # elif self.sp.linear.x < -0.75 and self.sp.linear.x > -1.0:
-        #     self.sp.linear.x = -0.75
-        # elif self.sp.linear.x < -1.0:
-        #     self.sp.linear.x = -1.0                                  
-        # self.publisher_.publish(self.sp)
-
         if self.sp.linear.x == 0.0 and abs(self.sp.linear.x - self.pv.linear.x) < 0.01:
             self.pv.linear.x = 0.0
 

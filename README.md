@@ -5,7 +5,11 @@
 4) Clone this project to your colcon workspace src folder.
 5) Run `rosdep install -r -y --from-path src`
 6) Build the package: `colcon build`
-7) if error Click [Dependencies](#Dependencies)
+7) Ff error Click [Dependencies](#Dependencies)
+8) In .bashrc file add command below file: 
+    `export ROS_DOMAIN_ID=102` 
+    `source /opt/ros/humble/setup.bash`
+    `export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`
 
 ## Running the Package
 
@@ -21,11 +25,13 @@
 - agv_bot_description
 - bno055
 - cartographer_ros
+- costmap_converter
 - csm
 - joy_tester
-- nav2_bringup
+- navigation2
 - odom_wheel
 - omron_b5l_a
+- omron_b5l_tof
 - pointcloud_to_laserscan
 - robot_localization
 - ros2_laser_scan_matcher
@@ -84,6 +90,7 @@
     sudo apt install libpcap-dev
     sudo apt install python3-pip
     pip install setuptools==58.2.0
+    sudo apt install ros-humble-rmw-cyclonedds-cpp
     
 
 # SLAM
