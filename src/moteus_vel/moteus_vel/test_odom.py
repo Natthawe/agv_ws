@@ -39,11 +39,11 @@ class MoteusControlNode(Node):
 
 
         # Parameters
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 1170.0).value)
+        self.ticks_meter = float(self.declare_parameter('ticks_meter', 39.5).value)
         self.base_width = float(self.declare_parameter('base_width', 0.65).value)  
         self.radius_of_wheels = float(self.declare_parameter('radius_of_wheels', 0.254/2).value) 
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
-        self.base_frame = self.declare_parameter('base_frame', 'base_link').value
+        self.base_frame = self.declare_parameter('base_frame', 'base_footprint').value
         self.encoder_min = self.declare_parameter('encoder_min', -2147483648).value
         self.encoder_max = self.declare_parameter('encoder_max', 2147483647).value
         self.encoder_low_wrap = self.declare_parameter('wheel_low_wrap', (
@@ -65,16 +65,16 @@ class MoteusControlNode(Node):
 
     def feedback_callback(self, msg):
         
-        enc_wheel_right_raw = msg.state[0].position
-        enc_wheel_left_raw = msg.state[1].position
+        enc_wheel_left_raw = msg.state[0].position
+        enc_wheel_right_raw = msg.state[1].position
         
         if enc_wheel_left_raw < self.encoder_low_wrap and self.prev_enc_left > self.encoder_high_wrap:
             self.enc_wheel_left_mult = self.enc_wheel_left_mult + 1
             
         if enc_wheel_left_raw > self.encoder_high_wrap and self.prev_enc_left < self.encoder_low_wrap:
-            self.enc_wheel_left_mult = self.enc_wheel_left_mult -1
+            self.enc_wheel_left_mult = self.enc_wheel_left_mult - 1
         
-        enc_wheel_left = -20.0 * (enc_wheel_left_raw + self.enc_wheel_left_mult * (self.encoder_max - self.encoder_min))
+        enc_wheel_left = -1.0 * (enc_wheel_left_raw + self.enc_wheel_left_mult * (self.encoder_max - self.encoder_min))
         self.prev_enc_left = enc_wheel_left_raw
         
         if enc_wheel_right_raw < self.encoder_low_wrap and self.prev_enc_right > self.encoder_high_wrap:
@@ -83,10 +83,10 @@ class MoteusControlNode(Node):
         if enc_wheel_right_raw > self.encoder_high_wrap and self.prev_enc_right < self.encoder_low_wrap:
             self.enc_wheel_right_mult = self.enc_wheel_right_mult - 1
             
-        enc_wheel_right = -20.0 * (enc_wheel_right_raw + self.enc_wheel_right_mult * (self.encoder_max - self.encoder_min))
+        enc_wheel_right = -1.0 * (enc_wheel_right_raw + self.enc_wheel_right_mult * (self.encoder_max - self.encoder_min))
         self.prev_enc_right = enc_wheel_right_raw
         
-        self.get_logger().info(f"{self.prev_enc_left, self.prev_enc_right}")
+        self.get_logger().info(f"{enc_wheel_right, enc_wheel_left}")
         
         
         # Calculate Time
