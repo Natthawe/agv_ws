@@ -6,7 +6,7 @@ amcl:
     alpha3: 0.2
     alpha4: 0.2
     alpha5: 0.2
-    base_frame_id: "base_link"
+    base_frame_id: "base_footprint"
     beam_skip_distance: 0.5
     beam_skip_error_threshold: 0.9
     beam_skip_threshold: 0.3
@@ -43,7 +43,7 @@ bt_navigator:
   ros__parameters:
     use_sim_time: False
     global_frame: map
-    robot_base_frame: base_link
+    robot_base_frame: base_footprint
     odom_topic: /odom
     transform_tolerance: 0.1
     bt_loop_duration: 10
@@ -278,7 +278,7 @@ local_costmap:
       update_frequency: 10.0
       publish_frequency: 10.0
       global_frame: odom
-      robot_base_frame: base_link
+      robot_base_frame: base_footprint
       use_sim_time: False
       rolling_window: true
       width: 3
@@ -322,7 +322,7 @@ global_costmap:
       update_frequency: 1.0
       publish_frequency: 1.0
       global_frame: map
-      robot_base_frame: base_link
+      robot_base_frame: base_footprint
       use_sim_time: False
       # robot_radius: 0.22
       footprint: "[[-0.3,-0.275], [0.3,-0.275], [0.3,0.275], [-0.3,0.275]]"

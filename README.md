@@ -18,7 +18,7 @@
 
 ##### Run Navigation2 : Terminal2
     
-    ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml>   
+    ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=~/agv_ws/src/nav2_bringup/maps/map_1.yaml 
 
 ## All Packages
 - accel_decel

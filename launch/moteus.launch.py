@@ -36,8 +36,8 @@ def generate_launch_description():
     launch_moteus_drive_pkg = os.path.join(launch_moteus_drive_dir, 'launch')
 
     # moteus_vel
-    moteus_vel_dir = get_package_share_directory('moteus_vel')
-    launch_moteus_vel_pkg = os.path.join(moteus_vel_dir, 'launch')
+    # moteus_vel_dir = get_package_share_directory('moteus_vel')
+    # launch_moteus_vel_pkg = os.path.join(moteus_vel_dir, 'launch')
 
     # joy_tester
     joy_tester_dir = get_package_share_directory('joy_tester')
@@ -83,9 +83,9 @@ def generate_launch_description():
         ),
 
     # moteus_vel        
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(launch_moteus_vel_pkg, 'moteus_vel_node.launch.py'))
-        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(os.path.join(launch_moteus_vel_pkg, 'moteus_vel_node.launch.py'))
+        # ),
 
     # joy_tester
         IncludeLaunchDescription(
