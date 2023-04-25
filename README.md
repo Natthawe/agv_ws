@@ -136,3 +136,5 @@
 wheelchair001@wheelchair001:~/ros2_bridge$ `ros2 launch rosbridge_server rosbridge_websocket_launch.xml`
 wheelchair001@wheelchair001:~/ros_web_interface$ `npm start`
 http://10.1.10.146:3000/
+
+python3 -m moteus_gui.tview --device=1,2
