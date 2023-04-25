@@ -64,7 +64,7 @@ class MoteusControlNode(Node):
         self.pub_odom_wheel = self.create_publisher(Odometry, "odometry/wheel", 10)
 
         # TF BroadCaster
-        self.odom_broadcaster = TransformBroadcaster(self)
+        # self.odom_broadcaster = TransformBroadcaster(self)
 
         # RATE TIMER HZ
         self.rate = self.declare_parameter("rate", 100.0).value
@@ -137,13 +137,8 @@ class MoteusControlNode(Node):
         self.prev_enc_right = self.enc_wheel_right_raw
         # self.get_logger().info(f"{enc_wheel_left , enc_wheel_right}")
         
-        return self.enc_wheel_left, self.enc_wheel_right          
+        # return self.enc_wheel_left, self.enc_wheel_right       
         
-
-    def update(self, msg):
-        
-        self.enc_wheel_left, self.enc_wheel_right = self.callback_feedback(msg)
-        # Calculate Time
         now = self.get_clock().now()
         elapsed = now - self.then
         self.then = now
@@ -153,14 +148,23 @@ class MoteusControlNode(Node):
         distance_wheel_left = (self.enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
         distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter        
 
+        # self.get_logger().info(f"{distance_wheel_left , distance_wheel_right}")
+
+
         # Distance traveled is the average of the two wheels 
         dist = (distance_wheel_left + distance_wheel_right) / 2
+        # self.get_logger().info(f"{dist}")
+        
 
         # This approximation works (in radians) for small angles
         th = (distance_wheel_left - distance_wheel_right) / self.base_width
+        # self.get_logger().info(f"{th}")
+        
 
         self.dx = dist / elapsed
         self.dr = th / elapsed
+        # self.get_logger().info(f"{self.dx , self.dr}")
+        
 
         if dist != 0:
             # Calculate Distance Traveled in x and y
@@ -178,6 +182,8 @@ class MoteusControlNode(Node):
         quaternion.y = 0.0
         quaternion.z = sin(self.th / 2)
         quaternion.w = cos(self.th / 2)
+        # self.get_logger().info(f"{quaternion.z , quaternion.w}")
+        
 
         transform_stamped_msg = TransformStamped()
         transform_stamped_msg.header.stamp = now.to_msg()
@@ -190,6 +196,9 @@ class MoteusControlNode(Node):
         transform_stamped_msg.transform.rotation.x = quaternion.x
         transform_stamped_msg.transform.rotation.y = quaternion.y
         transform_stamped_msg.transform.rotation.z = quaternion.z
+
+        # self.get_logger().info(f"{transform_stamped_msg.transform.translation.x , transform_stamped_msg.transform.translation.y}")
+
 
         # self.odom_broadcaster.sendTransform(transform_stamped_msg)
 
@@ -207,7 +216,14 @@ class MoteusControlNode(Node):
         self.pub_odom_wheel.publish(odom)
 
         self.enc_wheel_left_pv = self.enc_wheel_left
-        self.enc_wheel_right_pv = self.enc_wheel_right        
+        self.enc_wheel_right_pv = self.enc_wheel_right     
+        
+
+    def update(self):
+        
+        # self.enc_wheel_left, self.enc_wheel_right = self.callback_feedback(msg)
+        # Calculate Time
+        pass
 
 def main():
     rclpy.init()
