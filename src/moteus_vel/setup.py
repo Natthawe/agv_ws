@@ -25,8 +25,8 @@ setup(
     entry_points={
         'console_scripts': [
             "moteus_control_node = moteus_vel.moteus_control_node:main",
-            "moteus_control_old = moteus_vel.moteus_control_node_old2:main",
-            "test_odom = moteus_vel.test_odom:main"
+            "test_odom = moteus_vel.test_odom:main",
+            "test2_node = moteus_vel.test2_node:main"
 
         ],
     },

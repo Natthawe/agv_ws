@@ -36,10 +36,12 @@ class MoteusControlNode(Node):
         self.prev_enc_left = 0
         self.prev_enc_right = 0
         self.ns_to_sec = 1.0e-9
+        self.wheel_diameter = 0.127 # in meters
+        self.gear_ratio = 30.0        
 
 
         # Parameters
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 39.5).value)
+        self.ticks_meter = float(self.declare_parameter('ticks_meter', 39.5).value) #2*pi*0.127*39.5*30 = 945.587972804
         self.base_width = float(self.declare_parameter('base_width', 0.65).value)  
         self.radius_of_wheels = float(self.declare_parameter('radius_of_wheels', 0.254/2).value) 
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
@@ -74,7 +76,7 @@ class MoteusControlNode(Node):
         if enc_wheel_left_raw > self.encoder_high_wrap and self.prev_enc_left < self.encoder_low_wrap:
             self.enc_wheel_left_mult = self.enc_wheel_left_mult - 1
         
-        enc_wheel_left = -1.0 * (enc_wheel_left_raw + self.enc_wheel_left_mult * (self.encoder_max - self.encoder_min))
+        enc_wheel_left = -1.145 * (enc_wheel_left_raw + self.enc_wheel_left_mult * (self.encoder_max - self.encoder_min))
         self.prev_enc_left = enc_wheel_left_raw
         
         if enc_wheel_right_raw < self.encoder_low_wrap and self.prev_enc_right > self.encoder_high_wrap:
@@ -83,7 +85,7 @@ class MoteusControlNode(Node):
         if enc_wheel_right_raw > self.encoder_high_wrap and self.prev_enc_right < self.encoder_low_wrap:
             self.enc_wheel_right_mult = self.enc_wheel_right_mult - 1
             
-        enc_wheel_right = -1.0 * (enc_wheel_right_raw + self.enc_wheel_right_mult * (self.encoder_max - self.encoder_min))
+        enc_wheel_right = -1.145 * (enc_wheel_right_raw + self.enc_wheel_right_mult * (self.encoder_max - self.encoder_min))
         self.prev_enc_right = enc_wheel_right_raw
         
         self.get_logger().info(f"{enc_wheel_right, enc_wheel_left}")
@@ -98,7 +100,7 @@ class MoteusControlNode(Node):
         # Calculate Odometry
         distance_wheel_left = (enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
         distance_wheel_right = (enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter        
-
+        
         # Distance traveled is the average of the two wheels 
         dist = (distance_wheel_left + distance_wheel_right) / 2
 
@@ -155,17 +157,6 @@ class MoteusControlNode(Node):
         self.enc_wheel_left_pv = enc_wheel_left
         self.enc_wheel_right_pv = enc_wheel_right  
         
-        # odometry_msg = Odometry()
-        # odometry_msg.header.stamp = now.to_msg()
-        # odometry_msg.header.frame_id = self.odom_frame
-        # odometry_msg.child_frame_id = self.base_frame  
-        # odometry_msg.pose.pose.position.x = msg.state[1].position
-        # odometry_msg.pose.pose.position.z = 0.0
-        # odometry_msg.twist.twist.linear.x = msg.state[1].velocity
-        # odometry_msg.twist.twist.linear.y = 0.0
-        
-        # Publish the odometry message
-        # self.pub_odom_wheel.publish(odometry_msg)
 
     def cmd_vel_callback(self, twist):
 
