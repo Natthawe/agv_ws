@@ -71,7 +71,7 @@ class MoteusControlNode(Node):
         self.create_timer(1.0/self.rate, self.update)  
         
         # subscribe to cmd_vel
-        self.create_subscription(Twist, 'cmd_vel_accel_decel', self.cmd_vel_callback, 1)  #scurve_cmd_vel
+        self.create_subscription(Twist, 'cmd_vel', self.cmd_vel_callback, 1)  #scurve_cmd_vel #cmd_vel_accel_decel
         
         # subscribe to moteusStates
         self.create_subscription(MoteusStateStamped, 'moteus_feedback', self.callback_feedback, 1)   
@@ -114,39 +114,44 @@ class MoteusControlNode(Node):
         # send commands
         # self.get_logger().info(f"{self.recv_feedback[2]}")
         # # self.get_logger().info(f"{idx}")
-        self.enc_wheel_left_raw = self.recv_feedback[1]["position"]
-        self.enc_wheel_right_raw = self.recv_feedback[2]["position"]
-        # self.get_logger().info(f"{self.enc_wheel_left_raw , enc_wheel_right_raw}")
+        enc_wheel_left_raw = self.recv_feedback[1]["position"]
+        enc_wheel_right = self.recv_feedback[2]["position"]
+        # self.get_logger().info(f"{enc_wheel_left_raw , enc_wheel_right_raw}")
         
-        if self.enc_wheel_left_raw < self.encoder_low_wrap and self.prev_enc_left > self.encoder_high_wrap:
+        if enc_wheel_left_raw < self.encoder_low_wrap and self.prev_enc_left > self.encoder_high_wrap:
             self.enc_wheel_left_mult = self.enc_wheel_left_mult + 1
             
-        if self.enc_wheel_left_raw > self.encoder_high_wrap and self.prev_enc_left < self.encoder_low_wrap:
+        if enc_wheel_left_raw > self.encoder_high_wrap and self.prev_enc_left < self.encoder_low_wrap:
             self.enc_wheel_left_mult = self.enc_wheel_left_mult - 1
             
-        self.enc_wheel_left = 1.0 * (self.enc_wheel_left_raw + self.enc_wheel_left_mult * (self.encoder_max - self.encoder_min))
-        self.prev_enc_left = self.enc_wheel_left_raw
+        enc_wheel_left = 1.0 * (enc_wheel_left_raw + self.enc_wheel_left_mult * (self.encoder_max - self.encoder_min))
+        self.prev_enc_left = enc_wheel_left_raw
         
-        if self.enc_wheel_right_raw < self.encoder_low_wrap and self.prev_enc_right > self.encoder_high_wrap:
+        if enc_wheel_right < self.encoder_low_wrap and self.prev_enc_right > self.encoder_high_wrap:
             self.enc_wheel_right_mult = self.enc_wheel_right_mult + 1
             
-        if self.enc_wheel_right_raw > self.encoder_high_wrap and self.prev_enc_right < self.encoder_low_wrap:
+        if enc_wheel_right > self.encoder_high_wrap and self.prev_enc_right < self.encoder_low_wrap:
             self.enc_wheel_right_mult = self.enc_wheel_right_mult - 1
             
-        self.enc_wheel_right = 1.0 * (self.enc_wheel_right_raw + self.enc_wheel_right_mult * (self.encoder_max - self.encoder_min))
-        self.prev_enc_right = self.enc_wheel_right_raw
+        enc_wheel_right = 1.0 * (enc_wheel_right + self.enc_wheel_right_mult * (self.encoder_max - self.encoder_min))
+        self.prev_enc_right = enc_wheel_right
         # self.get_logger().info(f"{enc_wheel_left , enc_wheel_right}")
         
-        # return self.enc_wheel_left, self.enc_wheel_right       
+        return enc_wheel_left, enc_wheel_right            
         
+
+    def update(self):
+        
+        enc_wheel_left, enc_wheel_right = self.callback_feedback()
+        # Calculate Time
         now = self.get_clock().now()
         elapsed = now - self.then
         self.then = now
         elapsed = elapsed.nanoseconds / self.ns_to_sec
 
         # Calculate Odometry
-        distance_wheel_left = (self.enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
-        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter        
+        distance_wheel_left = (enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
+        distance_wheel_right = (enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter        
 
         # self.get_logger().info(f"{distance_wheel_left , distance_wheel_right}")
 
@@ -216,15 +221,8 @@ class MoteusControlNode(Node):
         self.pub_odom_wheel.publish(odom)
 
         self.enc_wheel_left_pv = self.enc_wheel_left
-        self.enc_wheel_right_pv = self.enc_wheel_right     
+        self.enc_wheel_right_pv = self.enc_wheel_right
         
-
-    def update(self):
-        
-        # self.enc_wheel_left, self.enc_wheel_right = self.callback_feedback(msg)
-        # Calculate Time
-        pass
-
 def main():
     rclpy.init()
     moteus_control = MoteusControlNode()
