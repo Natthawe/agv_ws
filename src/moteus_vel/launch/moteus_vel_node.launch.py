@@ -6,7 +6,7 @@ def generate_launch_description():
         
     node=Node(
         package = 'moteus_vel',
-        executable = 'moteus_control_node'
+        executable = 'test_odom'
     )
     ld.add_action(node)
     return ld

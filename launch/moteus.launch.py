@@ -40,8 +40,8 @@ def generate_launch_description():
     launch_moteus_vel_pkg = os.path.join(moteus_vel_dir, 'launch')
 
     # joy_tester
-    joy_tester_dir = get_package_share_directory('joy_tester')
-    launch_joy_tester_pkg = os.path.join(joy_tester_dir, 'launch')
+    # joy_tester_dir = get_package_share_directory('joy_tester')
+    # launch_joy_tester_pkg = os.path.join(joy_tester_dir, 'launch')
 
     # accel_decel
     accel_decel_dir = get_package_share_directory('accel_decel')
@@ -88,9 +88,9 @@ def generate_launch_description():
         ),
 
     # joy_tester
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(launch_joy_tester_pkg, 'joy_stick.launch.py'))
-        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(os.path.join(launch_joy_tester_pkg, 'joy_stick.launch.py'))
+        # ),
 
     # accel_decel        
         IncludeLaunchDescription(

@@ -45,7 +45,7 @@ class MoteusControlNode(Node):
         self.base_width = float(self.declare_parameter('base_width', 0.65).value)  
         self.radius_of_wheels = float(self.declare_parameter('radius_of_wheels', 0.254/2).value) 
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
-        self.base_frame = self.declare_parameter('base_frame', 'base_footprint').value
+        self.base_frame = self.declare_parameter('base_frame', 'base_link').value
         self.encoder_min = self.declare_parameter('encoder_min', -2147483648).value
         self.encoder_max = self.declare_parameter('encoder_max', 2147483647).value
         self.encoder_low_wrap = self.declare_parameter('wheel_low_wrap', (
@@ -62,7 +62,7 @@ class MoteusControlNode(Node):
         self.create_subscription(Twist, 'cmd_vel_accel_decel', self.cmd_vel_callback, 1)  #scurve_cmd_vel
         
         # TF BroadCaster
-        # self.odom_broadcaster = TransformBroadcaster(self)        
+        self.odom_broadcaster = TransformBroadcaster(self)        
         
 
     def feedback_callback(self, msg):
@@ -139,7 +139,7 @@ class MoteusControlNode(Node):
         transform_stamped_msg.transform.rotation.y = quaternion.y
         transform_stamped_msg.transform.rotation.z = quaternion.z
 
-        # self.odom_broadcaster.sendTransform(transform_stamped_msg)
+        self.odom_broadcaster.sendTransform(transform_stamped_msg)
 
         odom = Odometry()
         odom.header.stamp = now.to_msg()
