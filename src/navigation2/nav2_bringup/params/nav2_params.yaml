@@ -14,7 +14,7 @@ amcl:
     global_frame_id: "map"
     lambda_short: 0.1
     laser_likelihood_max_dist: 2.0
-    laser_max_range: 4.0
+    laser_max_range: 25.0
     laser_min_range: -1.0
     laser_model_type: "likelihood_field"
     max_beams: 60
@@ -141,8 +141,8 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.3
-      yaw_goal_tolerance: 0.3
+      xy_goal_tolerance: 0.25
+      yaw_goal_tolerance: 0.5
 
     # TEB parameters
     FollowPath:
@@ -184,8 +184,8 @@ controller_server:
       free_goal_vel: false 
 
     # Obstacles
-      min_obstacle_dist: 0.1    
-      inflation_dist: 0.5
+      min_obstacle_dist: 0.3    
+      inflation_dist: 0.7
       dynamic_obstacle_inflation_dist: 0.6
       # include_dynamic_obstacles: true
       include_costmap_obstacles: true
@@ -241,8 +241,8 @@ local_costmap:
       robot_base_frame: base_link
       use_sim_time: False
       rolling_window: true
-      width: 3
-      height: 3
+      width: 5
+      height: 5
       resolution: 0.05
       # robot_radius: 0.22
       footprint: "[[-0.3,-0.275], [0.3,-0.275], [0.3,0.275], [-0.3,0.275]]"
