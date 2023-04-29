@@ -149,7 +149,7 @@ controller_server:
       plugin: "teb_local_planner::TebLocalPlannerROS"
       footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
         type: "polygon"
-        vertices: "[[-0.495,-0.34], [0.495,-0.34], [0.495,0.34], [-0.495,0.34]]"
+        vertices: "[[-0.127,-0.34], [0.863,-0.34], [0.863,0.34], [-0.127,0.34]]"
 
       # // Trajectory
       teb_autoresize: True
@@ -170,7 +170,7 @@ controller_server:
 
 
     # Robot
-      max_vel_x: 0.8
+      max_vel_x: 0.5
       max_vel_x_backwards: 0.125
       max_vel_theta: 0.125
       acc_lim_x: 0.5
@@ -204,7 +204,7 @@ controller_server:
       weight_acc_lim_x: 1.0
       weight_acc_lim_theta: 2.0
       weight_kinematics_nh: 2000.0
-      weight_kinematics_forward_drive: 10000.0
+      weight_kinematics_forward_drive: 1.0
       weight_obstacle: 1.0
       weight_inflation: 0.9
       # weight_dynamic_obstacle: 30.0
@@ -245,7 +245,7 @@ local_costmap:
       height: 3
       resolution: 0.05
       # robot_radius: 0.22
-      footprint: "[[-0.495,-0.34], [0.495,-0.34], [0.495,0.34], [-0.495,0.34]]"
+      footprint: "[[-0.127,-0.34], [0.863,-0.34], [0.863,0.34], [-0.127,0.34]]"
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
@@ -285,7 +285,7 @@ global_costmap:
       robot_base_frame: base_link
       use_sim_time: False
       # robot_radius: 0.22
-      footprint: "[[-0.495,-0.34], [0.495,-0.34], [0.495,0.34], [-0.495,0.34]]"
+      footprint: "[[-0.127,-0.34], [0.863,-0.34], [0.863,0.34], [-0.127,0.34]]"
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
