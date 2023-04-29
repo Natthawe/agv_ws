@@ -133,10 +133,10 @@
     udevadm control --reload-rules && udevadm trigger    
 
 
-wheelchair001@wheelchair001:~/ros2_bridge$ `ros2 launch rosbridge_server rosbridge_websocket_launch.xml`
-wheelchair001@wheelchair001:~/ros_web_interface$ `npm start`
+wheelchair001@wheelchair001:~/ros2_bridge$  `ros2 launch rosbridge_server rosbridge_websocket_launch.xml`
+wheelchair001@wheelchair001:~/ros_web_interface$  `npm start`
 http://10.1.10.146:3000/
 
 # Using tf2_echo
-#### tf2_echo reports the transform between any two frames broadcasted over ROS.
+#### `tf2_echo` reports the transform between any two frames broadcasted over ROS.
     ros2 run tf2_ros tf2_echo base_link laser
