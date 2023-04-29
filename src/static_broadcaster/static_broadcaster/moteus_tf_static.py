@@ -26,17 +26,17 @@ class StaticFramePublisher(Node):
         map_to_odom.transform.rotation.y = 0.0
         map_to_odom.transform.rotation.z = 0.0      
 
-        base_footprint_to_base_link = TransformStamped()
-        base_footprint_to_base_link.header.frame_id = 'base_link'
-        base_footprint_to_base_link.header.stamp = self.get_clock().now().to_msg()
-        base_footprint_to_base_link.child_frame_id = 'base_footprint'
-        base_footprint_to_base_link.transform.translation.x = 0.0
-        base_footprint_to_base_link.transform.translation.y = 0.0
-        base_footprint_to_base_link.transform.translation.z = -0.15 #0.125
-        base_footprint_to_base_link.transform.rotation.w = 1.0
-        base_footprint_to_base_link.transform.rotation.x = 0.0
-        base_footprint_to_base_link.transform.rotation.y = 0.0
-        base_footprint_to_base_link.transform.rotation.z = 0.0
+        # base_footprint_to_base_link = TransformStamped()
+        # base_footprint_to_base_link.header.frame_id = 'base_link'
+        # base_footprint_to_base_link.header.stamp = self.get_clock().now().to_msg()
+        # base_footprint_to_base_link.child_frame_id = 'base_footprint'
+        # base_footprint_to_base_link.transform.translation.x = 0.0
+        # base_footprint_to_base_link.transform.translation.y = 0.0
+        # base_footprint_to_base_link.transform.translation.z = -0.15 #0.125
+        # base_footprint_to_base_link.transform.rotation.w = 1.0
+        # base_footprint_to_base_link.transform.rotation.x = 0.0
+        # base_footprint_to_base_link.transform.rotation.y = 0.0
+        # base_footprint_to_base_link.transform.rotation.z = 0.0
 
         base_link_to_bno055 = TransformStamped()
         base_link_to_bno055.header.frame_id = 'base_link'
@@ -53,7 +53,7 @@ class StaticFramePublisher(Node):
         base_link_to_laser = TransformStamped()
         base_link_to_laser.header.frame_id = 'base_link'
         base_link_to_laser.header.stamp = self.get_clock().now().to_msg()
-        base_link_to_laser.child_frame_id = 'laser_link'
+        base_link_to_laser.child_frame_id = 'laser'
         base_link_to_laser.transform.translation.x = 0.0
         base_link_to_laser.transform.translation.y = 0.0
         base_link_to_laser.transform.translation.z = 0.29
@@ -64,7 +64,7 @@ class StaticFramePublisher(Node):
 
         return(
             map_to_odom,
-            base_footprint_to_base_link,
+            # base_footprint_to_base_link,
             base_link_to_bno055,
             base_link_to_laser,
         )
