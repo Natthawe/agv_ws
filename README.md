@@ -107,7 +107,9 @@
 #### 50-bno055.rules
     #KERNEL=="ttyUSB*", KERNELS=="1-6.1", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666", SYMLINK+="bno055"
 
-    ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", RUN+="/sbin/modprobe usbserial vendor=0x0403 product=0x6001", MODE="0666", GROUP="dialout"
+    #ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", RUN+="/sbin/modprobe usbserial vendor=0x0403 product=0x6001", MODE="0666", GROUP="dialout"
+
+    SUBSYSTEM=="tty", ATTRS{manufacturer}=="FTDI", ATTRS{product}=="FT232R USB UART", MODE="0666", SYMLINK+="FT232R USB UART"
 
 #### 50-omron.rules
     #SUBSYSTEMS=="tty", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", GROUP="dialout", MODE="0666"
@@ -124,13 +126,18 @@
 #### 50-rplidar.rules
     #KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="rplidar"
 
-    ACTION=="add", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="/sbin/modprobe usbserial vendor=0x10c4 product=0xea60", MODE="0666", GROUP="dialout"    
+    #ACTION=="add", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="/sbin/modprobe usbserial vendor=0x10c4 product=0xea60", MODE="0666", GROUP="dialout"    
+
+    SUBSYSTEM=="tty", ATTRS{manufacturer}=="Silicon Labs", ATTRS{product}=="CP2102 USB to UART Bridge Controller", MODE="0666", SYMLINK+="CP2102"
 
 #### 50-stm32.rules
     ACTION=="add", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", RUN+="/sbin/modprobe usbserial vendor=0x0483 product=0x374b", MODE="0666", GROUP="dialout"
 
 #### reload udev
-    udevadm control --reload-rules && udevadm trigger    
+    udevadm info -a -p $(udevadm info -q path -n /dev/ttyUSB1)
+    #udevadm control --reload-rules && udevadm trigger   
+    sudo udevadm control --reload-rules 
+    sudo udevadm trigger --subsystem-match=tty
 
 
 wheelchair001@wheelchair001:~/ros2_bridge$ `ros2 launch rosbridge_server rosbridge_websocket_launch.xml`
