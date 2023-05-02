@@ -8,7 +8,7 @@ amcl: #ระบุตำแหน่งของหุ่นยนต์ใน�
     alpha5: 0.2 # alpha5: เป็นค่าพารามิเตอร์ที่ใช้ปรับความไม่แน่นอนเกี่ยวกับการวัดระยะห่างด้วยเซ็นเซอร์ ค่านี้มีผลต่อการทำนายตำแหน่งในแกนการหมุนของหุ่นยนต์ 
     base_frame_id: "base_link"  # ระบุชื่อของ frame หรือ coordinate system ที่ใช้เป็นตัวอ้างอิงในการติดตามตำแหน่งของหุ่นยนต์ ซึ่งในที่นี้คือ "base_link" 
     beam_skip_distance: 0.2  # เป็นระยะห่างระหว่างการส่ง beam ที่ใช้ในการสแกนแผนที่ หากหุ่นยนต์เคลื่อนที่เป็นระยะทางน้อยกว่า beam_skip_distance และยังไม่มีอุปสรรคของสิ่งกีดขวางในเส้นทางหุ่นยนต์จะไม่สแกนแผนที่ แต่จะเคลื่อนไปต่อไปโดยไม่ต้องทำการสแกน
-    beam_skip_error_threshold: 0.9e6 d4sxzx  # เป็นค่าที่ใช้ในการกำหนด threshold ของความคลาดเคลื่อนที่สามารถยอมรับได้ในการทำนายตำแหน่งของหุ่นยนต์ หากความคลาดเคลื่อนของการทำนายตำแหน่งของหุ่นยนต์มีค่าต่ำกว่า beam_skip_error_threshold หุ่นยนต์จะทำการสแกนแผนที่
+    beam_skip_error_threshold: 0.9  # เป็นค่าที่ใช้ในการกำหนด threshold ของความคลาดเคลื่อนที่สามารถยอมรับได้ในการทำนายตำแหน่งของหุ่นยนต์ หากความคลาดเคลื่อนของการทำนายตำแหน่งของหุ่นยนต์มีค่าต่ำกว่า beam_skip_error_threshold หุ่นยนต์จะทำการสแกนแผนที่
     beam_skip_threshold: 0.3  # เป็นค่า threshold ที่ใช้ในการกำหนดความแม่นยำของการสแกนแผนที่ หากค่าความแม่นยำของการสแกนแผนที่มีค่ามากกว่า beam_skip_threshold หุ่นยนต์จะทำการสแกนแผนที่
     do_beamskip: false # เป็นค่า boolean ที่ใช้กำหนดว่าหุ่นยนต์จะใช้ beamskip หรือไม่ หากเป็นค่า true หุ่นยนต์จะใช้ beamskip เพื่อลดความซับซ้อนในการสแกนแผนที่ แต่หากเป็นค่า false หุ่นยนต์จะสแกนแผนที่ทุกจุดที่เดินทางผ่าน
     global_frame_id: "map"  # เป็นชื่อของ global frame หรือ coordinate system ที่ใช้เป็นตัวอ้างอิงในการกำหนดตำแหน่งของหุ่นยนต์บนแผนที่ ซึ่งในที่นี้คือ "map"
@@ -175,19 +175,19 @@ controller_server:
       acc_lim_x: 0.5
       acc_lim_theta: 0.5
       is_footprint_dynamic: True
-      min_turning_radius: 0.4 #รัศมีวงเลี้ยวต่ำสุดของหุ่นยนต์คาร์ไลค์ (ตั้งค่าเป็นศูนย์สำหรับหุ่นยนต์ดิฟไดรฟ์)
+      min_turning_radius: 0.33 #รัศมีวงเลี้ยวต่ำสุดของหุ่นยนต์คาร์ไลค์ (ตั้งค่าเป็นศูนย์สำหรับหุ่นยนต์ดิฟไดรฟ์)
       wheelbase: 0.76 #ระยะห่างระหว่างเพลาล้อหลังกับเพลาหน้า
       cmd_angle_instead_rotvel: False
 
     # GoalTolerance
-      xy_goal_tolerance: 0.3
-      yaw_goal_tolerance: 0.3
+      xy_goal_tolerance: 0.2
+      yaw_goal_tolerance: 0.25
       free_goal_vel: false 
 
     # Obstacles
-      min_obstacle_dist: 0.5    
-      inflation_dist: 0.7
-      dynamic_obstacle_inflation_dist: 0.8
+      min_obstacle_dist: 0.3    
+      inflation_dist: 0.55
+      dynamic_obstacle_inflation_dist: 0.55
       # include_dynamic_obstacles: true
       include_costmap_obstacles: true
       costmap_obstacles_behind_robot_dist: 2.0
@@ -205,10 +205,10 @@ controller_server:
       weight_acc_lim_x: 1.0
       weight_acc_lim_theta: 2.0
       weight_kinematics_nh: 2000.0
-      weight_kinematics_forward_drive: 1.0
-      weight_obstacle: 30.0
+      weight_kinematics_forward_drive: 10000.0
+      weight_obstacle: 5.0
       weight_inflation: 1.0
-      weight_dynamic_obstacle: 30.0
+      weight_dynamic_obstacle: .0
       weight_dynamic_obstacle_inflation: 1.0
       weight_viapoint: 10.0
       penalty_epsilon: 0.02
@@ -236,8 +236,8 @@ costmap_converter:
 local_costmap:
   local_costmap:
     ros__parameters:
-      update_frequency: 10.0
-      publish_frequency: 10.0
+      update_frequency: 20.0
+      publish_frequency: 20.0
       global_frame: odom
       robot_base_frame: base_link
       use_sim_time: False
@@ -250,7 +250,7 @@ local_costmap:
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
+        cost_scaling_factor: 1.0
         inflation_radius: 0.55
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
@@ -309,7 +309,7 @@ global_costmap:
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
+        cost_scaling_factor: 1.0
         inflation_radius: 0.55
       always_send_full_costmap: True
 
@@ -347,7 +347,7 @@ planner_server:
       angle_quantization_bins: 64         # For Hybrid nodes: Number of angle bins for search, must be 1 for 2D node (no angle search)
       analytic_expansion_ratio: 3.5       # For Hybrid/Lattice nodes: The ratio to attempt analytic expansions during search for final approach.
       analytic_expansion_max_length: 3.0    # For Hybrid/Lattice nodes: The maximum length of the analytic expansion to be considered valid to prevent unsafe shortcutting (in meters). This should be scaled with minimum turning radius and be no less than 4-5x the minimum radius
-      minimum_turning_radius: 0.4        # For Hybrid/Lattice nodes: minimum turning radius in m of path / vehicle
+      minimum_turning_radius: 0.33        # For Hybrid/Lattice nodes: minimum turning radius in m of path / vehicle
       reverse_penalty: 2.1 #2.1                # For Reeds-Shepp model: penalty to apply if motion is reversing, must be => 1
       change_penalty: 0.0                 # For Hybrid nodes: penalty to apply if motion is changing directions, must be >= 0
       non_straight_penalty: 1.20          # For Hybrid nodes: penalty to apply if motion is non-straight, must be => 1
@@ -360,7 +360,7 @@ planner_server:
         max_iterations: 1000
         w_smooth: 0.3
         w_data: 0.2
-        tolerance: 0.0000000001
+        tolerance: 1.0e-10
         do_refinement: true               # Whether to recursively run the smoother 3 times on the results from prior runs to refine the results further
 
 # planner_server:
@@ -463,8 +463,8 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [1.0, 0.0, 0.125]
-    min_velocity: [-1.0, 0.0, -0.125]
+    max_velocity: [1.0, 0.0, 1.0]  #[x, y, theta]
+    min_velocity: [-1.0, 0.0, -1.0]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
     odom_topic: "odom"
