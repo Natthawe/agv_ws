@@ -208,7 +208,7 @@ controller_server:
       weight_kinematics_forward_drive: 10000.0
       weight_obstacle: 5.0
       weight_inflation: 1.0
-      weight_dynamic_obstacle: .0
+      weight_dynamic_obstacle: 1.0
       weight_dynamic_obstacle_inflation: 1.0
       weight_viapoint: 10.0
       penalty_epsilon: 0.02
