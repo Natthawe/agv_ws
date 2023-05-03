@@ -120,8 +120,8 @@ def main():
   goal_pose.pose.position.z = 0.0
   goal_pose.pose.orientation.x = 0.0
   goal_pose.pose.orientation.y = 0.0
-  goal_pose.pose.orientation.z = 0.0
-  goal_pose.pose.orientation.w = 1.0
+  goal_pose.pose.orientation.z = -1.0
+  goal_pose.pose.orientation.w = 0.0
   goal_poses.append(goal_pose)
 
 
