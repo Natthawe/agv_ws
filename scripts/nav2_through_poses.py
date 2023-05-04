@@ -38,7 +38,7 @@ def main():
   goal_pose.header.frame_id = 'map'
   goal_pose.header.stamp = navigator.get_clock().now().to_msg()
   goal_pose.pose.position.x = 12.0
-  goal_pose.pose.position.y = -1.0
+  goal_pose.pose.position.y = -1.4
   goal_pose.pose.position.z = 0.0
   goal_pose.pose.orientation.x = 0.0
   goal_pose.pose.orientation.y = 0.0
@@ -50,8 +50,8 @@ def main():
   goal_pose = PoseStamped()
   goal_pose.header.frame_id = 'map'
   goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-  goal_pose.pose.position.x = 12.0
-  goal_pose.pose.position.y = 1.0
+  goal_pose.pose.position.x = 12.5
+  goal_pose.pose.position.y = -0.9
   goal_pose.pose.position.z = 0.0
   goal_pose.pose.orientation.x = 0.0
   goal_pose.pose.orientation.y = 0.0
@@ -63,8 +63,8 @@ def main():
   goal_pose = PoseStamped()
   goal_pose.header.frame_id = 'map'
   goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-  goal_pose.pose.position.x = 2.0
-  goal_pose.pose.position.y = 1.2
+  goal_pose.pose.position.x = 12.5
+  goal_pose.pose.position.y = 0.5
   goal_pose.pose.position.z = 0.0
   goal_pose.pose.orientation.x = 0.0
   goal_pose.pose.orientation.y = -0.707
@@ -76,34 +76,34 @@ def main():
   goal_pose = PoseStamped()
   goal_pose.header.frame_id = 'map'
   goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-  goal_pose.pose.position.x = 2.0
-  goal_pose.pose.position.y = -1.0
-  goal_pose.pose.position.z = 0.0
-  goal_pose.pose.orientation.x = 0.0
-  goal_pose.pose.orientation.y = 0.0
-  goal_pose.pose.orientation.z = 0.0
-  goal_pose.pose.orientation.w = 1.0
-  goal_poses.append(goal_pose)
-
-  # pose1
-  goal_pose = PoseStamped()
-  goal_pose.header.frame_id = 'map'
-  goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-  goal_pose.pose.position.x = 12.0
-  goal_pose.pose.position.y = -1.0
-  goal_pose.pose.position.z = 0.0
-  goal_pose.pose.orientation.x = 0.0
-  goal_pose.pose.orientation.y = 0.0
-  goal_pose.pose.orientation.z = 0.0
-  goal_pose.pose.orientation.w = 1.0
-  goal_poses.append(goal_pose)
-
-  # pose2
-  goal_pose = PoseStamped()
-  goal_pose.header.frame_id = 'map'
-  goal_pose.header.stamp = navigator.get_clock().now().to_msg()
   goal_pose.pose.position.x = 12.0
   goal_pose.pose.position.y = 1.0
+  goal_pose.pose.position.z = 0.0
+  goal_pose.pose.orientation.x = 0.0
+  goal_pose.pose.orientation.y = 0.0
+  goal_pose.pose.orientation.z = 0.0
+  goal_pose.pose.orientation.w = 1.0
+  goal_poses.append(goal_pose)
+
+  # pose5
+  goal_pose = PoseStamped()
+  goal_pose.header.frame_id = 'map'
+  goal_pose.header.stamp = navigator.get_clock().now().to_msg()
+  goal_pose.pose.position.x = 0.0
+  goal_pose.pose.position.y = 1.0
+  goal_pose.pose.position.z = 0.0
+  goal_pose.pose.orientation.x = 0.0
+  goal_pose.pose.orientation.y = 0.0
+  goal_pose.pose.orientation.z = 0.0
+  goal_pose.pose.orientation.w = 1.0
+  goal_poses.append(goal_pose)
+
+  # pose6
+  goal_pose = PoseStamped()
+  goal_pose.header.frame_id = 'map'
+  goal_pose.header.stamp = navigator.get_clock().now().to_msg()
+  goal_pose.pose.position.x = -0.5
+  goal_pose.pose.position.y = 0.5
   goal_pose.pose.position.z = 0.0
   goal_pose.pose.orientation.x = 0.0
   goal_pose.pose.orientation.y = 0.0
@@ -111,12 +111,12 @@ def main():
   goal_pose.pose.orientation.w = 0.707
   goal_poses.append(goal_pose)
 
-  # pose3
+  # pose7
   goal_pose = PoseStamped()
   goal_pose.header.frame_id = 'map'
   goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-  goal_pose.pose.position.x = 2.0
-  goal_pose.pose.position.y = 1.2
+  goal_pose.pose.position.x = -0.5
+  goal_pose.pose.position.y = -0.9
   goal_pose.pose.position.z = 0.0
   goal_pose.pose.orientation.x = 0.0
   goal_pose.pose.orientation.y = -0.707
@@ -124,12 +124,12 @@ def main():
   goal_pose.pose.orientation.w = 0.707
   goal_poses.append(goal_pose)
 
-  # pose4
+  # pose8
   goal_pose = PoseStamped()
   goal_pose.header.frame_id = 'map'
   goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-  goal_pose.pose.position.x = 2.0
-  goal_pose.pose.position.y = -1.0
+  goal_pose.pose.position.x = 0.0
+  goal_pose.pose.position.y = -1.4
   goal_pose.pose.position.z = 0.0
   goal_pose.pose.orientation.x = 0.0
   goal_pose.pose.orientation.y = 0.0
@@ -137,18 +137,18 @@ def main():
   goal_pose.pose.orientation.w = 1.0
   goal_poses.append(goal_pose)
 
-  # pose1
-  goal_pose = PoseStamped()
-  goal_pose.header.frame_id = 'map'
-  goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-  goal_pose.pose.position.x = 12.0
-  goal_pose.pose.position.y = -1.0
-  goal_pose.pose.position.z = 0.0
-  goal_pose.pose.orientation.x = 0.0
-  goal_pose.pose.orientation.y = 0.0
-  goal_pose.pose.orientation.z = 0.0
-  goal_pose.pose.orientation.w = 1.0
-  goal_poses.append(goal_pose)
+  # # pose1
+  # goal_pose = PoseStamped()
+  # goal_pose.header.frame_id = 'map'
+  # goal_pose.header.stamp = navigator.get_clock().now().to_msg()
+  # goal_pose.pose.position.x = 12.0
+  # goal_pose.pose.position.y = -1.4
+  # goal_pose.pose.position.z = 0.0
+  # goal_pose.pose.orientation.x = 0.0
+  # goal_pose.pose.orientation.y = 0.0
+  # goal_pose.pose.orientation.z = 0.0
+  # goal_pose.pose.orientation.w = 1.0
+  # goal_poses.append(goal_pose)
   
   # Go through the goal poses
   navigator.goThroughPoses(goal_poses)

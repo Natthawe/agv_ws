@@ -31,7 +31,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
   - Class: nav2_rviz_plugins/Navigation 2
     Name: Navigation 2
   - Class: slam_toolbox::SlamToolboxPlugin
@@ -54,7 +54,7 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 10
+      Plane Cell Count: 30
       Reference Frame: <Fixed Frame>
       Value: true
     - Acceleration properties:
@@ -503,11 +503,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 65.64498901367188
+      Scale: 57.17974853515625
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: -1.0366672277450562
-      Y: -0.5826865434646606
+      X: 4.971283912658691
+      Y: -0.5314847826957703
     Saved: ~
 Window Geometry:
   Displays:

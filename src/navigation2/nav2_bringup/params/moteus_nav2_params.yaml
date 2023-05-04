@@ -39,9 +39,9 @@ amcl: #ระบุตำแหน่งของหุ่นยนต์ใน�
     z_short: 0.05  # น้ำหนักผสมสำหรับส่วน z_short ของโมเดล ผลรวมของน้ำหนัก z ที่ใช้ทั้งหมดต้องเป็น 1 บีมใช้ทั้งหมด 4 ตัว likelihood model uses z_hit and z_rand, ความเป็นไปได้ของการตัดเลเซอร์สแกนในระยะสั้น
     scan_topic: scan # เป็นชื่อ topic สำหรับรับข้อมูลเลเซอร์
     # set_initial_pose: True # ตั้งค่าท่าทางเริ่มต้นจากพารามิเตอร์ initial_pose* แทนที่จะรอข้อความ initial_pose
-    # initial_pose.x: 1.226
-    # initial_pose.y: 0.031
-    # initial_pose.yaw: 0.0
+    # initial_pose.x: -0.222
+    # initial_pose.y: -1.234
+    # initial_pose.yaw: -0.111
 
 bt_navigator:
   ros__parameters:
@@ -169,13 +169,13 @@ controller_server:
 
 
     # Robot
-      max_vel_x: 0.5
+      max_vel_x: 1.0
       max_vel_x_backwards: 0.125
-      max_vel_theta: 0.5
-      acc_lim_x: 0.5
-      acc_lim_theta: 0.5
+      max_vel_theta: 0.7
+      acc_lim_x: 2.5
+      acc_lim_theta: 3.2
       is_footprint_dynamic: True
-      min_turning_radius: 0.33 #รัศมีวงเลี้ยวต่ำสุดของหุ่นยนต์คาร์ไลค์ (ตั้งค่าเป็นศูนย์สำหรับหุ่นยนต์ดิฟไดรฟ์)
+      min_turning_radius: 0.7 #รัศมีวงเลี้ยวต่ำสุดของหุ่นยนต์คาร์ไลค์ (ตั้งค่าเป็นศูนย์สำหรับหุ่นยนต์ดิฟไดรฟ์)
       wheelbase: 0.76 #ระยะห่างระหว่างเพลาล้อหลังกับเพลาหน้า
 
     # GoalTolerance
@@ -185,8 +185,8 @@ controller_server:
       free_goal_vel: false 
 
     # Obstacles
-      min_obstacle_dist: 0.3    
-      inflation_dist: 0.55
+      min_obstacle_dist: 0.27    
+      inflation_dist: 0.5
       dynamic_obstacle_inflation_dist: 0.55
       # include_dynamic_obstacles: true
       include_costmap_obstacles: true
@@ -200,10 +200,10 @@ controller_server:
       # no_inner_iterations: 5
       # no_outer_iterations: 4
       optimization_activate: true
-      weight_max_vel_x: 2.0
-      weight_max_vel_theta: 2.0
+      weight_max_vel_x: 1.0
+      weight_max_vel_theta: 1.0
       weight_acc_lim_x: 1.0
-      weight_acc_lim_theta: 2.0
+      weight_acc_lim_theta: 1.0
       weight_kinematics_nh: 2000.0
       weight_kinematics_forward_drive: 1000.0
       weight_obstacle: 1.0
@@ -242,8 +242,8 @@ local_costmap:
       robot_base_frame: base_link
       use_sim_time: False
       rolling_window: true
-      width: 5
-      height: 5
+      width: 6
+      height: 6
       resolution: 0.05
       # robot_radius: 0.22
       footprint: "[[-0.127,-0.34], [0.863,-0.34], [0.863,0.34], [-0.127,0.34]]"
@@ -251,7 +251,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 1.0
-        inflation_radius: 0.55
+        inflation_radius: 0.35
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -286,7 +286,7 @@ global_costmap:
       robot_base_frame: base_link
       use_sim_time: False
       # robot_radius: 0.22
-      footprint: "[[-0.127,-0.34], [0.863,-0.34], [0.863,0.34], [-0.127,0.34]]"
+      footprint: "[[-0.13,-0.35], [0.863,-0.35], [0.863,0.35], [-0.13,0.35]]"
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
