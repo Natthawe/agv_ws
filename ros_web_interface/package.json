@@ -1,0 +1,30 @@
+{
+  "name": "ros_web_interface",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "tailwind": "postcss public/styles/tailwind.css -o public/styles/style.css --watch",
+    "dev": "nodemon --ext *"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.groupmaker.co.th/gmc_ros2_pkg/ros_web_interface.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "postcss-cli": "^10.1.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "connect-livereload": "^0.6.1",
+    "livereload": "^0.9.3",
+    "nodemon": "^2.0.20",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.7"
+  }
+}
