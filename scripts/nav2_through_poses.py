@@ -40,7 +40,7 @@ def main():
                 Duration.from_msg(feedback.estimated_time_remaining).nanoseconds / 1e9) + ' seconds.')
         # print(feedback)
 
-    result = navigator.getResult()            
+    result = navigator.getResult()
     if result == TaskResult.SUCCEEDED:
         print('Goal Succeeded!')
     elif result == TaskResult.CANCELED:
@@ -48,8 +48,8 @@ def main():
     elif result == TaskResult.FAILED:
         print('Goal Failed!')
     else:
-        print('Goal has an invalid return status!')        
-
+        print('Goal has an invalid return status!')
+        
     exit(0)
 
 if __name__ == '__main__':

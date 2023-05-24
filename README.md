@@ -130,7 +130,9 @@
     ACTION=="add", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", RUN+="/sbin/modprobe usbserial vendor=0x0483 product=0x374b", MODE="0666", GROUP="dialout"
 
 #### reload udev
-    udevadm control --reload-rules && udevadm trigger    
+    sudo udevadm info -a -p $(udevadm info -q path -n /dev/ttyUSB1)
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger --subsystem-match=tty 
 
 
 wheelchair001@wheelchair001:~/ros2_bridge$  `ros2 launch rosbridge_server rosbridge_websocket_launch.xml`
