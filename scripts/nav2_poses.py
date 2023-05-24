@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import rclpy
-from nav2_simple_commander.robot_navigator import BasicNavigator
+from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 from geometry_msgs.msg import PoseStamped
 import tf_transformations 
+from rclpy.duration import Duration
+
 
 def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orientation_z):
     q_x, q_y, q_z, q_w = tf_transformations.quaternion_from_euler(0.0, 0.0, orientation_z) #x, y, z
@@ -32,11 +34,10 @@ def main():
     nav.waitUntilNav2Active()
     
     # Send Nav2 goal
-    goal_pose1 = create_pose_stamped(nav, 3.01, -0.09, 0.0)
-    goal_pose2 = create_pose_stamped(nav, 5.45, -0.04, 0.0)
-    goal_pose3 = create_pose_stamped(nav, 8.02, 0.02, 1.57)
-    goal_pose4 = create_pose_stamped(nav, 7.98, 2.89, 3.14)
-    goal_pose5 = create_pose_stamped(nav, -2.02, 1.35, 0.0)
+    goal_pose1 = create_pose_stamped(nav, 7.0, 0.0, 0.0)
+    goal_pose2 = create_pose_stamped(nav, 7.0, 3.0, 1.57)
+    goal_pose3 = create_pose_stamped(nav, -6.5, 2.0, -1.57)
+    goal_pose4 = create_pose_stamped(nav, 0.0, 0.0, 0.0)
     
     # go to one pose
     # nav.goToPose(goal_pose1)
@@ -47,17 +48,23 @@ def main():
 
     # Follow Waypoints
     for i in range(1):
-        waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4, goal_pose5]
+        waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4]
         nav.followWaypoints(waypoints)
         while not nav.isTaskComplete():
-            feedback = nav.getFeedback()
-            # print(feedback)        
+            feedback = nav.getFeedback()    
+            print('Current Waypoint: ' + str(feedback.current_waypoint))
 
+    result = nav.getResult()            
+    if result == TaskResult.SUCCEEDED:
+        print('Goal Succeeded!')
+    elif result == TaskResult.CANCELED:
+        print('Goal was Canceled!')
+    elif result == TaskResult.FAILED:
+        print('Goal Failed!')
+    else:
+        print('Goal has an invalid return status!')        
 
-    print(nav.getResult())        
-
-    # Shutdown
-    rclpy.shutdown()
+    exit(0)     
 
 if __name__ == '__main__':
     main()

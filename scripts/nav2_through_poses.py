@@ -24,13 +24,13 @@ def main():
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-    goal_pose.pose.position_x = 5.0
-    goal_pose.pose.position_y = 0.0
+    goal_pose.pose.position.x = 2.0 #6.0
+    goal_pose.pose.position.y = 0.0 #1.0
     goal_pose.pose.orientation.w = 1.0
-    goal_pose.append(goal_pose)
+    goal_poses.append(goal_pose)
 
     # Go through the goal poses
-    navigator.goThroughPoses(goal_pose)
+    navigator.goThroughPoses(goal_poses)
 
     while not navigator.isTaskComplete():
         feedback = navigator.getFeedback()
@@ -38,6 +38,7 @@ def main():
             feedback.distance_remaining) + ' meters.' + ' | '
             'Estimated time of arrival: ' + '{0:.0f}'.format(
                 Duration.from_msg(feedback.estimated_time_remaining).nanoseconds / 1e9) + ' seconds.')
+        # print(feedback)
 
     result = navigator.getResult()            
     if result == TaskResult.SUCCEEDED:
@@ -46,10 +47,10 @@ def main():
         print('Goal was Canceled!')
     elif result == TaskResult.FAILED:
         print('Goal Failed!')
-    else
+    else:
         print('Goal has an invalid return status!')        
 
     exit(0)
 
 if __name__ == '__main__':
-    main()
+  main()

@@ -39,8 +39,8 @@ amcl:
     z_short: 0.05
     scan_topic: scan
     set_initial_pose: True
-    initial_pose.x: -2.02
-    initial_pose.y: 1.35
+    initial_pose.x: 0.0
+    initial_pose.y: 0.0
     initial_pose.yaw: 0.0
 
 
@@ -123,7 +123,7 @@ controller_server:
     min_theta_velocity_threshold: 0.001
     failure_tolerance: 0.3
     progress_checker_plugin: "progress_checker"
-    controller_plugin_types: ["teb_local_planner::TebLocalPlannerROS"]
+    # controller_plugin_types: ["teb_local_planner::TebLocalPlannerROS"]
     goal_checker_plugins: ["general_goal_checker"] # "precise_goal_checker"
     controller_plugins: ["FollowPath"]
 
@@ -144,93 +144,136 @@ controller_server:
       xy_goal_tolerance: 0.25
       yaw_goal_tolerance: 0.5
 
-    # TEB parameters
+    # DWB parameters
     FollowPath:
-      plugin: "teb_local_planner::TebLocalPlannerROS"
-      # footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
-      #   type: "polygon"
-      #   vertices: "[[-0.3,-0.275], [0.3,-0.275], [0.3,0.275], [-0.3,0.275]]"
+      plugin: "dwb_core::DWBLocalPlanner"
+      debug_trajectory_details: True
+      min_vel_x: 0.0
+      min_vel_y: 0.0
+      max_vel_x: 1.0
+      max_vel_y: 0.0
+      max_vel_theta: 0.6
+      min_speed_xy: 0.0
+      max_speed_xy: 1.0
+      min_speed_theta: 0.0
+      # Add high threshold velocity for turtlebot 3 issue.
+      # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
+      acc_lim_x: 2.5
+      acc_lim_y: 0.0
+      acc_lim_theta: 3.2
+      decel_lim_x: -2.5
+      decel_lim_y: 0.0
+      decel_lim_theta: -3.2
+      vx_samples: 20
+      vy_samples: 5
+      vtheta_samples: 20
+      sim_time: 1.7
+      linear_granularity: 0.05
+      angular_granularity: 0.025
+      transform_tolerance: 0.2
+      xy_goal_tolerance: 0.25
+      trans_stopped_velocity: 0.25
+      short_circuit_trajectory_evaluation: True
+      stateful: True
+      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
+      BaseObstacle.scale: 0.02
+      PathAlign.scale: 32.0
+      PathAlign.forward_point_distance: 0.1
+      GoalAlign.scale: 24.0
+      GoalAlign.forward_point_distance: 0.1
+      PathDist.scale: 32.0
+      GoalDist.scale: 24.0
+      RotateToGoal.scale: 32.0
+      RotateToGoal.slowing_factor: 5.0
+      RotateToGoal.lookahead_time: -1.0
 
-      footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
-        type: "circular"
-        radius: 0.6
+    # # TEB parameters
+    # FollowPath:
+    #   plugin: "teb_local_planner::TebLocalPlannerROS"
+    #   # footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
+    #   #   type: "polygon"
+    #   #   vertices: "[[-0.3,-0.275], [0.3,-0.275], [0.3,0.275], [-0.3,0.275]]"
 
-      # // Trajectory
-      teb_autoresize: True
-      dt_ref: 0.3
-      dt_hysteresis: 0.1
-      min_samples: 3
-      max_samples: 20      
-      global_plan_overwrite_orientation: true
-      allow_init_with_backwards_motion: true #(this is only recommended if the robot is equipped with rear sensors)
-      global_plan_viapoint_sep: 1.0     
-      # via_points_ordered: true
-      max_global_plan_lookahead_dist: 1.0  
-      # global_plan_prune_distance: 1.0
-      # exact_arc_length: true
-      feasibility_check_no_poses: 5
-      publish_feedback: true
-      control_look_ahead_poses: 5
+    #   footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
+    #     type: "circular"
+    #     radius: 0.3
+
+    #   # // Trajectory
+    #   teb_autoresize: True
+    #   dt_ref: 0.3
+    #   dt_hysteresis: 0.1
+    #   min_samples: 3
+    #   max_samples: 20      
+    #   global_plan_overwrite_orientation: true
+    #   allow_init_with_backwards_motion: true #(this is only recommended if the robot is equipped with rear sensors)
+    #   global_plan_viapoint_sep: 1.0     
+    #   # via_points_ordered: true
+    #   max_global_plan_lookahead_dist: 1.0  
+    #   # global_plan_prune_distance: 1.0
+    #   # exact_arc_length: true
+    #   feasibility_check_no_poses: 5
+    #   publish_feedback: true
+    #   control_look_ahead_poses: 5
 
 
-    # Robot
-      max_vel_x: 0.8
-      max_vel_x_backwards: 0.125
-      max_vel_theta: 0.125
-      acc_lim_x: 0.5
-      acc_lim_theta: 0.5
-      min_turning_radius: 0.0
-      is_footprint_dynamic: true
+    # # Robot
+    #   max_vel_x: 1.0
+    #   max_vel_x_backwards: 0.125
+    #   max_vel_theta: 0.125
+    #   acc_lim_x: 0.5
+    #   acc_lim_theta: 0.5
+    #   # min_turning_radius: 0.0
+    #   is_footprint_dynamic: true
 
-    # GoalTolerance
-      xy_goal_tolerance: 0.3
-      yaw_goal_tolerance: 0.3
-      free_goal_vel: false 
+    # # GoalTolerance
+    #   xy_goal_tolerance: 0.3
+    #   yaw_goal_tolerance: 0.3
+    #   free_goal_vel: false 
 
-    # Obstacles
-      min_obstacle_dist: 0.3    
-      inflation_dist: 0.7
-      dynamic_obstacle_inflation_dist: 0.6
-      # include_dynamic_obstacles: true
-      include_costmap_obstacles: true
-      costmap_obstacles_behind_robot_dist: 2.0
-      obstacle_poses_affected: 25
-      costmap_converter_plugin: "costmap_converter::CostmapToPolygonsDBSMCCH"
-      costmap_converter_spin_thread: true
-      costmap_converter_rate: 5
+    # # Obstacles
+    #   min_obstacle_dist: 0.3    
+    #   inflation_dist: 0.7
+    #   dynamic_obstacle_inflation_dist: 0.6
+    #   # include_dynamic_obstacles: true
+    #   include_costmap_obstacles: true
+    #   costmap_obstacles_behind_robot_dist: 2.0
+    #   obstacle_poses_affected: 25
+    #   costmap_converter_plugin: "costmap_converter::CostmapToPolygonsDBSMCCH"
+    #   costmap_converter_spin_thread: true
+    #   costmap_converter_rate: 5
 
-    # Optimization
-      # no_inner_iterations: 5
-      # no_outer_iterations: 4
-      optimization_activate: true
-      weight_max_vel_x: 2.0
-      weight_max_vel_theta: 2.0
-      weight_acc_lim_x: 1.0
-      weight_acc_lim_theta: 2.0
-      weight_kinematics_nh: 2000.0
-      weight_kinematics_forward_drive: 10000.0
-      weight_obstacle: 1.0
-      weight_inflation: 0.9
-      # weight_dynamic_obstacle: 30.0
-      # weight_dynamic_obstacle_inflation: 0.1
-      weight_viapoint: 10.0
-      penalty_epsilon: 0.02
+    # # Optimization
+    #   # no_inner_iterations: 5
+    #   # no_outer_iterations: 4
+    #   optimization_activate: true
+    #   weight_max_vel_x: 2.0
+    #   weight_max_vel_theta: 2.0
+    #   weight_acc_lim_x: 1.0
+    #   weight_acc_lim_theta: 2.0
+    #   weight_kinematics_nh: 2000.0
+    #   weight_kinematics_forward_drive: 10000.0
+    #   weight_obstacle: 1.0
+    #   weight_inflation: 0.9
+    #   # weight_dynamic_obstacle: 30.0
+    #   # weight_dynamic_obstacle_inflation: 0.1
+    #   weight_viapoint: 10.0
+    #   penalty_epsilon: 0.02
 
-    # Homotopy Class Planner
-      enable_homotopy_class_planning: false
-      enable_multithreading: false
-      max_number_classes: 5
-      selection_cost_hysteresis: 1.0
-      # selection_obst_cost_scale: 100.0
-      selection_viapoint_cost_scale: 1.0
-      roadmap_graph_no_samples: 15
-      roadmap_graph_area_width: 6.0
-      roadmap_graph_area_length_scale: 1.0
-      h_signature_prescaler: 0.6
-      h_signature_threshold: 0.1
-      obstacle_keypoint_offset: 0.1
-      obstacle_heading_threshold: 0.45 
-      visualize_hc_graph: true
+    # # Homotopy Class Planner
+    #   enable_homotopy_class_planning: false
+    #   enable_multithreading: false
+    #   max_number_classes: 5
+    #   selection_cost_hysteresis: 1.0
+    #   # selection_obst_cost_scale: 100.0
+    #   selection_viapoint_cost_scale: 1.0
+    #   roadmap_graph_no_samples: 15
+    #   roadmap_graph_area_width: 6.0
+    #   roadmap_graph_area_length_scale: 1.0
+    #   h_signature_prescaler: 0.6
+    #   h_signature_threshold: 0.1
+    #   obstacle_keypoint_offset: 0.1
+    #   obstacle_heading_threshold: 0.45 
+    #   visualize_hc_graph: true
 
 costmap_converter:
   ros__parameters:
@@ -248,7 +291,7 @@ local_costmap:
       width: 5
       height: 5
       resolution: 0.05
-      robot_radius: 0.6
+      robot_radius: 0.35
       # footprint: "[[-0.3,-0.275], [0.3,-0.275], [0.3,0.275], [-0.3,0.275]]"
       plugins: ["voxel_layer", "inflation_layer"]
       # UNCOMMENT THIS LINE BELOW FOR KEEPOUT DEMO
@@ -295,13 +338,14 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: False
-      robot_radius: 0.6
+      robot_radius: 0.35
       # footprint: "[[-0.3,-0.275], [0.3,-0.275], [0.3,0.275], [-0.3,0.275]]"
       resolution: 0.05
       track_unknown_space: true
+      lethal_cost_threshold: 100
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       # UNCOMMENT THIS LINE BELOW FOR KEEPOUT DEMO
-      # filters: ["keepout_filter", "inflation_layer"]      
+      filters: ["keepout_filter", "inflation_layer"]      
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -325,27 +369,28 @@ global_costmap:
         inflation_radius: 0.55
       always_send_full_costmap: True
       # UNCOMMENT NEXT 4 LINES HERE FOR KEEPOUT DEMO
-      # keepout_filter:
-      #   plugin: "nav2_costmap_2d::KeepoutFilter"
-      #   enabled: True
-      #   filter_info_topic: "/costmap_filter_info"      
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        enabled: True
+        filter_info_topic: "/costmap_filter_info"  
+        transform_tolerance: 0.3    
 
 # UNCOMMENT NEXT 15 LINES HERE FOR KEEPOUT DEMO
-# costmap_filter_info_server:
-#   ros__parameters:
-#     use_sim_time: true
-#     type: 0
-#     filter_info_topic: "/costmap_filter_info"
-#     mask_topic: "/keepout_filter_mask"
-#     base: 0.0
-#     multiplier: 1.0
+costmap_filter_info_server:
+  ros__parameters:
+    use_sim_time: true
+    type: 0
+    filter_info_topic: "/costmap_filter_info"
+    mask_topic: "/keepout_filter_mask"
+    base: 0.0
+    multiplier: 1.0
 
-# filter_mask_server:
-#   ros__parameters:
-#     use_sim_time: true
-#     frame_id: "map"
-#     topic_name: "/keepout_filter_mask"
-#     yaml_filename: "/home/natthawe/dev_ws/src/mobile_robot/maps/lanes.yaml"
+filter_mask_server:
+  ros__parameters:
+    use_sim_time: true
+    frame_id: "map"
+    topic_name: "/keepout_filter_mask"
+    yaml_filename: "/home/wheelchair001/agv_ws/maps/lanes.yaml"
 
 map_server:
   ros__parameters:
@@ -439,7 +484,7 @@ waypoint_follower:
     wait_at_waypoint:
       plugin: "nav2_waypoint_follower::WaitAtWaypoint"
       enabled: True
-      waypoint_pause_duration: 200
+      waypoint_pause_duration: 0
 
 # velocity_smoother:
 #   ros__parameters:
@@ -463,7 +508,7 @@ velocity_smoother:
     scale_velocities: False
     feedback: "OPEN_LOOP"
     max_velocity: [1.0, 0.0, 0.125]
-    min_velocity: [-0.125, 0.0, -0.125]
+    min_velocity: [-1.0, 0.0, -0.125]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
     odom_topic: "odom"
