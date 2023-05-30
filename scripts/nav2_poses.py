@@ -34,10 +34,11 @@ def main():
     nav.waitUntilNav2Active()
     
     # Send Nav2 goal
-    goal_pose1 = create_pose_stamped(nav, 7.0, 0.2, 0.0)
+    goal_pose1 = create_pose_stamped(nav, 7.0, 0.4, 0.0)
     goal_pose2 = create_pose_stamped(nav, 7.0, 3.0, 1.57)
-    goal_pose3 = create_pose_stamped(nav, -6.5, 2.0, -1.57)
-    goal_pose4 = create_pose_stamped(nav, 0.0, 0.0, 0.0)
+    goal_pose3 = create_pose_stamped(nav, -4.0, 2.8, 3.14)
+    goal_pose4= create_pose_stamped(nav, -4.0, 2.8, 3.14)
+    goal_pose5 = create_pose_stamped(nav, 0.0, 0.0, 0.0)
     
     # go to one pose
     # nav.goToPose(goal_pose1)
@@ -47,8 +48,8 @@ def main():
     #     # print(feedback)
 
     # Follow Waypoints
-    for i in range(3):
-        waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4]
+    for i in range(5):
+        waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4, goal_pose5]
         nav.followWaypoints(waypoints)
         while not nav.isTaskComplete():
             feedback = nav.getFeedback()    

@@ -50,7 +50,7 @@ class odom_wheel_node(Node):
             self.encoder_max - self.encoder_min) * 0.7 + self.encoder_min).value
         
         # Subscribe Topic cmd_vel
-        self.sub_cmd_vel = self.create_subscription(Twist, "cmd_vel_accel_decel", self.callback_cmd_vel, 10)
+        self.sub_cmd_vel = self.create_subscription(Twist, "cmd_vel_accel_decel", self.callback_cmd_vel, 10) #cmd_vel_accel_decel
 
         # Publish Topic odom_wheel
         self.pub_odom_wheel = self.create_publisher(Odometry, "odometry/wheel", 10)
