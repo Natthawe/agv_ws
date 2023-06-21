@@ -48,7 +48,7 @@ def main():
     #     # print(feedback)
 
     # Follow Waypoints
-    for i in range(5):
+    for i in range(3):
         waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4, goal_pose5]
         nav.followWaypoints(waypoints)
         while not nav.isTaskComplete():
