@@ -36,10 +36,13 @@ class odom_wheel_node(Node):
         self.prev_enc_left = 0
         self.prev_enc_right = 0
         self.ns_to_sec = 1.0e-9
-
-        # Parameters
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 33970.276).value)
-        self.base_width = float(self.declare_parameter('base_width', 0.51).value)
+# 33023.0, 34016.0
+        # Parametersself.ticks_meter_R
+        self.ticks_meter = float(self.declare_parameter('ticks_meter', 33519.5).value)
+        # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33023.0).value)
+        # self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 34016.0).value)
+        
+        self.base_width = float(self.declare_parameter('base_width', 0.28).value)
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
         self.base_frame = self.declare_parameter('base_frame', 'base_link').value
         self.encoder_min = self.declare_parameter('encoder_min', -2147483648).value
@@ -82,7 +85,11 @@ class odom_wheel_node(Node):
 
         # Calculate Odometry
         distance_wheel_left = (self.enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
-        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter        
+        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter
+        
+        # print(self.enc_wheel_left ,self.enc_wheel_right)
+        self.get_logger().info(f"========={self.enc_wheel_left, self.enc_wheel_right}=========")
+             
 
         # Distance traveled is the average of the two wheels 
         dist = (distance_wheel_left + distance_wheel_right) / 2
