@@ -103,7 +103,11 @@
 #### save map
     ros2 run nav2_map_server map_saver_cli -f <map_name>
 
+# Services
+    cd /etc/systemd/system/
+
 # UDEV   
+    cd /etc/udev/rules.d/
 #### 50-bno055.rules
     #KERNEL=="ttyUSB*", KERNELS=="1-6.1", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666", SYMLINK+="bno055"
 
