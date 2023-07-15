@@ -47,9 +47,9 @@ class MyNode(Node):
         self.cmd_vel_pub = self.create_publisher(Twist, "cmd_vel", 10)
         self.frame_count = 0
         self.start_time = time.time()
-        self.pid_controller = PIDController(kp=0.1, ki=0.0, kd=0.05, setpoint=400)
-        self.max_linear_speed = 1.2
-        self.max_angular_speed = 0.2
+        self.pid_controller = PIDController(kp=0.01, ki=0.0, kd=1.0, setpoint=400)
+        self.max_linear_speed = 0.3
+        self.max_angular_speed = 0.08
 
         self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
         self.previous_angular_speed = 0.0
@@ -58,11 +58,11 @@ class MyNode(Node):
         bridge = CvBridge()
         frame = bridge.imgmsg_to_cv2(msg, "bgr8")
 
-        low_b = np.uint8([100, 100, 100])
+        low_b = np.uint8([50, 50, 50])
         high_b = np.uint8([0, 0, 0])
         mask = cv2.inRange(frame, high_b, low_b)
         contours, hierarchy = cv2.findContours(mask, 1, cv2.CHAIN_APPROX_NONE)
-        cv2.drawContours(frame, contours, -1, (0, 255, 0), 10)
+        cv2.drawContours(frame, contours, -1, (0, 255, 0), 5)
 
         if len(contours) > 0:
             c = max(contours, key=cv2.contourArea)
@@ -78,7 +78,7 @@ class MyNode(Node):
                 angular = self.calculate_angular_speed(cx)
 
                 self.publish_velocity(linear, angular)
-                cv2.circle(frame, (cx, cy), 10, (255, 255, 255), -1)
+                cv2.circle(frame, (cx, cy), 5, (255, 255, 255), -1)
             else:
                 self.get_logger().info("No valid moments found.")
                 self.publish_velocity(0.0, 0.0)  # Stop the robot if no valid moments found
@@ -97,41 +97,25 @@ class MyNode(Node):
             # self.get_logger().info("Framerate: %.2f fps" % framerate)
 
     def calculate_linear_speed(self, angular_speed, cx):
-        # image_width = 800
-        # period_width = image_width / 5
-        # period_id = int(cx // period_width)
-
-        # if period_id == 2:
-        #     return self.max_linear_speed  # Run straight in the middle period
-
-        # max_linear_speed_period = self.max_linear_speed / 2
-        # # linear_speed = max_linear_speed_period - abs(period_id - 2) * (max_linear_speed_period / 2)
-        # linear_speed = max_linear_speed_period / 2
-        # linear_speed *= self.linear_speed_reduction_factor
-        # self.get_logger().info("linear_speed: %.2f" % linear_speed)
-
-
-        # # if self.previous_angular_speed != 0.0 and angular_speed != self.previous_angular_speed:
-        # #     linear_speed *= self.linear_speed_reduction_factor
-
-        # # self.previous_angular_speed = angular_speed
-        # return abs(linear_speed)
         image_width = 800
         period_width = image_width / 5
-        if period_width * 2 <= cx < period_width * 3:
-            return 1.2
+        period_id = int(cx // period_width)
 
-        if 0 <= cx < period_width * 2:  # Range is inclined to the left
-            linear_percentage = (period_width * 2 - cx) / period_width
-            linear_speed = self.max_linear_speed * linear_percentage
-            return linear_speed
+        if period_id == 2:
+            return self.max_linear_speed  # Run straight in the middle period
 
-        if period_width * 3 <= cx < period_width * 5:  # Range is inclined to the right
-            linear_percentage = (cx - period_width * 3) / period_width
-            linear_speed = self.max_linear_speed * linear_percentage
-            return linear_speed
+        max_linear_speed_period = self.max_linear_speed / 2
+        # linear_speed = max_linear_speed_period - abs(period_id - 2) * (max_linear_speed_period / 2)
+        linear_speed = max_linear_speed_period / 2
+        linear_speed *= self.linear_speed_reduction_factor
+        self.get_logger().info("linear_speed: %.2f" % linear_speed)
 
-        return 1.2  # Default case: Run straight
+
+        # if self.previous_angular_speed != 0.0 and angular_speed != self.previous_angular_speed:
+        #     linear_speed *= self.linear_speed_reduction_factor
+
+        # self.previous_angular_speed = angular_speed
+        return abs(linear_speed)
 
     def calculate_angular_speed(self, cx):
         image_width = 800
@@ -143,12 +127,12 @@ class MyNode(Node):
         if 0 <= cx < period_width * 2:  # Range is inclined to the left
             angle_percentage = (period_width * 2 - cx) / period_width
             angular_speed = self.max_angular_speed * angle_percentage
-            return -angular_speed
+            return angular_speed
 
         if period_width * 3 <= cx < period_width * 5:  # Range is inclined to the right
             angle_percentage = (cx - period_width * 3) / period_width
             angular_speed = self.max_angular_speed * angle_percentage
-            return angular_speed
+            return -angular_speed
 
         return 0.0  # Default case: Run straight
 
