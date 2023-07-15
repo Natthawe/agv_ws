@@ -48,7 +48,7 @@ class MyNode(Node):
         self.frame_count = 0
         self.start_time = time.time()
         self.pid_controller = PIDController(kp=0.1, ki=0.0, kd=0.05, setpoint=400)
-        self.max_linear_speed = 1.2
+        self.max_linear_speed = 0.5
         self.max_angular_speed = 0.2
 
         self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
