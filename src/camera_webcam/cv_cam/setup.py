@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'cv_cam = cv_cam.cv_cam_node:main',
+            'cv2_cam = cv_cam.cv2_cam_node:main',
         ],
     },
 )
