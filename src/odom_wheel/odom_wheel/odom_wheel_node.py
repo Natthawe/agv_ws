@@ -38,9 +38,9 @@ class odom_wheel_node(Node):
         self.ns_to_sec = 1.0e-9
 # 33023.0, 34016.0
         # Parametersself.ticks_meter_R
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 33519.5).value)
-        # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33023.0).value)
-        # self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 34016.0).value)
+        # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33519.5).value)
+        self.ticks_meter = float(self.declare_parameter('ticks_meter', 33023.0).value)
+        self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 34016.0).value)
         
         self.base_width = float(self.declare_parameter('base_width', 0.28).value)
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
@@ -70,7 +70,7 @@ class odom_wheel_node(Node):
         angular = twist.angular.z
         print(speed, angular)
         wheel_left_set = ((speed + angular) * self.ticks_meter)
-        wheel_right_set = ((speed - angular) * self.ticks_meter)
+        wheel_right_set = ((speed - angular) * self.ticks_meter_R)
         str_send = str(wheel_left_set) + "," + str(wheel_right_set) + '\n'
         self.serial_write(str_send)
 
@@ -85,7 +85,7 @@ class odom_wheel_node(Node):
 
         # Calculate Odometry
         distance_wheel_left = (self.enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
-        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter
+        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter_R
         
         # print(self.enc_wheel_left ,self.enc_wheel_right)
         self.get_logger().info(f"========={self.enc_wheel_left, self.enc_wheel_right}=========")
