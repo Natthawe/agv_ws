@@ -259,6 +259,11 @@ def timer_callback():
 
     # Determine the speed to turn and get the line in the center of the camera.
     message.angular.z = float(error) * -KP
+    if angular_z > 0.1:
+        angular_z = 0.1
+    elif angular_z < -0.1:
+        angular_z = -0.1
+    message.angular.z = angular_z        
     print("Error: {} | Angular Z: {}, ".format(error, message.angular.z))
 
     # Plot the boundaries where the image was cropped
