@@ -47,9 +47,9 @@ class FollowerNode(Node):
         self.cmd_vel_pub = self.create_publisher(Twist, "cmd_vel", 10)
         self.frame_count = 0
         self.start_time = time.time()
-        self.pid_controller = PIDController(kp=0.1, ki=0.0, kd=0.05, setpoint=400)
-        self.max_linear_speed = 0.5
-        self.max_angular_speed = 0.05
+        self.pid_controller = PIDController(kp=0.015, ki=0.0, kd=0.15, setpoint=400)
+        self.max_linear_speed = 0.2
+        self.max_angular_speed = 0.08
 
         self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
         self.previous_angular_speed = 0.0
@@ -58,7 +58,7 @@ class FollowerNode(Node):
         bridge = CvBridge()
         frame = bridge.imgmsg_to_cv2(msg, "bgr8")
 
-        low_b = np.uint8([100, 100, 100])
+        low_b = np.uint8([40, 40, 40])
         high_b = np.uint8([0, 0, 0])
         mask = cv2.inRange(frame, high_b, low_b)
         contours, hierarchy = cv2.findContours(mask, 1, cv2.CHAIN_APPROX_NONE)
@@ -118,12 +118,12 @@ class FollowerNode(Node):
         if 0 <= cx < period_width * 2:  # Range is inclined to the left
             angle_percentage = (period_width * 2 - cx) / period_width
             angular_speed = self.max_angular_speed * angle_percentage
-            return -angular_speed
+            return angular_speed
 
         if period_width * 3 <= cx < period_width * 5:  # Range is inclined to the right
             angle_percentage = (cx - period_width * 3) / period_width
             angular_speed = self.max_angular_speed * angle_percentage
-            return angular_speed
+            return -angular_speed
 
         return 0.0  # Default case: Run straight
 
