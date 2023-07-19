@@ -1,14 +1,14 @@
 /**:
     ros__parameters:
       video_device: "/dev/video0"
-      framerate: 60.0
+      framerate: 30.0
       io_method: "mmap"
       frame_id: "camera"
-      pixel_format: "yuyv2rgb" #mjpeg2rgb # see usb_cam/supported_formats for list of supported formats
-      image_width: 160 #1280 #800 #640
-      image_height: 90 #720 #448 #480
+      pixel_format: "yuyv2rgb" #mjpeg2rgb # see usb_cam/supported_formats for list of supported formats yuyv2rgb
+      image_width: 160 #1280 #800 #640 #160
+      image_height: 90 #720 #448 #480 #90
       camera_name: "logi_camera"
-      camera_info_url: "package://usb_cam/config/ost.yaml" #"package://usb_cam/config/camera_info.yaml"
+      camera_info_url: "package://usb_cam/config/camera_info.yaml" #"package://usb_cam/config/camera_info.yaml"
       brightness: -1
       contrast: -1
       saturation: -1
