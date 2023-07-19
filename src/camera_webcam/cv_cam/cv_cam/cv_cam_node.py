@@ -62,7 +62,7 @@ class FollowerNode(Node):
         high_b = np.uint8([0, 0, 0])
         mask = cv2.inRange(frame, high_b, low_b)
         contours, hierarchy = cv2.findContours(mask, 1, cv2.CHAIN_APPROX_NONE)
-        cv2.drawContours(frame, contours, -1, (0, 255, 0), 0.1)
+        cv2.drawContours(frame, contours, -1, (0, 255, 0), 1)
 
         if len(contours) > 0:
             c = max(contours, key=cv2.contourArea)
@@ -79,7 +79,7 @@ class FollowerNode(Node):
                 angular = self.calculate_angular_speed(output, cx)
 
                 self.publish_velocity(linear, angular)
-                cv2.circle(frame, (cx, cy), 0.1, (255, 255, 255), -1)
+                cv2.circle(frame, (cx, cy), 1, (255, 255, 255), -1)
             else:
                 self.get_logger().info("No valid moments found.")
                 self.publish_velocity(0.0, 0.0)  # Stop the robot if no valid moments found
