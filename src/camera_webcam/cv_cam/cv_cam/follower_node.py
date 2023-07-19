@@ -258,7 +258,7 @@ def timer_callback():
         just_seen_right_mark = False
 
     # Determine the speed to turn and get the line in the center of the camera.
-    message.angular.z = float(error) * -KP
+    angular_z = float(error) * -KP
     if angular_z > 0.1:
         angular_z = 0.1
     elif angular_z < -0.1:
