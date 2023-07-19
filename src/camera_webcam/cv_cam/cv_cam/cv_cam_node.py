@@ -37,9 +37,9 @@ class PIDController:
         return output
 
 
-class MyNode(Node):
+class FollowerNode(Node):
     def __init__(self):
-        super().__init__("my_node")
+        super().__init__("follower_node")
         self.image_pub = self.create_publisher(Image, "camera/cv_image", 10)
         self.camera_sub = self.create_subscription(
             Image, "camera/image_raw", self.callback, 10
@@ -49,7 +49,7 @@ class MyNode(Node):
         self.start_time = time.time()
         self.pid_controller = PIDController(kp=0.1, ki=0.0, kd=0.05, setpoint=400)
         self.max_linear_speed = 0.5
-        self.max_angular_speed = 0.2
+        self.max_angular_speed = 0.05
 
         self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
         self.previous_angular_speed = 0.0
@@ -72,7 +72,7 @@ class MyNode(Node):
                 cy = int(M["m01"] / M["m00"])
                 # self.get_logger().info("CX: %d  CY: %d" % (cx, cy))
                 output = self.pid_controller.update(cx)
-                self.get_logger().info("PID Output: %.2f" % output)
+                # self.get_logger().info("PID Output: %.2f" % output)
 
                 linear = self.calculate_linear_speed(output)
                 angular = self.calculate_angular_speed(cx)
@@ -91,7 +91,7 @@ class MyNode(Node):
         self.image_pub.publish(img_msg)
 
         self.frame_count += 1
-        if self.frame_count % 10 == 0:  # Calculate framerate every 10 frames
+        if self.frame_count % 1 == 0:  # Calculate framerate every 1 frames
             elapsed_time = time.time() - self.start_time
             framerate = self.frame_count / elapsed_time
             # self.get_logger().info("Framerate: %.2f fps" % framerate)
@@ -109,7 +109,7 @@ class MyNode(Node):
         return linear
 
     def calculate_angular_speed(self, cx):
-        image_width = 800
+        image_width = 640
         period_width = image_width / 5
 
         if period_width * 2 <= cx < period_width * 3:
@@ -136,7 +136,7 @@ class MyNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MyNode()
+    node = FollowerNode()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
