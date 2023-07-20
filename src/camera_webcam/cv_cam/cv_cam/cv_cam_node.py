@@ -115,30 +115,28 @@ class FollowerNode(Node):
         val = err / 800
         return val
         
+    # def calculate_angular_speed2(self, output, cx):
+    #     image_width = 160
+    #     period_width = image_width // 5
 
-        return 0.0  # Default case: Run straight
-    def calculate_angular_speed2(self, output, cx):
-        image_width = 160
-        period_width = image_width // 5
+    #     if period_width * 2 <= cx < period_width * 3:
+    #         return 0.0  # Run straight in the middle period
 
-        if period_width * 2 <= cx < period_width * 3:
-            return 0.0  # Run straight in the middle period
+    #     if 0 <= cx < period_width * 2:  # Range is inclined to the left
+    #         angle_percentage = (period_width * 2 - cx) / period_width
 
-        if 0 <= cx < period_width * 2:  # Range is inclined to the left
-            angle_percentage = (period_width * 2 - cx) / period_width
+    #         # Gradually increase angular speed until reaching the full value
+    #         angular_speed = self.max_angular_speed * angle_percentage
+    #         return angular_speed
 
-            # Gradually increase angular speed until reaching the full value
-            angular_speed = self.max_angular_speed * angle_percentage
-            return angular_speed
+    #     if period_width * 3 <= cx < period_width * 5:  # Range is inclined to the right
+    #         angle_percentage = (cx - period_width * 3) / period_width
 
-        if period_width * 3 <= cx < period_width * 5:  # Range is inclined to the right
-            angle_percentage = (cx - period_width * 3) / period_width
+    #         # Gradually increase angular speed until reaching the full value
+    #         angular_speed = -self.max_angular_speed * angle_percentage
+    #         return angular_speed
 
-            # Gradually increase angular speed until reaching the full value
-            angular_speed = -self.max_angular_speed * angle_percentage
-            return angular_speed
-
-        return 0.0  # Default case: Run straight
+    #     return 0.0  # Default case: Run straight
 
 
 

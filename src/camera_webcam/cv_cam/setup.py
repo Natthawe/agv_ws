@@ -27,6 +27,7 @@ setup(
             'cv2_cam = cv_cam.cv2_cam_node:main',
             'follower = cv_cam.follower_node:main',
             'test_topic = cv_cam.test_topic:main',
+            'follower_test = cv_cam.follower_test:main',
         ],
     },
 )
