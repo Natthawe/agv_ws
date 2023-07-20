@@ -72,6 +72,7 @@ class LineDetectionNode(Node):
         diff = []
         points = []
         start_height = []
+        middle = 0
 
         # Calculate the number of rows based on image height
         num_rows = min(5, frame.shape[0] // 45)
@@ -84,7 +85,6 @@ class LineDetectionNode(Node):
 
             points.append(np.where(np.logical_or(diff[i] > 200, diff[i] < -200)))
             cv2.line(frame, (0, start_height[i]), (thresh.shape[1], start_height[i]), (255, 0, 0), 2)
-
 
             point_count = 0
             for j in range(len(points[i][0])):
@@ -123,9 +123,11 @@ class LineDetectionNode(Node):
 
         # Calculate the angular speed using the PID controller
         angular_speed = self.calculate_angular_speed(middle)
-
+        print("Output:", middle)
+        print("Angular Speed:", angular_speed)
         # Calculate the linear speed based on the angular speed
         linear_speed = self.calculate_linear_speed(angular_speed)
+        print("Linear Speed:", linear_speed)
 
         # Publish the velocities
         self.publish_velocity(linear_speed, angular_speed)
@@ -145,8 +147,10 @@ class LineDetectionNode(Node):
         self.previous_angular_speed = angular_speed
         return linear
 
-    def calculate_angular_speed(self, cx):
-        return self.pid_controller.update(cx)
+    def calculate_angular_speed(self, middle):
+        err = (middle - 80)*(-1)
+        val = err / 800
+        return val
 
     def publish_velocity(self, linear, angular):
         twist_msg = Twist()
