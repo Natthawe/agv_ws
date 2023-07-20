@@ -47,9 +47,9 @@ class FollowerNode(Node):
         self.cmd_vel_pub = self.create_publisher(Twist, "cmd_vel", 10)
         self.frame_count = 0
         self.start_time = time.time()
-        self.pid_controller = PIDController(kp=1.0, ki=0.0, kd=0.0, setpoint=80)
-        self.max_linear_speed = 0.3
-        self.max_angular_speed = 0.06
+        self.pid_controller = PIDController(kp=5.0, ki=0.0, kd=0.0, setpoint=80)
+        self.max_linear_speed = 0.5
+        self.max_angular_speed = 0.1
 
         self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
         self.previous_angular_speed = 0.0
@@ -58,7 +58,7 @@ class FollowerNode(Node):
         bridge = CvBridge()
         frame = bridge.imgmsg_to_cv2(msg, "bgr8")
 
-        low_b = np.uint8([50, 50, 50])
+        low_b = np.uint8([100, 100, 100])
         high_b = np.uint8([0, 0, 0])
         mask = cv2.inRange(frame, high_b, low_b)
         contours, hierarchy = cv2.findContours(mask, 1, cv2.CHAIN_APPROX_NONE)
@@ -109,8 +109,15 @@ class FollowerNode(Node):
         self.previous_angular_speed = angular_speed
         return linear
 
-
     def calculate_angular_speed(self, output, cx):
+    
+        err = (cx - 80)*(-1)
+        val = err / 800
+        return val
+        
+
+        return 0.0  # Default case: Run straight
+    def calculate_angular_speed2(self, output, cx):
         image_width = 160
         period_width = image_width // 5
 
@@ -134,40 +141,6 @@ class FollowerNode(Node):
         return 0.0  # Default case: Run straight
 
 
-
-    # def calculate_angular_speed(self, output, cx):
-    #     image_width = 640
-    #     center_range = image_width // 5  # Define the range around the center where the object is considered centered
-
-    #     if center_range * 2 - center_range // 2 <= cx <= center_range * 3 + center_range // 2:
-    #         return 0.0  # Run straight in the middle range
-
-    #     deviation = cx - (center_range * 2 + center_range * 3) / 2  # Calculate deviation from center
-    #     angular_speed = output + 0.01 * deviation  # Adjust the coefficient (0.01) as needed
-
-    #     # Limit the angular speed to the maximum value
-    #     angular_speed = np.clip(angular_speed, -self.max_angular_speed, self.max_angular_speed)
-
-    #     return angular_speed
-
-    # def calculate_angular_speed(self, cx):
-    #     image_width = 640
-    #     period_width = image_width / 5
-
-    #     if period_width * 2 <= cx < period_width * 3:
-    #         return 0.0  # Run straight in the middle period
-
-    #     if 0 <= cx < period_width * 2:  # Range is inclined to the left
-    #         angle_percentage = (period_width * 2 - cx) / period_width
-    #         angular_speed = self.max_angular_speed * angle_percentage
-    #         return angular_speed
-
-    #     if period_width * 3 <= cx < period_width * 5:  # Range is inclined to the right
-    #         angle_percentage = (cx - period_width * 3) / period_width
-    #         angular_speed = self.max_angular_speed * angle_percentage
-    #         return -angular_speed
-
-        return 0.0  # Default case: Run straight
 
     def publish_velocity(self, linear, angular):
         twist_msg = Twist()
