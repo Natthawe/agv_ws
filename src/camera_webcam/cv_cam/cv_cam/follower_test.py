@@ -93,7 +93,17 @@ class LineDetectionNode(Node):
                 cv2.circle(frame, (thresh.shape[1] // 2, start_height[i]), 5, (255, 0, 0), 2)
                 cv2.line(frame, (middle, start_height[i]), (thresh.shape[1] // 2, start_height[i]), (0, 255, 0), 2)
                 point_count += 1
+                # Calculate the angular speed using the PID controller
+                angular_speed = self.calculate_angular_speed(middle)
+                print("Output:", middle)
+                print("Angular Speed:", angular_speed)
+                # Calculate the linear speed based on the angular speed
+                linear_speed = self.calculate_linear_speed(angular_speed)
+                print("Linear Speed:", linear_speed)
 
+                # Publish the velocities
+                self.publish_velocity(linear_speed, angular_speed)
+                
         if point_count != self.last_point_count:
             self.last_point_count = point_count
             print(point_count)
@@ -121,16 +131,10 @@ class LineDetectionNode(Node):
                 if len(points) > 1 and len(points[1]) > 1:
                     middle = (points[1][0] + points[1][1]) // 2
 
-        # Calculate the angular speed using the PID controller
-        angular_speed = self.calculate_angular_speed(middle)
-        print("Output:", middle)
-        print("Angular Speed:", angular_speed)
-        # Calculate the linear speed based on the angular speed
-        linear_speed = self.calculate_linear_speed(angular_speed)
-        print("Linear Speed:", linear_speed)
 
-        # Publish the velocities
-        self.publish_velocity(linear_speed, angular_speed)
+        if middle == 0:
+            self.get_logger().info("Not found!!!")
+            self.publish_velocity(0.0, 0.0)
 
         img_msg = bridge.cv2_to_imgmsg(frame, "bgr8")
         self.image_pub.publish(img_msg)
