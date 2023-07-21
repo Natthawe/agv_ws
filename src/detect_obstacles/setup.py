@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'detect_obstacles_node = detect_obstacles.detect_obstacles_node:main',
+            'range_node = detect_obstacles.range_node:main',
         ],
     },
 )

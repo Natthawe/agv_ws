@@ -79,6 +79,8 @@ class LineDetectionNode(Node):
 
         # Calculate the number of rows based on image height
         num_rows = min(5, frame.shape[0] // 15)
+        #num_rows = min(1, 60)
+        
 
         for i in range(num_rows):
             start_height.append(thresh.shape[0] - 1 - (15 * i))
@@ -99,10 +101,21 @@ class LineDetectionNode(Node):
                 if i == 4:
                     self.point_count += 1
                 
+                # Calculate the angular speed using the PID controller
+                #angular_speed = self.calculate_angular_speed(self.middle)
+                # print("Output:", middle)
+                # print("Angular Speed:", angular_speed)
+                # Calculate the linear speed based on the angular speed
+                #linear_speed = self.calculate_linear_speed(angular_speed)
+                # print("Linear Speed:", linear_speed)
+
+                # Publish the velocities
+                #self.publish_velocity(linear_speed, angular_speed)
                 
         if self.point_count != self.last_point_count:
             self.last_point_count = self.point_count
             print("point_count:", self.point_count)
+            #print(points)
 
             if self.point_count >= 10:
                 if self.mark == 0:
@@ -121,7 +134,8 @@ class LineDetectionNode(Node):
                     self.count = 0
                     print("Count:", self.count)
                     print("RLine:", self.RLine)
-
+        #try:
+        #print("Data = ",len(points))
         if len(points) >= 5:
             if self.RLine == 1:
                 if len(points[4][0]) > 0:
@@ -163,7 +177,59 @@ class LineDetectionNode(Node):
                     if len(points[1][0]) > 0:
                         self.middle = points[1][0][0]
                         #print("L5",self.middle)
+        # [
+        #     (array([134, 140]),), 
+        #     (array([136, 142]),), 
+        #     (array([138, 145]),), 
+        #     (array([142, 149]),), 
+        #     (array([147, 154]),)
+        # ]
+    
+        #     if self.middle == 0 :
+        #         if self.RLine == 1:
+        #             if len(points[0][3]) > 0:
+        #                 rr = len(points[0][0])
+        #                 self.middle = points[0][3][rr-1] 
+        #                 print("R4",self.middle)
+        #         else :
+        #             if len(points[0][3]) > 0:
+        #                 self.middle = points[0][3][0]  
+        #                 print("L4",self.middle)    
+        #     if self.middle == 0 :
+        #         if self.RLine == 1:
+        #             if len(points[0][2]) > 0:
+        #                 rr = len(points[0][0])
+        #                 self.middle = points[0][2][rr-1] 
+        #                 print("R3",self.middle)
+        #         else :
+        #             if len(points[0][2]) > 0:
+        #                 self.middle = points[0][2][0]  
+        #                 print("L3",self.middle) 
+        #     if self.middle == 0 :
+        #         if self.RLine == 1:
+        #             if len(points[0][1]) > 0:
+        #                 rr = len(points[0][0])
+        #                 self.middle = points[0][1][rr-1] 
+        #                 print("R2",self.middle) 
+        #         else :
+        #             if len(points[0][1]) > 0:
+        #                 self.middle = points[0][1][0]    
+        #                 print("L2",self.middle) 
+        # #except:
+        #    pass 
+        # if self.RLine == 1:
+        #     if len(points) > 0 and len(points[0]) > 1:
+        #         self.middle = (points[0][0] + points[0][1]) // 2
+        #         print("GoR")
+        # else:
+        #     if len(points) > 1 and len(points[1]) > 1:
+        #         self.middle = (points[1][0] + points[1][1]) // 2
+        #         print("GoL")
+        #     elif len(points) > 0 and len(points[0]) > 1:
+        #         self.middle = (points[0][0] + points[0][1]) // 2
                 
+
+
         if self.middle == 0:
             self.get_logger().info("Not found!!!")
             self.publish_velocity(0.0, 0.0)
