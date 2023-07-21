@@ -38,10 +38,10 @@ amcl:
     z_rand: 0.5
     z_short: 0.05
     scan_topic: scan
-    set_initial_pose: True
-    initial_pose.x: 0.0
-    initial_pose.y: 0.0
-    initial_pose.yaw: 0.0
+    set_initial_pose: False
+    # initial_pose.x: 0.0
+    # initial_pose.y: 0.0
+    # initial_pose.yaw: 0.0
 
 
 bt_navigator:
@@ -151,11 +151,11 @@ controller_server:
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.5
+      max_vel_x: 0.6
       max_vel_y: 0.0
-      max_vel_theta: 0.05
+      max_vel_theta: 0.1
       min_speed_xy: 0.0
-      max_speed_xy: 0.5
+      max_speed_xy: 0.6
       min_speed_theta: 0.0
       # Add high threshold velocity for turtlebot 3 issue.
       # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
@@ -299,7 +299,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
-        inflation_radius: 0.9 #0.55
+        inflation_radius: 0.55 #0.55
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -341,7 +341,7 @@ global_costmap:
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       # UNCOMMENT THIS LINE BELOW FOR KEEPOUT DEMO
       # filters: ["keepout_filter", "inflation_layer"]  
-      filters: ["speed_filter"]    
+      # filters: ["speed_filter"]    
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -362,12 +362,12 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0 #3.0
-        inflation_radius: 0.9 #0.55
-      speed_filter:
-        plugin: "nav2_costmap_2d::SpeedFilter"
-        enabled: True
-        filter_info_topic: "/costmap_filter_info"
-        speed_limit_topic: "/speed_limit"        
+        inflation_radius: 0.55 #0.55
+      # speed_filter:
+      #   plugin: "nav2_costmap_2d::SpeedFilter"
+      #   enabled: True
+      #   filter_info_topic: "/costmap_filter_info"
+      #   speed_limit_topic: "/speed_limit"        
       always_send_full_costmap: True
       # UNCOMMENT NEXT 4 LINES HERE FOR KEEPOUT
       # keepout_filter:
@@ -518,8 +518,8 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.5, 0.0, 0.1396263402] #0.1396263402 0.1570796327
-    min_velocity: [-0.5, 0.0, -0.1396263402]
+    max_velocity: [0.6, 0.0, 0.1396263402] #0.1396263402 0.1570796327
+    min_velocity: [-0.6, 0.0, -0.1396263402]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
     odom_topic: "odom"

@@ -150,11 +150,11 @@ controller_server:
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 1.0
+      max_vel_x: 0.6
       max_vel_y: 0.0
       max_vel_theta: 0.6
       min_speed_xy: 0.0
-      max_speed_xy: 1.0
+      max_speed_xy: 0.6
       min_speed_theta: 0.0
       # Add high threshold velocity for turtlebot 3 issue.
       # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
@@ -345,7 +345,7 @@ global_costmap:
       lethal_cost_threshold: 100
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       # UNCOMMENT THIS LINE BELOW FOR KEEPOUT DEMO
-      filters: ["keepout_filter", "inflation_layer"]      
+      # filters: ["keepout_filter", "inflation_layer"]      
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -369,28 +369,28 @@ global_costmap:
         inflation_radius: 0.55
       always_send_full_costmap: True
       # UNCOMMENT NEXT 4 LINES HERE FOR KEEPOUT DEMO
-      keepout_filter:
-        plugin: "nav2_costmap_2d::KeepoutFilter"
-        enabled: True
-        filter_info_topic: "/costmap_filter_info"  
-        transform_tolerance: 0.3    
+      # keepout_filter:
+      #   plugin: "nav2_costmap_2d::KeepoutFilter"
+      #   enabled: True
+      #   filter_info_topic: "/costmap_filter_info"  
+      #   transform_tolerance: 0.3    
 
 # UNCOMMENT NEXT 15 LINES HERE FOR KEEPOUT DEMO
-costmap_filter_info_server:
-  ros__parameters:
-    use_sim_time: true
-    type: 0
-    filter_info_topic: "/costmap_filter_info"
-    mask_topic: "/keepout_filter_mask"
-    base: 0.0
-    multiplier: 1.0
+# costmap_filter_info_server:
+#   ros__parameters:
+#     use_sim_time: true
+#     type: 0
+#     filter_info_topic: "/costmap_filter_info"
+#     mask_topic: "/keepout_filter_mask"
+#     base: 0.0
+#     multiplier: 1.0
 
-filter_mask_server:
-  ros__parameters:
-    use_sim_time: true
-    frame_id: "map"
-    topic_name: "/keepout_filter_mask"
-    yaml_filename: "/home/wheelchair001/agv_ws/maps/lanes.yaml"
+# filter_mask_server:
+#   ros__parameters:
+#     use_sim_time: true
+#     frame_id: "map"
+#     topic_name: "/keepout_filter_mask"
+#     yaml_filename: "/home/wheelchair001/agv_ws/maps/lanes.yaml"
 
 map_server:
   ros__parameters:
