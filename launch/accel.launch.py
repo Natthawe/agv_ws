@@ -39,4 +39,12 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(launch_accel_decel_pkg, 'accel_decel_node.launch.py'))
         ),                
-    ])
+    ])    # cv_cam        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(launch_cv_cam_pkg, 'follower_pid.launch.py'))
+        ),       
+
+    # usb_cam        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(launch_usb_cam_pkg, 'demo_launch.py'))
+        ),    
