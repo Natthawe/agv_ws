@@ -29,6 +29,7 @@ setup(
             'follower = cv_cam.follower_node:main',
             'test_topic = cv_cam.test_topic:main',
             'follower_pid = cv_cam.follower_pid:main',
+            'linelaser = cv_cam.linelaser:main',
         ],
     },
 )

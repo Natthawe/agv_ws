@@ -19,9 +19,9 @@ def generate_launch_description():
     accel_decel_dir = get_package_share_directory('accel_decel')
     launch_accel_decel_pkg = os.path.join(accel_decel_dir, 'launch')     
 
-    # cv_cam
-    cv_cam_dir = get_package_share_directory('cv_cam') 
-    launch_cv_cam_pkg = os.path.join(cv_cam_dir, 'launch')
+    # # cv_cam
+    # cv_cam_dir = get_package_share_directory('cv_cam') 
+    # launch_cv_cam_pkg = os.path.join(cv_cam_dir, 'launch')
 
     # usb_cam
     usb_cam_dir = get_package_share_directory('usb_cam') 
@@ -40,10 +40,10 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(os.path.join(launch_accel_decel_pkg, 'accel_decel_node.launch.py'))
         ),      
         
-    # cv_cam        
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(launch_cv_cam_pkg, 'follower_pid.launch.py'))
-        ),       
+    # # cv_cam        
+    #     IncludeLaunchDescription(
+    #         PythonLaunchDescriptionSource(os.path.join(launch_cv_cam_pkg, 'follower_pid.launch.py'))
+    #     ),       
 
         # usb_cam        
         IncludeLaunchDescription(
