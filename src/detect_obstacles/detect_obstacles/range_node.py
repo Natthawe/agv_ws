@@ -29,7 +29,7 @@ class RangeObstacleDetectionNode(Node):
 
         # Initialize the Twist message to move forward
         self.twist_cmd = Twist()
-        self.twist_cmd.linear.x = 0.2  # Set the linear speed (adjust as needed)
+        self.twist_cmd.linear.x = 0.5  # Set the linear speed (adjust as needed)
 
         # Variable to track the last time an obstacle was detected
         self.last_obstacle_time = time.time()        

@@ -86,22 +86,21 @@ class LineAndObstacleDetectionNode(Node):
         # Filter the laser scan data within the desired range
         filtered_ranges = []
         filtered_angles = []
-        for angle, distance in zip(msg.angle_min + msg.angle_increment * range(len(msg.ranges)), msg.ranges):
+        for i, distance in enumerate(msg.ranges):
+            angle = msg.angle_min + i * msg.angle_increment
             if self.min_angle <= angle <= self.max_angle:
                 filtered_ranges.append(distance)
                 filtered_angles.append(angle)
 
-        # Check for obstacles within the desired range
-        obstacle_detected = any(distance < 1.0 for distance in filtered_ranges)  # Adjust the threshold as needed
+        # Find the minimum distance to an obstacle within the desired range
+        min_obstacle_distance = min(filtered_ranges)
 
-        # Stop or move forward based on obstacle detection
-        if obstacle_detected:
+        if min_obstacle_distance < 2.0:  # Adjust the desired stopping distance as needed
+            # If the minimum obstacle distance is less than 2.0 meters, stop the robot
             self.twist_cmd.linear.x = 0.0  # Set linear speed to 0 to stop
-            self.last_obstacle_time = time.time()  # Update the time when an obstacle was last detected
         else:
-            # Check if it's time to move forward again after the delay
-            if time.time() - self.last_obstacle_time >= 2.0:
-                self.twist_cmd.linear.x = 0.2  # Set the linear speed to move forward
+            # If the minimum obstacle distance is greater than or equal to 2.0 meters, move forward
+            self.twist_cmd.linear.x = 0.2  # Set the desired forward speed (e.g., 0.2 m/s)
 
         # Publish the Twist command
         self.cmd_vel_pub.publish(self.twist_cmd)
