@@ -11,24 +11,25 @@ from launch.substitutions import LaunchConfiguration, PythonExpression
 
 def generate_launch_description():
 
+    # rplidar_ros node
+    rplidar_ros_dir = get_package_share_directory('rplidar_ros')
+    launch_rplidar_ros_pkg = os.path.join(rplidar_ros_dir, 'launch')    
+
     # odom_wheel node
     odom_wheel_dir = get_package_share_directory('odom_wheel')
     launch_odom_wheel_pkg = os.path.join(odom_wheel_dir, 'launch')    
 
     # accel_decel
     accel_decel_dir = get_package_share_directory('accel_decel')
-    launch_accel_decel_pkg = os.path.join(accel_decel_dir, 'launch')     
-
-    # cv_cam
-    cv_cam_dir = get_package_share_directory('cv_cam') 
-    launch_cv_cam_pkg = os.path.join(cv_cam_dir, 'launch')
-
-    # usb_cam
-    usb_cam_dir = get_package_share_directory('usb_cam') 
-    launch_usb_cam_pkg = os.path.join(usb_cam_dir, 'launch')    
+    launch_accel_decel_pkg = os.path.join(accel_decel_dir, 'launch')      
 
 
     return LaunchDescription([
+
+    # rplidar_ros        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(launch_rplidar_ros_pkg, 'rplidar_a3.launch.py'))
+        ),
 
     # odom_wheel        
         IncludeLaunchDescription(
@@ -38,6 +39,6 @@ def generate_launch_description():
     # accel_decel        
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(launch_accel_decel_pkg, 'accel_decel_node.launch.py'))
-        ),      
-                           
-    ])    
+        ),        
+        
+    ])

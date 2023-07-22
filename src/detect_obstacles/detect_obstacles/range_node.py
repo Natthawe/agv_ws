@@ -13,8 +13,8 @@ class RangeObstacleDetectionNode(Node):
         self.get_logger().info(f'========={self.node_name}=========')
         
         # Set the desired obstacle detection range
-        self.min_angle = -60.0  # Minimum angle (degrees)
-        self.max_angle = 60.0   # Maximum angle (degrees)
+        self.min_angle = -45.0  # Minimum angle (degrees)
+        self.max_angle = 45.0   # Maximum angle (degrees)
 
         # Subscribe to the LaserScan topic
         self.subscription = self.create_subscription(
@@ -51,7 +51,7 @@ class RangeObstacleDetectionNode(Node):
         #     self.get_logger().info(f"Angle: {np.degrees(angle):.2f} degrees, Distance: {distance:.2f} meters")
 
                 # Check for obstacles within the desired range
-        obstacle_detected = any(distance < 0.5 for distance in filtered_ranges)  # Adjust the threshold as needed
+        obstacle_detected = any(distance < 1.0 for distance in filtered_ranges)  # Adjust the threshold as needed
 
 
 
