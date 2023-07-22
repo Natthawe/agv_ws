@@ -1,13 +1,14 @@
+#!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Image, LaserScan
+from sensor_msgs.msg import LaserScan, Image
 from cv_bridge import CvBridge
 from geometry_msgs.msg import Twist
 import cv2
 import numpy as np
 import time
 import math
-
 
 class PIDController:
     def __init__(self, kp, ki, kd, setpoint):
@@ -35,82 +36,101 @@ class PIDController:
 
         return output
 
-
-class LineAndObstacleDetectionNode(Node):
+class CombinedDetectionNode(Node):
     def __init__(self):
-        super().__init__('line_and_obstacle_detection_node')
-        
+        super().__init__('combined_detection_node')
+
         # Set the desired obstacle detection range
-        self.min_angle = -60.0  # Minimum angle (degrees)
-        self.max_angle = 60.0   # Maximum angle (degrees)
+        self.min_angle = -30.0  # Minimum angle (degrees)
+        self.max_angle = 30.0   # Maximum angle (degrees)
 
         # Subscribe to the LaserScan topic
-        self.subscription = self.create_subscription(
+        self.laser_subscription = self.create_subscription(
             LaserScan,
-            'scan',
+            '/scan',
             self.obstacle_detection_callback,
             10  # Adjust the queue size as needed
         )
 
-        # Subscribe to the camera topic
-        self.image_pub = self.create_publisher(Image, "camera/cv_image", 10)
-        self.camera_sub = self.create_subscription(
-            Image, "camera/image_raw", self.line_detection_callback, 10
+        # Subscribe to the camera image topic
+        self.camera_subscription = self.create_subscription(
+            Image,
+            'camera/image_raw',
+            self.line_detection_callback,
+            10
         )
 
+        self.image_pub = self.create_publisher(Image, "camera/cv_image", 10)
+
         # Publish Twist commands to control the robot
-        self.cmd_vel_pub = self.create_publisher(Twist, "cmd_vel", 10)
-        self.frame_count = 0
-        self.start_time = time.time()
-        self.pid_controller = PIDController(kp=5.0, ki=0.0, kd=0.0, setpoint=80)
-        self.max_linear_speed = 0.5
-        self.max_angular_speed = 0.1
+        self.publisher = self.create_publisher(Twist, 'cmd_vel', 10)
 
         # Initialize the Twist message to move forward
         self.twist_cmd = Twist()
-        self.twist_cmd.linear.x = 0.2  # Set the linear speed (adjust as needed)
+        self.twist_cmd.linear.x = 0.5  # Set the linear speed (adjust as needed)
 
-        self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
-        self.previous_angular_speed = 0.0
+        # Variable to track the last time an obstacle was detected
+        self.last_obstacle_time = time.time()
 
+        # Line detection variables
         self.RLine = 0
         self.point_count = 0
         self.last_point_count = 0
         self.count = 0
         self.middle = 0
         self.mark = 0
-        
-        self.last_obstacle_time = time.time()
+
+        self.start_time = time.time()
+
+        self.pid_controller = PIDController(kp=5.0, ki=0.0, kd=0.0, setpoint=80)
+        self.max_linear_speed = 0.5
+        self.max_angular_speed = 0.1
+        self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
+        self.previous_angular_speed = 0.0
 
     def obstacle_detection_callback(self, msg):
+        # Convert LaserScan angles to radians
+        angles = np.arange(msg.angle_min, msg.angle_max, msg.angle_increment)
+                
         # Filter the laser scan data within the desired range
         filtered_ranges = []
         filtered_angles = []
-        for i, distance in enumerate(msg.ranges):
-            angle = msg.angle_min + i * msg.angle_increment
-            if self.min_angle <= angle <= self.max_angle:
+        for angle, distance in zip(angles, msg.ranges):
+            if self.min_angle <= np.degrees(angle) <= self.max_angle:
                 filtered_ranges.append(distance)
                 filtered_angles.append(angle)
 
-        # Find the minimum distance to an obstacle within the desired range
-        min_obstacle_distance = min(filtered_ranges)
+        # # Print the filtered distance and angle data
+        # for angle, distance in zip(filtered_angles, filtered_ranges):
+        #     self.get_logger().info(f"Angle: {np.degrees(angle):.2f} degrees, Distance: {distance:.2f} meters")
 
-        if min_obstacle_distance < 2.0:  # Adjust the desired stopping distance as needed
-            # If the minimum obstacle distance is less than 2.0 meters, stop the robot
+                # Check for obstacles within the desired range
+        obstacle_detected = any(distance < 1.0 for distance in filtered_ranges)  # Adjust the threshold as needed
+
+        # Stop or move forward based on obstacle detection
+        if obstacle_detected:
             self.twist_cmd.linear.x = 0.0  # Set linear speed to 0 to stop
+            self.last_obstacle_time = time.time()  # Update the time when an obstacle was last detected
         else:
-            # If the minimum obstacle distance is greater than or equal to 2.0 meters, move forward
-            self.twist_cmd.linear.x = 0.2  # Set the desired forward speed (e.g., 0.2 m/s)
+            # Check if it's time to move forward again after the delay
+            if time.time() - self.last_obstacle_time >= 2.0:
+                self.twist_cmd.linear.x = 0.2  # Set the linear speed to move forward
 
         # Publish the Twist command
-        self.cmd_vel_pub.publish(self.twist_cmd)
+        self.publisher.publish(self.twist_cmd) 
+
+        # Check if the obstacle is cleared, then resume line following
+        if not obstacle_detected and self.twist_cmd.linear.x > 0:
+            # Line following logic
+            angular_speed = self.calculate_angular_speed(self.middle)
+            linear_speed = self.calculate_linear_speed(angular_speed)
+            self.publish_velocity(linear_speed, angular_speed)        
 
     def line_detection_callback(self, msg):
         # Convert the ROS2 Image message to OpenCV format
         bridge = CvBridge()
         frame = bridge.imgmsg_to_cv2(msg, "bgr8")
 
-        # Line detection logic
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         kernel_size = 5
         blur_gray = cv2.GaussianBlur(gray_frame, (kernel_size, kernel_size), 0)
@@ -207,23 +227,18 @@ class LineAndObstacleDetectionNode(Node):
                     if len(points[1][0]) > 0:
                         self.middle = points[1][0][0]
                         #print("L5",self.middle)
-
+                
         if self.middle == 0:
             self.get_logger().info("Not found!!!")
-            self.twist_cmd.linear.x = 0.0  # Set linear speed to 0 to stop
+            self.publish_velocity(0.0, 0.0)
         else:   
             angular_speed = self.calculate_angular_speed(self.middle)
             linear_speed = self.calculate_linear_speed(angular_speed)
-            self.twist_cmd.linear.x = linear_speed
-            self.twist_cmd.angular.z = angular_speed
-
-        # Publish the Twist command
-        self.cmd_vel_pub.publish(self.twist_cmd)
-
+            self.publish_velocity(linear_speed, angular_speed)
+        
         img_msg = bridge.cv2_to_imgmsg(frame, "bgr8")
-        self.image_pub.publish(img_msg)
+        self.image_pub.publish(img_msg)        
 
-    # calculate_linear_speed and calculate_angular_speed methods
     def calculate_linear_speed(self, angular_speed):
         if self.previous_angular_speed != 0.0 and angular_speed != self.previous_angular_speed:
             linear = self.max_linear_speed * self.linear_speed_reduction_factor
@@ -241,13 +256,16 @@ class LineAndObstacleDetectionNode(Node):
         val = err / 800
         return val
 
+    def publish_velocity(self, linear, angular):
+        twist_msg = Twist()
+        twist_msg.linear.x = linear
+        twist_msg.angular.z = angular
+        self.publisher.publish(twist_msg)
 
 def main(args=None):
     rclpy.init(args=args)
-    node = LineAndObstacleDetectionNode()
-    rclpy.spin(node)
-    cv2.destroyAllWindows() 
-    node.destroy_node()
+    combined_detection_node = CombinedDetectionNode()
+    rclpy.spin(combined_detection_node)
     rclpy.shutdown()
 
 if __name__ == '__main__':
