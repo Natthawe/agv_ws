@@ -84,12 +84,17 @@ class CombinedDetectionNode(Node):
         self.count = 0
         self.middle = 0
         self.mark = 0
+        self.count_mark = 0
+        # Flag to indicate if retreat is in progress
+        self.retreat_in_progress = False        
 
         self.start_time = time.time()
 
         self.pid_controller = PIDController(kp=5.0, ki=0.0, kd=0.0, setpoint=80)
         self.max_linear_speed = 0.5
         self.max_angular_speed = 0.1
+        self.angular_speed = 0.0
+        self.linear_speed = 0.0
         self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
         self.previous_angular_speed = 0.0
 
@@ -107,9 +112,6 @@ class CombinedDetectionNode(Node):
         self.obstacle_detected = any(distance < 0.65 for distance in filtered_ranges)  # Adjust the threshold as needed
 
         if self.obstacle_detected:
-            # Stop the robot immediately when an obstacle is detected
-            # self.publish_velocity(0.0, 0.0)
-
             self.stop_time = time.time()
             self.obstacle_detected = True
             self.publish_velocity(0.0, 0.0)
@@ -164,25 +166,33 @@ class CombinedDetectionNode(Node):
                     
                 if self.point_count != self.last_point_count:
                     self.last_point_count = self.point_count
-                    print("point_count:", self.point_count)
+                    # print("point_count:", self.point_count)
 
                     if self.point_count >= 10:
                         if self.mark == 0:
+                            self.count_mark +=1                            
                             self.count += 1
                             self.mark = 1
                             print("Count:", self.count)
                             print("RLine:", self.RLine)
+                            print("Mark:", self.mark)
+                            print("Count_Mark:", self.count_mark)
+
                     
                     if self.point_count == 2:
                         self.mark = 0
                         if self.count >= 2:
+
                             if self.RLine == 1:
                                 self.RLine = 0
+                                
                             else:
                                 self.RLine = 1
                             self.count = 0
                             print("Count:", self.count)
                             print("RLine:", self.RLine)
+                            print("Mark:", self.mark)
+
 
                 if len(points) >= 5:
                     if self.RLine == 1:
@@ -228,23 +238,41 @@ class CombinedDetectionNode(Node):
         
         if self.obstacle_detected:
             # If an obstacle is detected while on the line, stop the robot
-            angular_speed = 0.0
-            linear_speed = 0.0
+            self.angular_speed = 0.0
+            self.linear_speed = 0.0
+
         else:
-            # Line following logic
+            # Line following behavior
             if self.middle != 0:
-                angular_speed = self.calculate_angular_speed(self.middle)
-                linear_speed = self.calculate_linear_speed(angular_speed)
+                self.angular_speed = self.calculate_angular_speed(self.middle)
+                self.linear_speed = self.calculate_linear_speed(self.angular_speed)                
             else:
                 # If the line is lost, stop the robot
-                angular_speed = 0.0
-                linear_speed = 0.0
+                self.angular_speed = self.calculate_angular_speed(self.middle)
+                self.linear_speed = self.calculate_linear_speed(self.angular_speed)
                 self.get_logger().info("Not found!!!")
 
-        self.publish_velocity(linear_speed, angular_speed)
+            self.twist_cmd.angular.z = self.angular_speed
+            self.twist_cmd.linear.x = self.calculate_linear_speed(self.twist_cmd.angular.z)
+
+            # Publish the velocity commands
+            self.publish_velocity(self.linear_speed, self.angular_speed)
 
         img_msg = bridge.cv2_to_imgmsg(frame, "bgr8")
-        self.image_pub.publish(img_msg)           
+        self.image_pub.publish(img_msg)         
+        # Check if count_mark reaches 5
+        if self.count_mark == 5:
+            self.angular_speed = 0.0
+            self.linear_speed = 0.0
+            self.count_mark = 0
+            self.publish_velocity(self.linear_speed, self.angular_speed)
+
+        # Check if count_mark reaches 5
+        if self.count_mark == 5:
+            self.angular_speed = 0.0
+            self.linear_speed = 0.0
+            self.count_mark = 0
+            self.publish_velocity(self.linear_speed, self.angular_speed)                 
 
     def calculate_linear_speed(self, angular_speed):
         if self.previous_angular_speed != 0.0 and angular_speed != self.previous_angular_speed:
@@ -262,19 +290,12 @@ class CombinedDetectionNode(Node):
         err = (pp - 80)*(-1)
         val = err / 800
         return val
-
-    # def publish_velocity(self, linear, angular):
-    #     twist_msg = Twist()
-    #     twist_msg.linear.x = linear
-    #     twist_msg.angular.z = angular
-    #     self.publisher.publish(twist_msg)
         
     def publish_velocity(self, linear, angular):
         twist_msg = Twist()
         twist_msg.linear.x = linear
         twist_msg.angular.z = angular
-        self.publisher.publish(twist_msg)
-        return linear  # Return the calculated linear value        
+        self.publisher.publish(twist_msg)      
 
 def main(args=None):
     rclpy.init(args=args)
