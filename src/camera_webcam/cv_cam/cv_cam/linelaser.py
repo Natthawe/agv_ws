@@ -169,7 +169,7 @@ class CombinedDetectionNode(Node):
                 self.last_point_count = self.point_count
                 # print("point_count:", self.point_count)
 
-                if self.point_count >= 4:
+                if self.point_count >= 4: #10
                     if self.mark == 0:
                         self.count_mark +=1                            
                         self.count += 1
@@ -250,38 +250,35 @@ class CombinedDetectionNode(Node):
                 self.publish_velocity(self.linear_speed, self.angular_speed)  
 
                 # Handle intersection behavior
-                if self.count_mark == 1:
-                    # Follow the right path at the first intersection
-                    self.RLine = 1
-                    # self.get_logger().info("RIGHT!!!")
-                elif self.count_mark == 2:
-                    # Follow the right path at the second intersection
-                    self.RLine = 1
-                    # self.get_logger().info("RIGHT!!!")
-                elif self.count_mark == 3:
-                    # Follow the right path at the third intersection
-                    self.RLine = 1
-                    # self.get_logger().info("RIGHT!!!")
-                elif self.count_mark == 4:
-                    # Follow the left path at the fourth intersection
-                    self.RLine = 0
-                    # self.get_logger().info("LEFT!!!")
-                elif self.count_mark == 5:
-                    # Stop for 2 seconds and go back at the fifth intersection
-                    self.retreat_in_progress = True
+                if self.retreat_in_progress:
+                    # Stop for 2 seconds and go forward during the retreat phase
                     self.publish_velocity(0.0, 0.0)
-                    self.get_logger().info("STOP!!!")
-                    self.get_logger().info("BACKWARD!!!")
                     self.retreat_in_progress = False
-                    self.count_mark += 1
-                elif self.count_mark == 6:
-                    # Stop for 2 seconds and go forward at the sixth intersection
-                    self.retreat_in_progress = True
-                    self.publish_velocity(0.0, 0.0)
-                    self.get_logger().info("STOP!!!")
-                    self.get_logger().info("FORWARD!!!")
-                    self.retreat_in_progress = False
-                    self.count_mark = 0
+                elif self.middle != 0 and not self.obstacle_detected:
+                    # Line detected and no obstacle, follow the appropriate path based on intersection count
+                    if self.count_mark == 1 or self.count_mark == 2 or self.count_mark == 3:
+                        # Follow the right path
+                        self.RLine = 1
+                    elif self.count_mark == 4:
+                        # Follow the left path
+                        self.RLine = 0
+                    elif self.count_mark == 5:
+                        # Stop for 2 seconds and go back
+                        self.retreat_in_progress = True
+                        self.angular_speed = -self.calculate_angular_speed(self.middle)
+                        self.linear_speed = -self.calculate_linear_speed(self.angular_speed)        
+                        self.publish_velocity(self.linear_speed, self.angular_speed)                          
+                        self.count_mark += 1
+                    elif self.count_mark == 6:
+                        # Stop for 2 seconds and go forward
+                        self.angular_speed = self.calculate_angular_speed(self.middle)
+                        self.linear_speed = self.calculate_linear_speed(self.angular_speed)        
+                        self.publish_velocity(self.linear_speed, self.angular_speed)  
+                        self.retreat_in_progress = True
+                        self.count_mark = 0
+                    
+                img_msg = bridge.cv2_to_imgmsg(frame, "bgr8")
+                self.image_pub.publish(img_msg)
 
                 # Publish the velocity commands
                 if not self.retreat_in_progress:
@@ -289,17 +286,17 @@ class CombinedDetectionNode(Node):
                     self.linear_speed = 0.0
                     # self.get_logger().info("Not found!!!")
                     self.publish_velocity(0.0, 0.0)
+
                 else:
                     # Set linear and angular speeds to negative during the retreat phase
                     self.angular_speed = -self.calculate_angular_speed(self.middle)
                     self.linear_speed = -self.calculate_linear_speed(self.angular_speed)        
                     self.publish_velocity(self.linear_speed, self.angular_speed)                      
-
-                self.publish_velocity(self.twist_cmd.linear.x, self.twist_cmd.angular.z)                      
+                   
             else:
                 self.angular_speed = 0.0
                 self.linear_speed = 0.0
-                # self.get_logger().info("Not found!!!")
+                self.get_logger().info("Not found!!!")
                 self.publish_velocity(0.0, 0.0)
 
 
