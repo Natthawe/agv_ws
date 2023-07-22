@@ -85,8 +85,9 @@ class CombinedDetectionNode(Node):
         self.middle = 0
         self.mark = 0
         self.count_mark = 0
-        # Flag to indicate if retreat is in progress
-        self.retreat_in_progress = False        
+  
+
+        self.retreat_in_progress = False  # Initialize retreat_in_progress to False        
 
         self.start_time = time.time()
 
@@ -145,96 +146,96 @@ class CombinedDetectionNode(Node):
         num_rows = min(5, frame.shape[0] // 15)
 
         for i in range(num_rows):
-                start_height.append(thresh.shape[0] - 1 - (15 * i))
-                signed_thresh = thresh[start_height[i]].astype(np.int16)
-                diff.append(np.diff(signed_thresh))
+            start_height.append(thresh.shape[0] - 1 - (15 * i))
+            signed_thresh = thresh[start_height[i]].astype(np.int16)
+            diff.append(np.diff(signed_thresh))
 
-                points.append(np.where(np.logical_or(diff[i] > 200, diff[i] < -200)))
-                cv2.line(frame, (0, start_height[i]), (thresh.shape[1], start_height[i]), (255, 0, 0), 2)
+            points.append(np.where(np.logical_or(diff[i] > 200, diff[i] < -200)))
+            cv2.line(frame, (0, start_height[i]), (thresh.shape[1], start_height[i]), (255, 0, 0), 2)
 
-                self.point_count = 0
-                for j in range(len(points[i][0])):
-                    self.middle = points[i][0][j]
-                    cv2.circle(frame, (self.middle, start_height[i]), 5, (0, 0, 255), 2)
-                    cv2.circle(frame, (thresh.shape[1] // 2, start_height[i]), 5, (255, 0, 0), 2)
-                    cv2.line(frame, (self.middle, start_height[i]), (thresh.shape[1] // 2, start_height[i]), (0, 255, 0), 2)
-                    
-                    
-                    if i == 4:
-                        self.point_count += 1
-                    
-                    
-                if self.point_count != self.last_point_count:
-                    self.last_point_count = self.point_count
-                    # print("point_count:", self.point_count)
+            self.point_count = 0
+            for j in range(len(points[i][0])):
+                self.middle = points[i][0][j]
+                cv2.circle(frame, (self.middle, start_height[i]), 5, (0, 0, 255), 2)
+                cv2.circle(frame, (thresh.shape[1] // 2, start_height[i]), 5, (255, 0, 0), 2)
+                cv2.line(frame, (self.middle, start_height[i]), (thresh.shape[1] // 2, start_height[i]), (0, 255, 0), 2)
+                
+                
+                if i == 4:
+                    self.point_count += 1
+                
+                
+            if self.point_count != self.last_point_count:
+                self.last_point_count = self.point_count
+                # print("point_count:", self.point_count)
 
-                    if self.point_count >= 10:
-                        if self.mark == 0:
-                            self.count_mark +=1                            
-                            self.count += 1
-                            self.mark = 1
-                            print("Count:", self.count)
-                            print("RLine:", self.RLine)
-                            print("Mark:", self.mark)
-                            print("Count_Mark:", self.count_mark)
+                if self.point_count >= 4:
+                    if self.mark == 0:
+                        self.count_mark +=1                            
+                        self.count += 1
+                        self.mark = 1
+                        print("Count:", self.count)
+                        print("RLine:", self.RLine)
+                        print("Mark:", self.mark)
+                        print("Count_Mark:", self.count_mark)
 
-                    
-                    if self.point_count == 2:
-                        self.mark = 0
-                        if self.count >= 2:
+                
+                if self.point_count == 2:
+                    self.mark = 0
+                    if self.count >= 2:
 
-                            if self.RLine == 1:
-                                self.RLine = 0
-                                
-                            else:
-                                self.RLine = 1
-                            self.count = 0
-                            print("Count:", self.count)
-                            print("RLine:", self.RLine)
-                            print("Mark:", self.mark)
+                        if self.RLine == 1:
+                            self.RLine = 0
+                            
+                        else:
+                            self.RLine = 1
+                        self.count = 0
+                        print("Count:", self.count)
+                        print("RLine:", self.RLine)
+                        print("Mark:", self.mark)
 
 
-                if len(points) >= 5:
+            if len(points) >= 5:
+                if self.RLine == 1:
+                    if len(points[4][0]) > 0:
+                        rr = len(points[4][0])
+                        self.middle = points[4][0][rr-1] 
+                        #print("R5",self.middle)
+                else :
+                    if len(points[4][0]) > 0:
+                        self.middle = points[4][0][0]
+                        #print("L5",self.middle)
+                        
+                if self.middle == 0:
                     if self.RLine == 1:
-                        if len(points[4][0]) > 0:
-                            rr = len(points[4][0])
-                            self.middle = points[4][0][rr-1] 
+                        if len(points[3][0]) > 0:
+                            rr = len(points[3][0])
+                            self.middle = points[3][0][rr-1] 
                             #print("R5",self.middle)
                     else :
-                        if len(points[4][0]) > 0:
-                            self.middle = points[4][0][0]
+                        if len(points[3][0]) > 0:
+                            self.middle = points[3][0][0]
                             #print("L5",self.middle)
-                            
-                    if self.middle == 0:
-                        if self.RLine == 1:
-                            if len(points[3][0]) > 0:
-                                rr = len(points[3][0])
-                                self.middle = points[3][0][rr-1] 
-                                #print("R5",self.middle)
-                        else :
-                            if len(points[3][0]) > 0:
-                                self.middle = points[3][0][0]
-                                #print("L5",self.middle)
-                    if self.middle == 0:
-                        if self.RLine == 1:
-                            if len(points[2][0]) > 0:
-                                rr = len(points[2][0])
-                                self.middle = points[2][0][rr-1] 
-                                #print("R5",self.middle)
-                        else :
-                            if len(points[2][0]) > 0:
-                                self.middle = points[2][0][0]
-                                #print("L5",self.middle)
-                    if self.middle == 0:
-                        if self.RLine == 1:
-                            if len(points[1][0]) > 0:
-                                rr = len(points[1][0])
-                                self.middle = points[1][0][rr-1] 
-                                #print("R5",self.middle)
-                        else :
-                            if len(points[1][0]) > 0:
-                                self.middle = points[1][0][0]
-                                #print("L5",self.middle)
+                if self.middle == 0:
+                    if self.RLine == 1:
+                        if len(points[2][0]) > 0:
+                            rr = len(points[2][0])
+                            self.middle = points[2][0][rr-1] 
+                            #print("R5",self.middle)
+                    else :
+                        if len(points[2][0]) > 0:
+                            self.middle = points[2][0][0]
+                            #print("L5",self.middle)
+                if self.middle == 0:
+                    if self.RLine == 1:
+                        if len(points[1][0]) > 0:
+                            rr = len(points[1][0])
+                            self.middle = points[1][0][rr-1] 
+                            #print("R5",self.middle)
+                    else :
+                        if len(points[1][0]) > 0:
+                            self.middle = points[1][0][0]
+                            #print("L5",self.middle)
         
         if self.obstacle_detected:
             # If an obstacle is detected while on the line, stop the robot
@@ -245,34 +246,66 @@ class CombinedDetectionNode(Node):
             # Line following behavior
             if self.middle != 0:
                 self.angular_speed = self.calculate_angular_speed(self.middle)
-                self.linear_speed = self.calculate_linear_speed(self.angular_speed)                
+                self.linear_speed = self.calculate_linear_speed(self.angular_speed)        
+                self.publish_velocity(self.linear_speed, self.angular_speed)  
+
+                # Handle intersection behavior
+                if self.count_mark == 1:
+                    # Follow the right path at the first intersection
+                    self.RLine = 1
+                    # self.get_logger().info("RIGHT!!!")
+                elif self.count_mark == 2:
+                    # Follow the right path at the second intersection
+                    self.RLine = 1
+                    # self.get_logger().info("RIGHT!!!")
+                elif self.count_mark == 3:
+                    # Follow the right path at the third intersection
+                    self.RLine = 1
+                    # self.get_logger().info("RIGHT!!!")
+                elif self.count_mark == 4:
+                    # Follow the left path at the fourth intersection
+                    self.RLine = 0
+                    # self.get_logger().info("LEFT!!!")
+                elif self.count_mark == 5:
+                    # Stop for 2 seconds and go back at the fifth intersection
+                    self.retreat_in_progress = True
+                    self.publish_velocity(0.0, 0.0)
+                    self.get_logger().info("STOP!!!")
+                    self.get_logger().info("BACKWARD!!!")
+                    self.retreat_in_progress = False
+                    self.count_mark += 1
+                elif self.count_mark == 6:
+                    # Stop for 2 seconds and go forward at the sixth intersection
+                    self.retreat_in_progress = True
+                    self.publish_velocity(0.0, 0.0)
+                    self.get_logger().info("STOP!!!")
+                    self.get_logger().info("FORWARD!!!")
+                    self.retreat_in_progress = False
+                    self.count_mark = 0
+
+                # Publish the velocity commands
+                if not self.retreat_in_progress:
+                    self.angular_speed = 0.0
+                    self.linear_speed = 0.0
+                    # self.get_logger().info("Not found!!!")
+                    self.publish_velocity(0.0, 0.0)
+                else:
+                    # Set linear and angular speeds to negative during the retreat phase
+                    self.angular_speed = -self.calculate_angular_speed(self.middle)
+                    self.linear_speed = -self.calculate_linear_speed(self.angular_speed)        
+                    self.publish_velocity(self.linear_speed, self.angular_speed)                      
+
+                self.publish_velocity(self.twist_cmd.linear.x, self.twist_cmd.angular.z)                      
             else:
-                # If the line is lost, stop the robot
-                self.angular_speed = self.calculate_angular_speed(self.middle)
-                self.linear_speed = self.calculate_linear_speed(self.angular_speed)
-                self.get_logger().info("Not found!!!")
+                self.angular_speed = 0.0
+                self.linear_speed = 0.0
+                # self.get_logger().info("Not found!!!")
+                self.publish_velocity(0.0, 0.0)
 
-            self.twist_cmd.angular.z = self.angular_speed
-            self.twist_cmd.linear.x = self.calculate_linear_speed(self.twist_cmd.angular.z)
-
-            # Publish the velocity commands
-            self.publish_velocity(self.linear_speed, self.angular_speed)
 
         img_msg = bridge.cv2_to_imgmsg(frame, "bgr8")
-        self.image_pub.publish(img_msg)         
-        # Check if count_mark reaches 5
-        if self.count_mark == 5:
-            self.angular_speed = 0.0
-            self.linear_speed = 0.0
-            self.count_mark = 0
-            self.publish_velocity(self.linear_speed, self.angular_speed)
-
-        # Check if count_mark reaches 5
-        if self.count_mark == 5:
-            self.angular_speed = 0.0
-            self.linear_speed = 0.0
-            self.count_mark = 0
-            self.publish_velocity(self.linear_speed, self.angular_speed)                 
+        self.image_pub.publish(img_msg)    
+           
 
     def calculate_linear_speed(self, angular_speed):
         if self.previous_angular_speed != 0.0 and angular_speed != self.previous_angular_speed:
