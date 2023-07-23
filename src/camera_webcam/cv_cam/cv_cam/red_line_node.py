@@ -175,7 +175,8 @@ class ImageProcessingNode(Node):
 
             # print(f'points: {points}')
 
-            self.middle = 0
+            self.point_count = 0
+
             for j in range(len(points[i][0])):
                 self.middle = points[i][0][j]
                 cv2.circle(frame_rgb, (self.middle, start_height[i]), 5, (0, 0, 255), 1)
@@ -187,9 +188,9 @@ class ImageProcessingNode(Node):
 
             if self.point_count != self.last_point_count:
                 self.last_point_count = self.point_count
-                # print("point_count:", self.point_count)
+                print("point_count:", self.point_count)
 
-                if self.point_count >= 4: #10
+                if self.point_count >= 10: #10
                     if self.mark == 0:
                         self.count_mark +=1                            
                         self.count += 1
