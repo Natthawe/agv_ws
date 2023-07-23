@@ -184,38 +184,79 @@ class ImageProcessingNode(Node):
                 if i == 4:
                     self.point_count += 1
 
-            if self.point_count != self.last_point_count:
-                self.last_point_count = self.point_count
-                # print("point_count:", self.point_count)
+        if self.point_count != self.last_point_count:
+            self.last_point_count = self.point_count
+            # print("point_count:", self.point_count)
 
-                if self.point_count >= 10: #10
-                    if self.mark == 0:
-                        self.count_mark +=1                            
-                        self.count += 1
-                        self.mark = 1
-                        print("Count:", self.count)
-                        print("RLine:", self.RLine)
-                        print("Mark:", self.mark)
-                        print("Count_Mark:", self.count_mark)
+            if self.point_count >= 10: #10
+                if self.mark == 0:
+                    self.count_mark +=1                            
+                    self.count += 1
+                    self.mark = 1
+                    print("Count:", self.count)
+                    print("RLine:", self.RLine)
+                    print("Mark:", self.mark)
+                    print("Count_Mark:", self.count_mark)
+                    
+            if self.point_count == 2:
+                self.mark = 0
+                if self.count >= 2:
+
+                    if self.RLine == 1:
+                        self.RLine = 0
                         
-                if self.point_count == 2:
-                    self.mark = 0
-                    if self.count >= 2:
+                    else:
+                        self.RLine = 1
+                    self.count = 0
+                    print("Count:", self.count)
+                    print("RLine:", self.RLine)
+                    print("Mark:", self.mark)                                           
 
-                        if self.RLine == 1:
-                            self.RLine = 0
-                            
-                        else:
-                            self.RLine = 1
-                        self.count = 0
-                        print("Count:", self.count)
-                        print("RLine:", self.RLine)
-                        print("Mark:", self.mark)                                           
+        if len(points) >= 5:
+            if self.RLine == 1:
+                if len(points[4][0]) > 0:
+                    rr = len(points[4][0])
+                    self.middle = points[4][0][rr-1] 
+                    #print("R5",self.middle)
+            else :
+                if len(points[4][0]) > 0:
+                    self.middle = points[4][0][0]
+                    #print("L5",self.middle)
+                    
+            if self.middle == 0:
+                if self.RLine == 1:
+                    if len(points[3][0]) > 0:
+                        rr = len(points[3][0])
+                        self.middle = points[3][0][rr-1] 
+                        #print("R5",self.middle)
+                else :
+                    if len(points[3][0]) > 0:
+                        self.middle = points[3][0][0]
+                        #print("L5",self.middle)
+            if self.middle == 0:
+                if self.RLine == 1:
+                    if len(points[2][0]) > 0:
+                        rr = len(points[2][0])
+                        self.middle = points[2][0][rr-1] 
+                        #print("R5",self.middle)
+                else :
+                    if len(points[2][0]) > 0:
+                        self.middle = points[2][0][0]
+                        #print("L5",self.middle)
+            if self.middle == 0:
+                if self.RLine == 1:
+                    if len(points[1][0]) > 0:
+                        rr = len(points[1][0])
+                        self.middle = points[1][0][rr-1] 
+                        #print("R5",self.middle)
+                else :
+                    if len(points[1][0]) > 0:
+                        self.middle = points[1][0][0]
+                        #print("L5",self.middle)
 
         if self.obstacle_detected:
-            # If an obstacle is detected while on the line, stop the robot
-            self.angular_speed = 0.0
-            self.linear_speed = 0.0
+            self.publish_velocity(0.0, 0.0)
+            self.get_logger().info("Found Obstacle!!!")
 
         else:
             # Line following behavior
@@ -224,12 +265,8 @@ class ImageProcessingNode(Node):
                 self.linear_speed = self.calculate_linear_speed(self.angular_speed)                
             else:
                 # If the line is lost, stop the robot
-                self.angular_speed = 0.0
-                self.linear_speed = 0.0
+                self.publish_velocity(0.0, 0.0)
                 self.get_logger().info("Not found!!!")
-
-            self.twist_cmd.angular.z = self.angular_speed
-            self.twist_cmd.linear.x = self.calculate_linear_speed(self.twist_cmd.angular.z)
 
             # Publish the velocity commands
             self.publish_velocity(self.linear_speed, self.angular_speed)
