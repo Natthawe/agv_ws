@@ -266,13 +266,6 @@ class ImageProcessingNode(Node):
 
             # Publish the velocity commands
             self.publish_velocity(self.linear_speed, self.angular_speed)
-       
-        # Check if count_mark reaches 5
-        if self.count_mark == 5:
-            self.angular_speed = 0.0
-            self.linear_speed = 0.0
-            self.count_mark = 0
-            self.publish_velocity(self.linear_speed, self.angular_speed)
 
         red_mask_rgb = cv2.cvtColor(red_mask, cv2.COLOR_GRAY2RGB)
         merge = np.hstack((frame, frame_rgb))
