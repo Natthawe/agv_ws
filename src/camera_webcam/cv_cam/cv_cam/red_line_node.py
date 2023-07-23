@@ -86,9 +86,10 @@ class ImageProcessingNode(Node):
         self.mark = 0
         self.count_mark = 0
   
-
         self.retreat_in_progress = False  # Initialize retreat_in_progress to False        
-
+        self.retreat_start_time = 0.0
+        self.retreat_duration = 3.0
+        
         self.start_time = time.time()
 
         self.pid_controller = PIDController(kp=5.0, ki=0.0, kd=0.0, setpoint=80)
@@ -149,8 +150,6 @@ class ImageProcessingNode(Node):
         # Use the mask to extract the red pixels from the original image
         red_filtered_image = cv2.bitwise_and(frame, frame, mask=red_mask)
 
-        # Reverse line detection
-        reverse_line_detected, reverse_line_position = self.detect_reverse_line(red_mask)
 
         # convert black to white and white to black
         cv2.bitwise_not(red_mask, red_mask)
@@ -255,25 +254,7 @@ class ImageProcessingNode(Node):
                 else :
                     if len(points[1][0]) > 0:
                         self.middle = points[1][0][0]
-                        #print("L5",self.middle)
-
-        # Reverse line detection when self.count_mark reaches 5
-        if self.count_mark == 5:
-            reverse_line_detected, reverse_line_position = self.detect_reverse_line(red_mask)
-            if reverse_line_detected:
-                self.RLine = 0
-                self.twist_cmd.linear.x = -0.2  # Adjust the backward speed as needed
-                self.twist_cmd.angular.z = self.calculate_angular_speed(reverse_line_position)
-
-            else:
-                self.RLine = 1
-                self.angular_speed = self.calculate_angular_speed(self.middle)
-                self.linear_speed = self.calculate_linear_speed(self.angular_speed)
-                self.twist_cmd.linear.x = self.linear_speed
-                self.twist_cmd.angular.z = self.angular_speed
-
-            # Publish the velocity commands
-            self.publisher.publish(self.twist_cmd)       
+                        #print("L5",self.middle)     
 
         if self.obstacle_detected:
             self.publish_velocity(0.0, 0.0)
@@ -299,33 +280,6 @@ class ImageProcessingNode(Node):
 
         processed_image_msg = bridge.cv2_to_imgmsg(frame_rgb, "bgr8")
         self.image_pub.publish(processed_image_msg)
-
-    def detect_reverse_line(self, red_mask):
-        # Define the number of points to sample for reverse line detection
-        sampling_points = 5
-        sampling_gap = red_mask.shape[0] // sampling_points
-
-        # Initialize variables to track reverse line detection
-        reverse_line_detected = False
-        reverse_line_position = None
-
-        for i in range(sampling_points):
-            start_height = red_mask.shape[0] - 1 - (sampling_gap * i)
-            row = red_mask[start_height, :]
-
-            # Count the number of non-zero (white) pixels in the row
-            white_pixel_count = np.count_nonzero(row)
-
-            # If a certain threshold of white pixels is detected in the row, consider it as a reverse line
-            # You may need to adjust the threshold value based on your specific use case
-            threshold = 0.2 * red_mask.shape[1]  # 20% of the total row width
-            if white_pixel_count > threshold:
-                reverse_line_detected = True
-                reverse_line_position = np.argmax(row)  # Find the position of the highest white pixel in the row
-                break  # Exit the loop once a reverse line is detected
-
-        return reverse_line_detected, reverse_line_position
-
 
     def calculate_linear_speed(self, angular_speed):
         if self.previous_angular_speed != 0.0 and angular_speed != self.previous_angular_speed:
