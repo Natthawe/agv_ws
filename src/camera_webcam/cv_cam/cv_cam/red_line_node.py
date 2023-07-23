@@ -101,9 +101,22 @@ class ImageProcessingNode(Node):
         self.previous_angular_speed = 0.0        
 
     def reverse(self):
-        # Make the robot move backward
-        backward_speed = -0.3
-        self.publish_velocity(backward_speed, 0.0)
+        if self.obstacle_detected:
+            self.publish_velocity_reverse(0.0, 0.0)
+            self.get_logger().info("Found Obstacle!!!")
+
+        else:
+            # Line following behavior
+            if self.middle != 0:
+                self.angular_speed = -self.calculate_angular_speed(self.middle)
+                self.linear_speed = -self.calculate_linear_speed(self.angular_speed)                
+            else:
+                # If the line is lost, stop the robot
+                self.publish_velocity_reverse(0.0, 0.0)
+                self.get_logger().info("Not found!!!")
+
+                # Publish the velocity commands
+                self.publish_velocity_reverse(self.linear_speed, self.angular_speed)
 
     def obstacle_detection_callback(self, msg):
         # Convert LaserScan angles to radians
@@ -205,9 +218,9 @@ class ImageProcessingNode(Node):
                     print("Mark:", self.mark)
                     print("Count_Mark:", self.count_mark)
                     
-            if self.count_mark == 5:
-                self.reverse()  # Call the reverse function when count_mark reaches 5
-                self.count_mark = 0  # Reset count_mark back to 0 after reversing
+                    if self.count_mark == 5:
+                        self.reverse()
+                        self.count_mark = 0
 
             if self.point_count == 2:
                 self.mark = 0
@@ -215,7 +228,6 @@ class ImageProcessingNode(Node):
 
                     if self.RLine == 1:
                         self.RLine = 0
-                        
                     else:
                         self.RLine = 1
                     self.count = 0
@@ -279,8 +291,8 @@ class ImageProcessingNode(Node):
                 self.publish_velocity(0.0, 0.0)
                 self.get_logger().info("Not found!!!")
 
-            # Publish the velocity commands
-            self.publish_velocity(self.linear_speed, self.angular_speed)
+                # Publish the velocity commands
+                self.publish_velocity(self.linear_speed, self.angular_speed)
 
         red_mask_rgb = cv2.cvtColor(red_mask, cv2.COLOR_GRAY2RGB)
         merge = np.hstack((frame, frame_rgb))
@@ -301,17 +313,40 @@ class ImageProcessingNode(Node):
 
         self.previous_angular_speed = angular_speed
         return linear
+    
+    def calculate_linear_speed_reverse(self, angular_speed):
+        if self.previous_angular_speed != 0.0 and angular_speed != self.previous_angular_speed:
+            linear = self.max_linear_speed * self.linear_speed_reduction_factor
+        else:
+            linear = self.max_linear_speed
+
+        if linear > self.max_linear_speed:
+            linear = self.max_linear_speed
+
+        self.previous_angular_speed = angular_speed
+        return -linear    
 
     def calculate_angular_speed(self, pp):
         err = (pp - 80)*(-1)
         val = err / 800
         return val
+
+    def calculate_angular_speed_reverse(self, pp):
+        err = (pp - 80)*(-1)
+        val = err / 800
+        return -val    
         
     def publish_velocity(self, linear, angular):
         twist_msg = Twist()
         twist_msg.linear.x = linear
         twist_msg.angular.z = angular
         self.publisher.publish(twist_msg) 
+
+    def publish_velocity_reverse(self, linear, angular):
+        twist_msg = Twist()
+        twist_msg.linear.x = -linear
+        twist_msg.angular.z = -angular
+        self.publisher.publish(twist_msg)         
 
 def main(args=None):
     rclpy.init(args=args)
