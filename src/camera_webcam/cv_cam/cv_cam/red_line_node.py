@@ -155,15 +155,13 @@ class ImageProcessingNode(Node):
         diff = []
         points = []
         start_height = []
-
-        left_points = []
-        middle_points = []
-        right_points = []
         self.middle = 0
 
         (h, w) = frame.shape[:2]
         sampling_points = 5
         sampling_gap = h // sampling_points
+
+
         for i in range(sampling_points):
             start_height.append(h - 1 - (sampling_gap * i))
             signed_thresh = red_mask[start_height[i]].astype(np.int16)  # select only one row
@@ -188,7 +186,7 @@ class ImageProcessingNode(Node):
 
             if self.point_count != self.last_point_count:
                 self.last_point_count = self.point_count
-                print("point_count:", self.point_count)
+                # print("point_count:", self.point_count)
 
                 if self.point_count >= 10: #10
                     if self.mark == 0:
@@ -199,8 +197,7 @@ class ImageProcessingNode(Node):
                         print("RLine:", self.RLine)
                         print("Mark:", self.mark)
                         print("Count_Mark:", self.count_mark)
-
-                
+                        
                 if self.point_count == 2:
                     self.mark = 0
                     if self.count >= 2:
@@ -213,38 +210,7 @@ class ImageProcessingNode(Node):
                         self.count = 0
                         print("Count:", self.count)
                         print("RLine:", self.RLine)
-                        print("Mark:", self.mark)    
-
-                if self.middle == 0:
-                    if self.RLine == 1:
-                        if len(points[3][0]) > 0:
-                            rr = len(points[3][0])
-                            self.middle = points[3][0][rr-1] 
-                            #print("R5",self.middle)
-                    else :
-                        if len(points[3][0]) > 0:
-                            self.middle = points[3][0][0]
-                            #print("L5",self.middle)
-                if self.middle == 0:
-                    if self.RLine == 1:
-                        if len(points[2][0]) > 0:
-                            rr = len(points[2][0])
-                            self.middle = points[2][0][rr-1] 
-                            #print("R5",self.middle)
-                    else :
-                        if len(points[2][0]) > 0:
-                            self.middle = points[2][0][0]
-                            #print("L5",self.middle)
-                if self.middle == 0:
-                    if self.RLine == 1:
-                        if len(points[1][0]) > 0:
-                            rr = len(points[1][0])
-                            self.middle = points[1][0][rr-1] 
-                            #print("R5",self.middle)
-                    else :
-                        if len(points[1][0]) > 0:
-                            self.middle = points[1][0][0]
-                            #print("L5",self.middle)                                                    
+                        print("Mark:", self.mark)                                           
 
         if self.obstacle_detected:
             # If an obstacle is detected while on the line, stop the robot
