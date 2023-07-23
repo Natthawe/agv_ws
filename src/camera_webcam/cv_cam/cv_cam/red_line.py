@@ -100,11 +100,6 @@ class ImageProcessingNode(Node):
         self.linear_speed_reduction_factor = 1.0  # Adjust the reduction factor as needed
         self.previous_angular_speed = 0.0        
 
-    def reverse(self):
-        # Make the robot move backward
-        backward_speed = -0.3
-        self.publish_velocity(backward_speed, 0.0)
-
     def obstacle_detection_callback(self, msg):
         # Convert LaserScan angles to radians
         angles = np.arange(msg.angle_min, msg.angle_max, msg.angle_increment)
@@ -204,10 +199,6 @@ class ImageProcessingNode(Node):
                     print("RLine:", self.RLine)
                     print("Mark:", self.mark)
                     print("Count_Mark:", self.count_mark)
-                    
-            if self.count_mark == 5:
-                self.reverse()  # Call the reverse function when count_mark reaches 5
-                self.count_mark = 0  # Reset count_mark back to 0 after reversing
 
             if self.point_count == 2:
                 self.mark = 0
@@ -276,7 +267,8 @@ class ImageProcessingNode(Node):
                 self.linear_speed = self.calculate_linear_speed(self.angular_speed)                
             else:
                 # If the line is lost, stop the robot
-                self.publish_velocity(0.0, 0.0)
+                self.angular_speed = 0.0
+                self.linear_speed = 0.0
                 self.get_logger().info("Not found!!!")
 
             # Publish the velocity commands

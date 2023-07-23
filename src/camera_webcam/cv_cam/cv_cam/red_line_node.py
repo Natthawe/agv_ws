@@ -116,7 +116,7 @@ class ImageProcessingNode(Node):
                 self.get_logger().info("Not found!!!")
 
                 # Publish the velocity commands
-                self.publish_velocity_reverse(self.linear_speed, self.angular_speed)
+            self.publish_velocity_reverse(self.linear_speed, self.angular_speed)
 
     def obstacle_detection_callback(self, msg):
         # Convert LaserScan angles to radians
@@ -218,9 +218,9 @@ class ImageProcessingNode(Node):
                     print("Mark:", self.mark)
                     print("Count_Mark:", self.count_mark)
                     
-                    if self.count_mark == 5:
-                        self.reverse()
-                        self.count_mark = 0
+            if self.count_mark == 5:
+                self.reverse()
+                self.count_mark = 0
 
             if self.point_count == 2:
                 self.mark = 0
@@ -292,7 +292,7 @@ class ImageProcessingNode(Node):
                 self.get_logger().info("Not found!!!")
 
                 # Publish the velocity commands
-                self.publish_velocity(self.linear_speed, self.angular_speed)
+            self.publish_velocity(self.linear_speed, self.angular_speed)
 
         red_mask_rgb = cv2.cvtColor(red_mask, cv2.COLOR_GRAY2RGB)
         merge = np.hstack((frame, frame_rgb))

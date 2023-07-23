@@ -30,7 +30,9 @@ setup(
             'test_topic = cv_cam.test_topic:main',
             'follower_pid = cv_cam.follower_pid:main',
             'linelaser = cv_cam.linelaser:main',
-            'red_line = cv_cam.red_line_node:main',
+            'red_line_b = cv_cam.red_line_node:main',
+            'red_line = cv_cam.red_line:main',
+            
         ],
     },
 )
