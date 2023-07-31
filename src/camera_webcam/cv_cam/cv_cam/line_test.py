@@ -53,12 +53,13 @@ class ImageProcessingNode(Node):
         # Initialize the Twist message to move forward
         self.twist_cmd = Twist()
         self.twist_cmd.linear.x = 0.5  # Set the linear speed (adjust as needed)   
+        self.angular_speed = 0.0
 
         # Line detection variables
         self.middle = 0
         self.frame = None
         # PID controller for angular speed
-        self.angular_pid = PIDController(kp=0.01, ki=0.0, kd=0.001, max_output=0.2)        
+        self.angular_pid = PIDController(kp=0.01, ki=0.0, kd=0.001, max_output=0.08)        
 
     def line_detection_callback(self, msg):
 
@@ -118,8 +119,18 @@ class ImageProcessingNode(Node):
                 cv2.circle(frame_rgb, (w // 2, start_height[i]), 5, (255, 0, 0), 1)
                 cv2.line(frame_rgb, (self.middle, start_height[i]), (w // 2, start_height[i]), (0, 255, 0), 1)
 
-        angular_speed = self.calculate_angular_speed(self.middle)
-        self.publish_velocity(self.twist_cmd.linear.x, angular_speed)
+        # Line following behavior
+        if self.middle != 0:
+            self.linear_speed = self.calculate_linear_speed(self.middle)                
+            self.angular_speed = self.calculate_angular_speed(self.middle)             
+        else:
+            # If the line is lost, stop the robot
+            self.linear_speed = 0.0
+            self.angular_speed = 0.0
+            self.get_logger().info("Not found!!!")
+
+        # Publish the velocity commands
+        self.publish_velocity(self.linear_speed, self.angular_speed)
 
         red_mask_rgb = cv2.cvtColor(red_mask, cv2.COLOR_GRAY2RGB)
         merge = np.hstack((self.frame, frame_rgb))
@@ -133,13 +144,23 @@ class ImageProcessingNode(Node):
         max_linear_speed = 0.5  # Maximum linear speed (adjust as needed)
         distance_from_center = abs(middle - (self.frame.shape[1] // 2))
         linear_speed = max_linear_speed * (1 - distance_from_center / (self.frame.shape[1] // 2))
+        # linear_speed = 0.5
         return linear_speed
 
+    # turn right -
+    # turn left +
+
     def calculate_angular_speed(self, pp):
-        err = (pp - 80)*(-1)
-        val = err / 800
-        return val
-        
+        center_x = self.frame.shape[1] // 2
+        error = center_x - pp
+        angular_speed = -self.angular_pid.compute(error)
+        return angular_speed
+
+    # def calculate_angular_speed(self, pp):
+    #     err = (pp - 80)*(-1)
+    #     val = err / 800
+    #     return val
+
     def publish_velocity(self, linear, angular):
         twist_msg = Twist()
         twist_msg.linear.x = linear
