@@ -59,7 +59,7 @@ class ImageProcessingNode(Node):
         self.middle = 0
         self.frame = None
         # PID controller for angular speed
-        self.angular_pid = PIDController(kp=0.01, ki=0.0, kd=0.001, max_output=0.08)        
+        self.angular_pid = PIDController(kp=20.0, ki=0.0, kd=0.0, max_output=0.08)        
 
     def line_detection_callback(self, msg):
 
@@ -141,10 +141,10 @@ class ImageProcessingNode(Node):
         self.image_pub.publish(processed_image_msg)
 
     def calculate_linear_speed(self, middle):
-        max_linear_speed = 0.5  # Maximum linear speed (adjust as needed)
-        distance_from_center = abs(middle - (self.frame.shape[1] // 2))
-        linear_speed = max_linear_speed * (1 - distance_from_center / (self.frame.shape[1] // 2))
-        # linear_speed = 0.5
+        # max_linear_speed = 0.5  # Maximum linear speed (adjust as needed)
+        # distance_from_center = abs(middle - (self.frame.shape[1] // 2))
+        # linear_speed = max_linear_speed * (1 - distance_from_center / (self.frame.shape[1] // 2))
+        linear_speed = 0.5
         return linear_speed
 
     # turn right -
@@ -153,7 +153,7 @@ class ImageProcessingNode(Node):
     def calculate_angular_speed(self, pp):
         center_x = self.frame.shape[1] // 2
         error = center_x - pp
-        angular_speed = -self.angular_pid.compute(error)
+        angular_speed = self.angular_pid.compute(error)
         return angular_speed
 
     # def calculate_angular_speed(self, pp):
