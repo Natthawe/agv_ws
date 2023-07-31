@@ -41,8 +41,8 @@ class ImageProcessingNode(Node):
         super().__init__('image_processing_node')
 
         # Set the desired obstacle detection range
-        self.min_angle = -30.0  # Minimum angle (degrees)
-        self.max_angle = 30.0   # Maximum angle (degrees)
+        self.min_angle = -10.0  # Minimum angle (degrees)
+        self.max_angle = 10.0  # Maximum angle (degrees)
 
         # Subscribe to the LaserScan topic
         self.laser_subscription = self.create_subscription(
@@ -111,12 +111,14 @@ class ImageProcessingNode(Node):
                 filtered_ranges.append(distance)
 
         # Check for obstacles within the desired range
-        self.obstacle_detected = any(distance < 0.65 for distance in filtered_ranges)  # Adjust the threshold as needed
+        self.obstacle_detected = any(distance < 2.0 for distance in filtered_ranges)  # Adjust the threshold as needed
 
         if self.obstacle_detected:
             self.stop_time = time.time()
             self.obstacle_detected = True
-            self.publish_velocity(0.0, 0.0)
+            self.angular_speed = 0.0
+            self.linear_speed = 0.0            
+            self.publish_velocity(self.linear_speed, self.angular_speed)
         else:
             # If no obstacle is detected, check the time difference before allowing the robot to move forward again
             if self.obstacle_detected and time.time() - self.stop_time >= 2.0:
