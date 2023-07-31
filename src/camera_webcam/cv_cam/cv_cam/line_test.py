@@ -9,6 +9,30 @@ import cv2
 import numpy as np
 import time
 
+class PIDController:
+    def __init__(self, kp, ki, kd, max_output):
+        self.kp = kp
+        self.ki = ki
+        self.kd = kd
+        self.max_output = max_output
+
+        self.prev_error = 0
+        self.integral = 0
+
+    def compute(self, error):
+        self.integral += error
+        derivative = error - self.prev_error
+        self.prev_error = error
+
+        output = self.kp * error + self.ki * self.integral + self.kd * derivative
+
+        if output > self.max_output:
+            output = self.max_output
+        elif output < -self.max_output:
+            output = -self.max_output
+
+        return output
+
 class ImageProcessingNode(Node):
     def __init__(self):
         super().__init__('image_processing_node')
@@ -33,6 +57,8 @@ class ImageProcessingNode(Node):
         # Line detection variables
         self.middle = 0
         self.frame = None
+        # PID controller for angular speed
+        self.angular_pid = PIDController(kp=0.01, ki=0.0, kd=0.001, max_output=0.2)        
 
     def line_detection_callback(self, msg):
 
