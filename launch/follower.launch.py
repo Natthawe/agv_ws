@@ -25,7 +25,11 @@ def generate_launch_description():
 
     # usb_cam
     usb_cam_dir = get_package_share_directory('usb_cam') 
-    launch_usb_cam_pkg = os.path.join(usb_cam_dir, 'launch')    
+    launch_usb_cam_pkg = os.path.join(usb_cam_dir, 'launch')   
+    
+    # rplidar_ros node
+    rplidar_ros_dir = get_package_share_directory('rplidar_ros')
+    launch_rplidar_ros_pkg = os.path.join(rplidar_ros_dir, 'launch')      
 
 
     return LaunchDescription([
@@ -49,4 +53,9 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(launch_usb_cam_pkg, 'demo_launch.py'))
         ),                      
+
+    # rplidar_ros        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(launch_rplidar_ros_pkg, 'rplidar_a3.launch.py'))
+        ),        
     ])    

@@ -24,15 +24,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cv_cam = cv_cam.cv_cam_node:main',
-            'cv2_cam = cv_cam.cv2_cam_node:main',
-            'follower = cv_cam.follower_node:main',
             'test_topic = cv_cam.test_topic:main',
             'follower_pid = cv_cam.follower_pid:main',
-            'linelaser = cv_cam.linelaser:main',
-            'red_line_b = cv_cam.red_line_node:main',
             'red_line = cv_cam.red_line:main',
-            
+            'laser_range = cv_cam.laser_range:main',
+            'line_test = cv_cam.line_test:main',
         ],
     },
 )
