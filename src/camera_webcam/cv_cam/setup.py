@@ -29,6 +29,9 @@ setup(
             'red_line = cv_cam.red_line:main',
             'laser_range = cv_cam.laser_range:main',
             'line_test = cv_cam.line_test:main',
+            'follow_red_line = cv_cam.follow_red_line:main',
+            'test_red_line = cv_cam.test_red_line:main',
+            'cv2_cam = cv_cam.cv2_cam:main',
         ],
     },
 )
