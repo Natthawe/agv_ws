@@ -151,15 +151,9 @@ class ImageProcessingNode(Node):
     # turn left +
 
     def calculate_angular_speed(self, pp):
-        center_x = self.frame.shape[1] // 2
-        error = center_x - pp
-        angular_speed = self.angular_pid.compute(error)
-        return angular_speed
-
-    # def calculate_angular_speed(self, pp):
-    #     err = (pp - 80)*(-1)
-    #     val = err / 800
-    #     return val
+        err = (pp - 80)*(-1)
+        val = err / 800
+        return val
 
     def publish_velocity(self, linear, angular):
         twist_msg = Twist()
