@@ -31,7 +31,9 @@ setup(
             'line_test = cv_cam.line_test:main',
             'follow_red_line = cv_cam.follow_red_line:main',
             'test_red_line = cv_cam.test_red_line:main',
+            'test_red_line2 = cv_cam.test_red_line2:main',
             'cv2_cam = cv_cam.cv2_cam:main',
+            'opencv_ros_node = cv_cam.opencv_ros_node:main',
         ],
     },
 )

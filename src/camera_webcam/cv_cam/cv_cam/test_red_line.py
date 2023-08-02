@@ -105,8 +105,6 @@ class ImageProcessingNode(Node):
         if len(contours) > 0:
             c = max(contours, key=cv2.contourArea)
             x, y, w, h = cv2.boundingRect(c)
-            center_x = x + w // 2
-            center_y = y + h // 2
             M = cv2.moments(c)
             if M["m00"] != 0:
                 cx = int(M["m10"] / M["m00"])
@@ -115,9 +113,13 @@ class ImageProcessingNode(Node):
                 # Draw a rectangle around the red line area
                 cv2.rectangle(frame_rgb, (x, y), (x + w, y + h), (255, 255, 0), 2)   
 
-                # Draw a line at the center of the red line area
-                center_point = (center_x, center_y)
-                cv2.line(frame_rgb, (x, y), (x + w, y + h), (0, 0, 255), 5)                             
+                # Draw the red line on the original image
+                for contour in contours:
+                    if cv2.contourArea(contour) > 100:  # Minimum area to consider as a line (you may need to adjust this value)
+                        x, y, w, h = cv2.boundingRect(contour)
+                        cv2.line(frame_rgb, (x + (w // 2), y), (x + (w // 2), y + h), (0, 0, 255), 3)
+
+
                 # self.get_logger().info("CX: %d  CY: %d" % (cx, cy))
                 output = self.pid_controller.update(cx)
                 # self.get_logger().info("PID Output: %.2f" % output)
@@ -125,15 +127,7 @@ class ImageProcessingNode(Node):
                 linear = self.calculate_linear_speed(cx)
                 angular = self.calculate_angular_speed(output, cx)
 
-                self.publish_velocity(linear, angular)
-                # cv2.circle(frame_rgb, (cx, cy), 2, (255, 0, 0), -1)
-                
-                # # Find two points on the red line (top and bottom points)
-                # top_point = (cx, 0)
-                # bottom_point = (cx, frame_rgb.shape[0])
-
-                # # Draw a line connecting the two points on the red line
-                # cv2.line(frame_rgb, top_point, bottom_point, (255, 0, 0), 2)                           
+                self.publish_velocity(linear, angular)                         
                 
             else:
                 self.get_logger().info("No valid moments found.")
