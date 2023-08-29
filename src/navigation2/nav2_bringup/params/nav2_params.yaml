@@ -345,7 +345,7 @@ global_costmap:
       lethal_cost_threshold: 100
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       # UNCOMMENT THIS LINE BELOW FOR KEEPOUT DEMO
-      filters: ["keepout_filter", "inflation_layer"]      
+      # filters: ["keepout_filter", "inflation_layer"]      
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True

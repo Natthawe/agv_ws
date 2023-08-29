@@ -38,11 +38,11 @@ class odom_wheel_node(Node):
         self.ns_to_sec = 1.0e-9
 # 33023.0, 34016.0
         # Parametersself.ticks_meter_R
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 33519.5).value)
+        self.ticks_meter = float(self.declare_parameter('ticks_meter', 32786.0).value)
         # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33023.0).value)
         # self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 34016.0).value)
         
-        self.base_width = float(self.declare_parameter('base_width', 0.28).value)
+        self.base_width = float(self.declare_parameter('base_width', 0.51).value)
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
         self.base_frame = self.declare_parameter('base_frame', 'base_link').value
         self.encoder_min = self.declare_parameter('encoder_min', -2147483648).value
