@@ -42,9 +42,9 @@ class StaticFramePublisher(Node):
         base_link_to_bno055.header.frame_id = 'base_link'
         base_link_to_bno055.header.stamp = self.get_clock().now().to_msg()
         base_link_to_bno055.child_frame_id = 'bno055'
-        base_link_to_bno055.transform.translation.x = 0.22
+        base_link_to_bno055.transform.translation.x = 0.28
         base_link_to_bno055.transform.translation.y = 0.0
-        base_link_to_bno055.transform.translation.z = 0.285
+        base_link_to_bno055.transform.translation.z = 0.16
         base_link_to_bno055.transform.rotation.w = 1.0
         base_link_to_bno055.transform.rotation.x = 0.0
         base_link_to_bno055.transform.rotation.y = 0.0
@@ -78,9 +78,9 @@ class StaticFramePublisher(Node):
         base_link_to_laser.header.frame_id = 'base_link'
         base_link_to_laser.header.stamp = self.get_clock().now().to_msg()
         base_link_to_laser.child_frame_id = 'laser'
-        base_link_to_laser.transform.translation.x = 0.05
+        base_link_to_laser.transform.translation.x = 0.0
         base_link_to_laser.transform.translation.y = 0.0
-        base_link_to_laser.transform.translation.z = 0.35
+        base_link_to_laser.transform.translation.z = 0.20
         base_link_to_laser.transform.rotation.w = 0.0
         base_link_to_laser.transform.rotation.x = 1.0
         base_link_to_laser.transform.rotation.y = 0.0
