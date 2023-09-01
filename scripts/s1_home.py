@@ -35,9 +35,7 @@ def main():
     
     # Send Nav2 goal
     goal_pose1 = create_pose_stamped(nav, 7.5, 1.7, 3.14)
-    goal_pose2 = create_pose_stamped(nav, 6.0, 1.7, 3.14)
-    goal_pose3 = create_pose_stamped(nav, 5.0, 1.5, 3.14)
-    goal_pose4 = create_pose_stamped(nav, 3.3, 2.0, 0.0)
+    goal_pose2 = create_pose_stamped(nav, 3.3, 2.0, 0.0)
     # goal_pose3 = create_pose_stamped(nav, -4.0, 2.8, 3.14)
     # goal_pose4= create_pose_stamped(nav, -4.0, 2.8, 3.14)
     # goal_pose5 = create_pose_stamped(nav, 0.0, 0.0, 0.0)
@@ -50,8 +48,8 @@ def main():
     #     # print(feedback)
 
     # Follow Waypoints
-    for i in range(1):
-        waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4]
+    for i in range(3):
+        waypoints = [goal_pose1, goal_pose2]
         nav.followWaypoints(waypoints)
         while not nav.isTaskComplete():
             feedback = nav.getFeedback()    

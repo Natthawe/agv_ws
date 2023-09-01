@@ -24,8 +24,8 @@ def main():
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
     goal_pose.header.stamp = navigator.get_clock().now().to_msg()
-    goal_pose.pose.position.x = 7.6 #6.0
-    goal_pose.pose.position.y = 3.2 #1.0
+    goal_pose.pose.position.x = 5.5 #6.0
+    goal_pose.pose.position.y = 1.5 #1.0
     goal_pose.pose.orientation.w = 1.0
     goal_poses.append(goal_pose)
 
