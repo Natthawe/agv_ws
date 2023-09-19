@@ -31,6 +31,17 @@ void ObstaclesCritic::initialize()
 
   collision_checker_.setCostmap(costmap_);
   possibly_inscribed_cost_ = findCircumscribedCost(costmap_ros_);
+
+  if (possibly_inscribed_cost_ < 1) {
+    RCLCPP_ERROR(
+      logger_,
+      "Inflation layer either not found or inflation is not set sufficiently for "
+      "optimized non-circular collision checking capabilities. It is HIGHLY recommended to set"
+      " the inflation radius to be at MINIMUM half of the robot's largest cross-section. See "
+      "github.com/ros-planning/navigation2/tree/main/nav2_smac_planner#potential-fields"
+      " for full instructions. This will substantially impact run-time performance.");
+  }
+
   RCLCPP_INFO(
     logger_,
     "ObstaclesCritic instantiated with %d power and %f / %f weights. "
@@ -181,10 +192,13 @@ CollisionCost ObstaclesCritic::costAtPose(float x, float y, float theta)
   float & cost = collision_cost.cost;
   collision_cost.using_footprint = false;
   unsigned int x_i, y_i;
-  collision_checker_.worldToMap(x, y, x_i, y_i);
+  if (!collision_checker_.worldToMap(x, y, x_i, y_i)) {
+    cost = nav2_costmap_2d::NO_INFORMATION;
+    return collision_cost;
+  }
   cost = collision_checker_.pointCost(x_i, y_i);
 
-  if (consider_footprint_ && cost >= possibly_inscribed_cost_) {
+  if (consider_footprint_ && (cost >= possibly_inscribed_cost_ || possibly_inscribed_cost_ < 1)) {
     cost = static_cast<float>(collision_checker_.footprintCostAtPose(
         x, y, theta, costmap_ros_->getRobotFootprint()));
     collision_cost.using_footprint = true;

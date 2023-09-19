@@ -38,7 +38,7 @@ class odom_wheel_node(Node):
         self.ns_to_sec = 1.0e-9
 # 33023.0, 34016.0
         # Parametersself.ticks_meter_R
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 33519.5).value)
+        self.ticks_meter = float(self.declare_parameter('ticks_meter', 8696).value)
         # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33023.0).value)
         # self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 34016.0).value)
         
@@ -198,7 +198,7 @@ class odom_wheel_node(Node):
                 break
         return bytes(line)
 
-STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=1-6.1:1.0"
+STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=4-1:1.0"
 _baudrate = 9600
 
 def getControl_drivePort():
