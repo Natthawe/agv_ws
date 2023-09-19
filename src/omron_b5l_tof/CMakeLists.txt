@@ -18,23 +18,43 @@ find_package(Boost COMPONENTS system filesystem REQUIRED)
 # find_package(<dependency> REQUIRED)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME})
 
-add_executable(omron_b5l_tof
-  src/omron_b5l_tof.cpp
+add_executable(omron_b5l_tof_front
+  src/omron_b5l_tof_front.cpp
   src/b5l_tof_device.cpp
   src/uart_linux.cpp
   src/TOFApiZ.cpp
 )
 
-ament_target_dependencies(omron_b5l_tof rclcpp std_msgs pcl_conversions)
+add_executable(omron_b5l_tof_back
+  src/omron_b5l_tof_back.cpp
+  src/b5l_tof_device.cpp
+  src/uart_linux.cpp
+  src/TOFApiZ.cpp
+)
+
+ament_target_dependencies(omron_b5l_tof_front rclcpp std_msgs pcl_conversions)
+ament_target_dependencies(omron_b5l_tof_back rclcpp std_msgs pcl_conversions)
+
 
 # add pthread
-target_link_libraries(omron_b5l_tof
+# Link libraries for omron_b5l_tof_front and omron_b5l_tof_back
+target_link_libraries(omron_b5l_tof_front
+  pthread
+  ${PCL_LIBRARIES}
+)
+
+target_link_libraries(omron_b5l_tof_back
   pthread
   ${PCL_LIBRARIES}
 )
 
 install(TARGETS
-  omron_b5l_tof
+  omron_b5l_tof_front
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(TARGETS
+  omron_b5l_tof_back
   DESTINATION lib/${PROJECT_NAME}
 )
 

@@ -16,8 +16,8 @@
 using namespace std::chrono_literals;
 
 /* Topic string macro */
-#define PUB_TOPIC_FRMT_001_002 "pointcloud2_xyz"
-#define PUB_TOPIC_FRMT_257_258 "pointcloud2_xyzi"
+#define PUB_TOPIC_FRMT_001_002 "back/pointcloud2_xyz"
+#define PUB_TOPIC_FRMT_257_258 "back/pointcloud2_xyzi"
 
 class omron_b5l_tof : public rclcpp::Node
 {

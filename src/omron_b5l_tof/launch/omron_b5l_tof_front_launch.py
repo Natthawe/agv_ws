@@ -11,13 +11,13 @@ def generate_launch_description():
     # Get the launch directory and create a path to the config file
     config = os.path.join(
         get_package_share_directory('omron_b5l_tof'),
-        'param', 'omron_b5l_tof.yaml'
+        'param', 'omron_b5l_tof_front.yaml'
     )
 
     node = Node(
         package='omron_b5l_tof',
         name='omron_b5l_tof',
-        executable='omron_b5l_tof',
+        executable='omron_b5l_tof_front',
         parameters=[config]
     )
 

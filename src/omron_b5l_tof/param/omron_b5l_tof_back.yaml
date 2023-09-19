@@ -1,0 +1,18 @@
+omron_b5l_tof:
+  ros__parameters:
+    use_sim_time: false
+    frame_id: "omron_back"
+    device: "/dev/ttyUSB0"
+    frequency: 30.0
+    IMAGE_PATH: "./"
+    FOV_LIMITATION: 1
+    OUTPUT_FORMAT: 258
+    OPERATION_MODE: 0
+    EXPOSURE_FPS: [900, 20]
+    T3D_XYZ: [90, 270, 0]
+    LED_FREQUENCY_ID: 0
+    MIN_AMP_ALL: 1
+    MIN_AMP_NEAR: 3
+    OPERATION_CHECK_LED: 0
+    RESPONSE_SPEED: [16, 1]
+    ENR_TRESHOLD: 12499
