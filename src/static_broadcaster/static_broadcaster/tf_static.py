@@ -42,13 +42,39 @@ class StaticFramePublisher(Node):
         base_link_to_bno055.header.frame_id = 'base_link'
         base_link_to_bno055.header.stamp = self.get_clock().now().to_msg()
         base_link_to_bno055.child_frame_id = 'bno055'
-        base_link_to_bno055.transform.translation.x = 0.22
-        base_link_to_bno055.transform.translation.y = 0.0
-        base_link_to_bno055.transform.translation.z = 0.285
+        base_link_to_bno055.transform.translation.x = 0.0
+        base_link_to_bno055.transform.translation.y = 0.12
+        base_link_to_bno055.transform.translation.z = 0.175
         base_link_to_bno055.transform.rotation.w = 1.0
         base_link_to_bno055.transform.rotation.x = 0.0
         base_link_to_bno055.transform.rotation.y = 0.0
         base_link_to_bno055.transform.rotation.z = 0.0
+
+        base_link_to_omron_front = TransformStamped()
+        base_link_to_omron_front.header.frame_id = 'base_link'
+        base_link_to_omron_front.header.stamp = self.get_clock().now().to_msg()
+        base_link_to_omron_front.child_frame_id = 'omron_front'
+        base_link_to_omron_front.transform.translation.x = 0.185
+        base_link_to_omron_front.transform.translation.y = 0.0
+        base_link_to_omron_front.transform.translation.z = 0.185
+        base_link_to_omron_front.transform.rotation.w = 1.0
+        base_link_to_omron_front.transform.rotation.x = 0.0
+        base_link_to_omron_front.transform.rotation.y = 0.0
+        base_link_to_omron_front.transform.rotation.z = 0.0
+
+        base_link_to_omron_back = TransformStamped()
+        base_link_to_omron_back.header.frame_id = 'base_link'
+        base_link_to_omron_back.header.stamp = self.get_clock().now().to_msg()
+        base_link_to_omron_back.child_frame_id = 'omron_back'
+        base_link_to_omron_back.transform.translation.x = -0.185
+        base_link_to_omron_back.transform.translation.y = 0.0
+        base_link_to_omron_back.transform.translation.z = 0.185
+        base_link_to_omron_back.transform.rotation.w = 0.0
+        base_link_to_omron_back.transform.rotation.x = 0.0
+        base_link_to_omron_back.transform.rotation.y = 1.0
+        base_link_to_omron_back.transform.rotation.z = 0.0
+
+
 
         # base_link_to_rslidar = TransformStamped()
         # base_link_to_rslidar.header.frame_id = 'base_link'
@@ -74,25 +100,27 @@ class StaticFramePublisher(Node):
         # base_link_to_omron.transform.rotation.y = -0.22
         # base_link_to_omron.transform.rotation.z = 0.0 
 
-        base_link_to_laser = TransformStamped()
-        base_link_to_laser.header.frame_id = 'base_link'
-        base_link_to_laser.header.stamp = self.get_clock().now().to_msg()
-        base_link_to_laser.child_frame_id = 'laser'
-        base_link_to_laser.transform.translation.x = 0.05
-        base_link_to_laser.transform.translation.y = 0.0
-        base_link_to_laser.transform.translation.z = 0.35
-        base_link_to_laser.transform.rotation.w = 0.0
-        base_link_to_laser.transform.rotation.x = 1.0
-        base_link_to_laser.transform.rotation.y = 0.0
-        base_link_to_laser.transform.rotation.z = 0.0          
+        # base_link_to_laser = TransformStamped()
+        # base_link_to_laser.header.frame_id = 'base_link'
+        # base_link_to_laser.header.stamp = self.get_clock().now().to_msg()
+        # base_link_to_laser.child_frame_id = 'laser'
+        # base_link_to_laser.transform.translation.x = 0.05
+        # base_link_to_laser.transform.translation.y = 0.0
+        # base_link_to_laser.transform.translation.z = 0.35
+        # base_link_to_laser.transform.rotation.w = 0.0
+        # base_link_to_laser.transform.rotation.x = 1.0
+        # base_link_to_laser.transform.rotation.y = 0.0
+        # base_link_to_laser.transform.rotation.z = 0.0          
 
         return(
             map_to_odom,
             # base_footprint_to_base_link,
             base_link_to_bno055,
+            base_link_to_omron_front,
+            base_link_to_omron_back,
             # base_link_to_rslidar,
             # base_link_to_omron,
-            base_link_to_laser,
+            # base_link_to_laser,
             
         )
 
