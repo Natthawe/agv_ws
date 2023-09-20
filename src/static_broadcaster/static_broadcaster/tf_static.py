@@ -71,8 +71,8 @@ class StaticFramePublisher(Node):
         base_link_to_omron_back.transform.translation.z = 0.185
         base_link_to_omron_back.transform.rotation.w = 0.0
         base_link_to_omron_back.transform.rotation.x = 0.0
-        base_link_to_omron_back.transform.rotation.y = 1.0
-        base_link_to_omron_back.transform.rotation.z = 0.0
+        base_link_to_omron_back.transform.rotation.y = 0.0
+        base_link_to_omron_back.transform.rotation.z = 1.0
 
 
 
