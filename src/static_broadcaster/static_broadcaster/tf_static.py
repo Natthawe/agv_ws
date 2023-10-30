@@ -42,7 +42,7 @@ class StaticFramePublisher(Node):
         base_link_to_bno055.header.frame_id = 'base_link'
         base_link_to_bno055.header.stamp = self.get_clock().now().to_msg()
         base_link_to_bno055.child_frame_id = 'bno055'
-        base_link_to_bno055.transform.translation.x = -0.28
+        base_link_to_bno055.transform.translation.x = -0.19
         base_link_to_bno055.transform.translation.y = -0.10
         base_link_to_bno055.transform.translation.z = 0.16
         base_link_to_bno055.transform.rotation.w = 1.0

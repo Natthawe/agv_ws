@@ -146,6 +146,11 @@ class odom_wheel_node(Node):
 
         self.enc_wheel_left_pv = self.enc_wheel_left
         self.enc_wheel_right_pv = self.enc_wheel_right
+        
+    def shutdown_node(self):
+        self.serial_write('s\n')
+        rclpy.shutdown()
+                
 
     def wheel_enc_ticks(self):
         recv = self._readline().decode("utf-8")
@@ -198,7 +203,7 @@ class odom_wheel_node(Node):
                 break
         return bytes(line)
 
-STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=1-3:1.0"
+STR_USBPORT = "USB VID:PID=16C0:0483 SER=13270010 LOCATION=1-3:1.0"
 _baudrate = 9600
 
 def getControl_drivePort():
@@ -211,9 +216,16 @@ def main(args=None):
     rclpy.init(args=args)
     _serial_port = getControl_drivePort()
     _odom_wheel_node = odom_wheel_node(_serial_port, _baudrate)
-    rclpy.spin(_odom_wheel_node)
+    try:
+        rclpy.spin(_odom_wheel_node)
+    except KeyboardInterrupt:
+        _odom_wheel_node.shutdown_node()
     _odom_wheel_node.destroy_node()
-    rclpy.shutdown()
+    rclpy.shutdown()    
+    
+    # rclpy.spin(_odom_wheel_node)
+    # _odom_wheel_node.destroy_node()
+    # rclpy.shutdown()
     
 if __name__ == '__main__':
     main()    
