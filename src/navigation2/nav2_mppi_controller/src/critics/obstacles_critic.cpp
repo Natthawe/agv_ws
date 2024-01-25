@@ -31,6 +31,17 @@ void ObstaclesCritic::initialize()
 
   collision_checker_.setCostmap(costmap_);
   possibly_inscribed_cost_ = findCircumscribedCost(costmap_ros_);
+
+  if (possibly_inscribed_cost_ < 1.0f) {
+    RCLCPP_ERROR(
+      logger_,
+      "Inflation layer either not found or inflation is not set sufficiently for "
+      "optimized non-circular collision checking capabilities. It is HIGHLY recommended to set"
+      " the inflation radius to be at MINIMUM half of the robot's largest cross-section. See "
+      "github.com/ros-planning/navigation2/tree/main/nav2_smac_planner#potential-fields"
+      " for full instructions. This will substantially impact run-time performance.");
+  }
+
   RCLCPP_INFO(
     logger_,
     "ObstaclesCritic instantiated with %d power and %f / %f weights. "
@@ -39,11 +50,18 @@ void ObstaclesCritic::initialize()
     "footprint" : "circular");
 }
 
-double ObstaclesCritic::findCircumscribedCost(
+float ObstaclesCritic::findCircumscribedCost(
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap)
 {
   double result = -1.0;
   bool inflation_layer_found = false;
+
+  const double circum_radius = costmap->getLayeredCostmap()->getCircumscribedRadius();
+  if (static_cast<float>(circum_radius) == circumscribed_radius_) {
+    // early return if footprint size is unchanged
+    return circumscribed_cost_;
+  }
+
   // check if the costmap has an inflation layer
   for (auto layer = costmap->getLayeredCostmap()->getPlugins()->begin();
     layer != costmap->getLayeredCostmap()->getPlugins()->end();
@@ -55,7 +73,6 @@ double ObstaclesCritic::findCircumscribedCost(
     }
 
     inflation_layer_found = true;
-    const double circum_radius = costmap->getLayeredCostmap()->getCircumscribedRadius();
     const double resolution = costmap->getCostmap()->getResolution();
     result = inflation_layer->computeCost(circum_radius / resolution);
     auto getParam = parameters_handler_->getParamGetter(name_);
@@ -65,7 +82,7 @@ double ObstaclesCritic::findCircumscribedCost(
 
   if (!inflation_layer_found) {
     RCLCPP_WARN(
-      rclcpp::get_logger("computeCircumscribedCost"),
+      logger_,
       "No inflation layer found in costmap configuration. "
       "If this is an SE2-collision checking plugin, it cannot use costmap potential "
       "field to speed up collision checking by only checking the full footprint "
@@ -73,7 +90,10 @@ double ObstaclesCritic::findCircumscribedCost(
       "significantly slow down planning times and not avoid anything but absolute collisions!");
   }
 
-  return result;
+  circumscribed_radius_ = static_cast<float>(circum_radius);
+  circumscribed_cost_ = static_cast<float>(result);
+
+  return circumscribed_cost_;
 }
 
 float ObstaclesCritic::distanceToObstacle(const CollisionCost & cost)
@@ -98,6 +118,11 @@ void ObstaclesCritic::score(CriticData & data)
     return;
   }
 
+  if (consider_footprint_) {
+    // footprint may have changed since initialization if user has dynamic footprints
+    possibly_inscribed_cost_ = findCircumscribedCost(costmap_ros_);
+  }
+
   // If near the goal, don't apply the preferential term since the goal is near obstacles
   bool near_goal = false;
   if (utils::withinPositionGoalTolerance(near_goal_distance_, data.state.pose.pose, data.path)) {
@@ -105,21 +130,21 @@ void ObstaclesCritic::score(CriticData & data)
   }
 
   auto && raw_cost = xt::xtensor<float, 1>::from_shape({data.costs.shape(0)});
-  raw_cost.fill(0.0);
+  raw_cost.fill(0.0f);
   auto && repulsive_cost = xt::xtensor<float, 1>::from_shape({data.costs.shape(0)});
-  repulsive_cost.fill(0.0);
+  repulsive_cost.fill(0.0f);
 
   const size_t traj_len = data.trajectories.x.shape(1);
   bool all_trajectories_collide = true;
   for (size_t i = 0; i < data.trajectories.x.shape(0); ++i) {
     bool trajectory_collide = false;
-    float traj_cost = 0.0;
+    float traj_cost = 0.0f;
     const auto & traj = data.trajectories;
     CollisionCost pose_cost;
 
     for (size_t j = 0; j < traj_len; j++) {
       pose_cost = costAtPose(traj.x(i, j), traj.y(i, j), traj.yaws(i, j));
-      if (pose_cost.cost < 1) {continue;}  // In free space
+      if (pose_cost.cost < 1.0f) {continue;}  // In free space
 
       if (inCollision(pose_cost.cost)) {
         trajectory_collide = true;
@@ -127,7 +152,7 @@ void ObstaclesCritic::score(CriticData & data)
       }
 
       // Cannot process repulsion if inflation layer does not exist
-      if (inflation_radius_ == 0 || inflation_scale_factor_ == 0) {
+      if (inflation_radius_ == 0.0f || inflation_scale_factor_ == 0.0f) {
         continue;
       }
 
@@ -142,7 +167,7 @@ void ObstaclesCritic::score(CriticData & data)
     }
 
     if (!trajectory_collide) {all_trajectories_collide = false;}
-    raw_cost[i] = static_cast<float>(trajectory_collide ? collision_cost_ : traj_cost);
+    raw_cost[i] = trajectory_collide ? collision_cost_ : traj_cost;
   }
 
   data.costs += xt::pow(
@@ -181,10 +206,15 @@ CollisionCost ObstaclesCritic::costAtPose(float x, float y, float theta)
   float & cost = collision_cost.cost;
   collision_cost.using_footprint = false;
   unsigned int x_i, y_i;
-  collision_checker_.worldToMap(x, y, x_i, y_i);
+  if (!collision_checker_.worldToMap(x, y, x_i, y_i)) {
+    cost = nav2_costmap_2d::NO_INFORMATION;
+    return collision_cost;
+  }
   cost = collision_checker_.pointCost(x_i, y_i);
 
-  if (consider_footprint_ && cost >= possibly_inscribed_cost_) {
+  if (consider_footprint_ &&
+    (cost >= possibly_inscribed_cost_ || possibly_inscribed_cost_ < 1.0f))
+  {
     cost = static_cast<float>(collision_checker_.footprintCostAtPose(
         x, y, theta, costmap_ros_->getRobotFootprint()));
     collision_cost.using_footprint = true;

@@ -44,10 +44,12 @@ public:
   void score(CriticData & data) override;
 
 protected:
-  double max_angle_to_furthest_{0};
+  float max_angle_to_furthest_{0};
   float threshold_to_consider_{0};
 
   size_t offset_from_furthest_{0};
+  bool reversing_allowed_{true};
+  bool forward_preference_{true};
 
   unsigned int power_{0};
   float weight_{0};
