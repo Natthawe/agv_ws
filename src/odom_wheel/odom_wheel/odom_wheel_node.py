@@ -203,7 +203,7 @@ class odom_wheel_node(Node):
                 break
         return bytes(line)
 
-STR_USBPORT = "USB VID:PID=16C0:0483 SER=13270010 LOCATION=1-3:1.0"
+STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=1-3:1.0"
 _baudrate = 9600
 
 def getControl_drivePort():
