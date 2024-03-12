@@ -23,7 +23,7 @@ OUTPUT_FORMAT=258
 # Operation Mode
 #     0: Normal Mode
 #     1: High Speed Mode (without HDR)
-OPERATION_MODE=0
+OPERATION_MODE=1
 
 # Exposure Time
 #     85~10000 [us]

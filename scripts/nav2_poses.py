@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import rclpy
-from nav2_simple_commander.robot_navigator import BasicNavigator
+from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 from geometry_msgs.msg import PoseStamped
 import tf_transformations 
+from rclpy.duration import Duration
+
 
 def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orientation_z):
     q_x, q_y, q_z, q_w = tf_transformations.quaternion_from_euler(0.0, 0.0, orientation_z) #x, y, z
@@ -30,12 +32,15 @@ def main():
 
     # Wait for Nav2
     nav.waitUntilNav2Active()
-
+    
     # Send Nav2 goal
-    goal_pose1 = create_pose_stamped(nav, 3.8, 0.45, 3.14)
-    goal_pose2 = create_pose_stamped(nav, 0.0, 0.0, 0.0)
-    goal_pose3 = create_pose_stamped(nav, -1.9, -0.2, 0.0)
-    goal_pose4 = create_pose_stamped(nav, -2.0, -0.6, 0.0)
+    goal_pose1 = create_pose_stamped(nav, 7.5, 1.7, 3.14)
+    goal_pose2 = create_pose_stamped(nav, 6.0, 1.7, 3.14)
+    goal_pose3 = create_pose_stamped(nav, 5.0, 1.5, 3.14)
+    goal_pose4 = create_pose_stamped(nav, 3.3, 2.0, 0.0)
+    # goal_pose3 = create_pose_stamped(nav, -4.0, 2.8, 3.14)
+    # goal_pose4= create_pose_stamped(nav, -4.0, 2.8, 3.14)
+    # goal_pose5 = create_pose_stamped(nav, 0.0, 0.0, 0.0)
     
     # go to one pose
     # nav.goToPose(goal_pose1)
@@ -45,18 +50,24 @@ def main():
     #     # print(feedback)
 
     # Follow Waypoints
-    for i in range(5):
+    for i in range(1):
         waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4]
         nav.followWaypoints(waypoints)
         while not nav.isTaskComplete():
-            feedback = nav.getFeedback()
-            # print(feedback)        
+            feedback = nav.getFeedback()    
+            print('Current Waypoint: ' + str(feedback.current_waypoint))
 
+    result = nav.getResult()            
+    if result == TaskResult.SUCCEEDED:
+        print('Goal Succeeded!')
+    elif result == TaskResult.CANCELED:
+        print('Goal was Canceled!')
+    elif result == TaskResult.FAILED:
+        print('Goal Failed!')
+    else:
+        print('Goal has an invalid return status!')        
 
-    print(nav.getResult())        
-
-    # Shutdown
-    rclpy.shutdown()
+    exit(0)     
 
 if __name__ == '__main__':
     main()

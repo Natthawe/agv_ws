@@ -125,8 +125,8 @@ private:
   size_t m_scan_count = 0;
   double max_distance = 8.0f;
   double angle_min = deg_2_rad(0);
-  double angle_max = deg_2_rad(359);
-  const float min_distance = 0.15f;
+  double angle_max = deg_2_rad(180);
+  const float min_distance = 0.35f;
   /* State */
   bool m_running = false;
 };

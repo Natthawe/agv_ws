@@ -24,7 +24,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'tf_static = static_broadcaster.tf_static:main'
+            'tf_static = static_broadcaster.tf_static:main',
+            'moteus_tf_static = static_broadcaster.moteus_tf_static:main'
         ],
     },
 )

@@ -36,9 +36,12 @@ class odom_wheel_node(Node):
         self.prev_enc_left = 0
         self.prev_enc_right = 0
         self.ns_to_sec = 1.0e-9
-
-        # Parameters
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 33970.276).value)
+# 33023.0, 34016.0
+        # Parametersself.ticks_meter_R
+        self.ticks_meter = float(self.declare_parameter('ticks_meter', 32786.0).value)
+        # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33023.0).value)
+        # self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 34016.0).value)
+        
         self.base_width = float(self.declare_parameter('base_width', 0.51).value)
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
         self.base_frame = self.declare_parameter('base_frame', 'base_link').value
@@ -50,7 +53,7 @@ class odom_wheel_node(Node):
             self.encoder_max - self.encoder_min) * 0.7 + self.encoder_min).value
         
         # Subscribe Topic cmd_vel
-        self.sub_cmd_vel = self.create_subscription(Twist, "cmd_vel_accel_decel", self.callback_cmd_vel, 10)
+        self.sub_cmd_vel = self.create_subscription(Twist, "cmd_vel_accel_decel", self.callback_cmd_vel, 10) #cmd_vel_accel_decel
 
         # Publish Topic odom_wheel
         self.pub_odom_wheel = self.create_publisher(Odometry, "odometry/wheel", 10)
@@ -82,7 +85,11 @@ class odom_wheel_node(Node):
 
         # Calculate Odometry
         distance_wheel_left = (self.enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
-        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter        
+        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter
+        
+        # print(self.enc_wheel_left ,self.enc_wheel_right)
+        self.get_logger().info(f"========={self.enc_wheel_left, self.enc_wheel_right}=========")
+             
 
         # Distance traveled is the average of the two wheels 
         dist = (distance_wheel_left + distance_wheel_right) / 2
@@ -139,6 +146,11 @@ class odom_wheel_node(Node):
 
         self.enc_wheel_left_pv = self.enc_wheel_left
         self.enc_wheel_right_pv = self.enc_wheel_right
+        
+    def shutdown_node(self):
+        self.serial_write('s\n')
+        rclpy.shutdown()
+                
 
     def wheel_enc_ticks(self):
         recv = self._readline().decode("utf-8")
@@ -191,7 +203,7 @@ class odom_wheel_node(Node):
                 break
         return bytes(line)
 
-STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=1-10:1.0"
+STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=1-3:1.0"
 _baudrate = 9600
 
 def getControl_drivePort():
@@ -204,9 +216,16 @@ def main(args=None):
     rclpy.init(args=args)
     _serial_port = getControl_drivePort()
     _odom_wheel_node = odom_wheel_node(_serial_port, _baudrate)
-    rclpy.spin(_odom_wheel_node)
+    try:
+        rclpy.spin(_odom_wheel_node)
+    except KeyboardInterrupt:
+        _odom_wheel_node.shutdown_node()
     _odom_wheel_node.destroy_node()
-    rclpy.shutdown()
+    rclpy.shutdown()    
+    
+    # rclpy.spin(_odom_wheel_node)
+    # _odom_wheel_node.destroy_node()
+    # rclpy.shutdown()
     
 if __name__ == '__main__':
     main()    

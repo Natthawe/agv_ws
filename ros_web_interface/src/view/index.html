@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/easeljs.js"></script>
+  <script src="js/eventemitter2.js"></script>
+  <script src="js/roslib.js"></script>
+  <script src="js/ros2d.js"></script>
+  <script src="js/three.js"></script>
+  <link rel="stylesheet" href="styles/style.css">
+  <title>RobotWebInteaface</title>
+</head>
+
+<body class="bg-black noselect">
+  <!-- display map -->
+  <div class="w-full">
+    <div class="mx-auto z-1 relative">
+      <div class="w-full pt-2 px-2 mt-2 shadow-2xl border rounded-xl bg-white">
+        <div id="navbar" class="flex items-center justify-between">
+          <div class="nav-header">
+            <img src="images/logo.png" alt="logo" class="w-44 py-2 px-4">
+          </div>
+          <div class="nav-header">
+            <!-- <h1 class="font-semibold text-xl w-full h-full">Web Control Interface</h1> -->
+          </div>
+          <div class="nav-header">
+            <h1 class="mx-4 flex items-center">
+              <div class="settings m-1">
+                <img class="w-8 h-8 p-0" src="images/settings.png" alt="">
+              </div>
+              <div class="battery m-1">
+                <div id="battery-level" class="battery-level" style="height:100%;"></div>
+              </div>
+            </h1>
+          </div>
+        </div>
+        <div class="mx-auto relative">
+          <!-- nav goal button -->
+
+          <div class="w-fit absolute right-5 top-10 z-0">
+            <div class="flex items-center justify-center">
+              <button type="button" data-x="-2.02" data-y="1.35" data-w="1.57"
+                class="nav-goal bottom w-12 h-12 bg-white shadow-xl rounded-l-xl overflow-hidden my-1 mr-1">
+                HOME
+              </button>
+              <button type="button" data-x="0.56" data-y="0.174" data-w="1.57"
+                class="nav-goal bottom w-12 h-12 bg-white shadow-xl overflow-hidden my-1 mr-1">
+                A
+              </button>
+              <button type="button" data-x="3.01" data-y="-0.09" data-w="1.57"
+                class="nav-goal bottom w-12 h-12 bg-white shadow-xl overflow-hidden my-1 mr-1">
+                B
+              </button>              
+              <button type="button" data-x="5.45" data-y="-0.04" data-w="1.57"
+                class="nav-goal bottom w-12 h-12 bg-white shadow-xl overflow-hidden my-1 mr-1">
+                C
+              </button>
+              <button type="button" data-x="7.98" data-y="2.89" data-w="0.0"
+                class="nav-goal bottom w-12 h-12 bg-white shadow-xl overflow-hidden my-1 mr-1">
+                D
+              </button>    
+              <!-- <button type="button" data-x="7.8773932456970215" data-y="2.808157205581665" data-w="-0.001434326171875"
+                class="nav-goal bottom w-12 h-12 bg-white shadow-xl overflow-hidden my-1 mr-1">
+                D
+              </button>                         -->
+              <!-- <button id="cancelTask" type="button" data-x="0.5964757800102234" data-y="-0.001434326171875" data-w="0.5"
+                class="nav-cancel bottom w-12 h-12 bg-white shadow-xl rounded-r-xl overflow-hidden my-1">
+                X
+              </button> -->
+            </div>
+          </div>
+          <div class="rounded-xl overflow-hidden" id="map"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-fit absolute p-2 left-10 bottom-10">
+    <div class="flex mt-4 bg-[#00567d] relative w-40 h-40 border rounded-full">
+      <button id="forward" type="button"
+        class="control-buttons w-0 h-0 border-l-[25px] border-r-[25px] border-b-[35px] border-solid border-l-transparent border-r-transparent border-b-white  bg-no-repeat bg-contain absolute top-2 left-1/2 -translate-x-1/2"></button>
+      <button id="backward" type="button"
+        class="control-buttons w-0 h-0 border-l-[25px] border-r-[25px] border-t-[35px] border-solid border-l-transparent border-r-transparent border-t-white bg-no-repeat bg-contain absolute bottom-2 left-1/2 -translate-x-1/2"></button>
+      <button id="left" type="button"
+        class="control-buttons w-0 h-0 border-t-[25px] border-b-[25px] border-r-[35px] border-solid border-t-transparent border-b-transparent border-r-white bg-no-repeat bg-contain absolute left-2 top-1/2 -translate-y-1/2"></button>
+      <button id="right" type="button"
+        class="control-buttons w-0 h-0 border-t-[25px] border-b-[25px] border-l-[35px] border-solid border-t-transparent border-b-transparent border-l-white bg-no-repeat bg-contain absolute right-2 top-1/2 -translate-y-1/2"></button>
+    </div>
+  </div>
+
+  <script src="js/robot_web_interface.js"></script>
+</body>
+
+</html>
