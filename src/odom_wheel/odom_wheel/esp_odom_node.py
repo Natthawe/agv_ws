@@ -38,11 +38,11 @@ class odom_wheel_node(Node):
         self.ns_to_sec = 1.0e-9
 # 33023.0, 34016.0
         # Parametersself.ticks_meter_R
-        self.ticks_meter = float(self.declare_parameter('ticks_meter', 32786.0).value)
-        # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33023.0).value)
-        # self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 34016.0).value)
+        # self.ticks_meter = float(self.declare_parameter('ticks_meter', 33076.0).value)
+        self.ticks_meter_L = float(self.declare_parameter('ticks_meter_L', 32920.0).value)
+        self.ticks_meter_R = float(self.declare_parameter('ticks_meter_R', 32760.0).value)
         
-        self.base_width = float(self.declare_parameter('base_width', 0.51).value)
+        self.base_width = float(self.declare_parameter('base_width', 0.234).value)
         self.odom_frame = self.declare_parameter('odom_frame', 'odom').value
         self.base_frame = self.declare_parameter('base_frame', 'base_link').value
         self.encoder_min = self.declare_parameter('encoder_min', -2147483648).value
@@ -69,8 +69,8 @@ class odom_wheel_node(Node):
         speed = twist.linear.x
         angular = twist.angular.z
         print(speed, angular)
-        wheel_left_set = ((speed + angular) * self.ticks_meter)
-        wheel_right_set = ((speed - angular) * self.ticks_meter)
+        wheel_left_set = ((speed + angular) * self.ticks_meter_L)
+        wheel_right_set = ((speed - angular) * self.ticks_meter_R)
         str_send = str(wheel_left_set) + "," + str(wheel_right_set) + '\n'
         self.serial_write(str_send)
 
@@ -84,8 +84,8 @@ class odom_wheel_node(Node):
         elapsed = elapsed.nanoseconds / self.ns_to_sec
 
         # Calculate Odometry
-        distance_wheel_left = (self.enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter
-        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter
+        distance_wheel_left = (self.enc_wheel_left - self.enc_wheel_left_pv) / self.ticks_meter_L
+        distance_wheel_right = (self.enc_wheel_right - self.enc_wheel_right_pv) / self.ticks_meter_R
         
         # print(self.enc_wheel_left ,self.enc_wheel_right)
         self.get_logger().info(f"========={self.enc_wheel_left, self.enc_wheel_right}=========")
@@ -203,8 +203,8 @@ class odom_wheel_node(Node):
                 break
         return bytes(line)
 
-# STR_USBPORT = "USB VID:PID=1A86:7523 LOCATION=5-1.4"
-STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=5-1.4:1.0"
+STR_USBPORT = "USB VID:PID=1A86:7523 LOCATION=5-1.3"
+# STR_USBPORT = "USB VID:PID=16C0:0483 SER=7442840 LOCATION=5-1.4:1.0"
 
 _baudrate = 9600
 

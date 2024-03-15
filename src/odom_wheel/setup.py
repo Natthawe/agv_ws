@@ -23,7 +23,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'odom_wheel = odom_wheel.odom_wheel_node:main'
+            'odom_wheel = odom_wheel.odom_wheel_node:main',
+            'esp_odom = odom_wheel.esp_odom_node:main'
         ],
     },
 )
