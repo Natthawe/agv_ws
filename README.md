@@ -143,9 +143,10 @@ http://10.1.10.146:3000/
 #### `tf2_echo` reports the transform between any two frames broadcasted over ROS.
     ros2 run tf2_ros tf2_echo base_link laser
 
-## Unistall ROS
+## Uninstall ROS & setuptools
     sudo apt remove ros-* or sudo apt remove ~nros-humble-* && sudo apt autoremove
     sudo rm /etc/apt/sources.list.d/ros2.list
+    pip uninstall setuptools
     sudo apt update
     sudo apt autoremove
     sudo apt upgrade
