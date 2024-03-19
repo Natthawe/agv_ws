@@ -144,9 +144,9 @@ http://10.1.10.146:3000/
     ros2 run tf2_ros tf2_echo base_link laser
 
 ## Unistall ROS
-sudo apt remove ros-* or sudo apt remove ~nros-humble-* && sudo apt autoremove
-sudo rm /etc/apt/sources.list.d/ros2.list
-sudo apt update
+    sudo apt remove ros-* or sudo apt remove ~nros-humble-* && sudo apt autoremove
+    sudo rm /etc/apt/sources.list.d/ros2.list
+    sudo apt update
 sudo apt autoremove
 sudo apt upgrade
 sudo reboot
