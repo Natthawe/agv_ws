@@ -114,7 +114,15 @@
 
     #KERNEL=="ttyUSB*", KERNELS=="1-5", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", MODE:="0666", SYMLINK+="omron"
 
-    ACTION=="add", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", RUN+="/sbin/modprobe usbserial vendor=0x0590 product=0x00ca", MODE="0666", GROUP="dialout"    
+    #ACTION=="add", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", RUN+="/sbin/modprobe usbserial vendor=0x0590 product=0x00ca", MODE="0666", GROUP="dialout"    
+
+    ACTION=="add", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", RUN+="/sbin/modprobe usbserial vendor=0x0590 product=0x00ca", MODE="0666", GROUP="dialout"
+    
+    ACTION=="add", KERNELS=="1-1", SUBSYSTEM=="tty", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", SYMLINK+="omron_front"
+
+    ACTION=="add", KERNELS=="2-1", SUBSYSTEM=="tty", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", SYMLINK+="omron_back"
+
+
 
 #### 50-teensy.rules
     #KERNEL=="ttyACM*", KERNELS=="1-6.2", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="0483", MODE:="0666", SYMLINK+="teensy"
@@ -128,6 +136,9 @@
 
 #### 50-stm32.rules
     ACTION=="add", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", RUN+="/sbin/modprobe usbserial vendor=0x0483 product=0x374b", MODE="0666", GROUP="dialout"
+
+#### 50-esp32_driver.rules    
+    KERNEL=="ttyUSB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE:="0666", SYMLINK+="motor"
 
 #### reload udev
     sudo udevadm info -a -p $(udevadm info -q path -n /dev/ttyUSB1)
