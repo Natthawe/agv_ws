@@ -164,13 +164,3 @@ http://10.1.10.146:3000/
     sudo apt upgrade
     sudo reboot
 
-## test
-
-#### Available cameras
-#### -----------------
-#### 0 : imx477 [4056x3040] (/base/soc/i2c0mux/i2c@1/imx477@1a)
-####     Modes: 'SRGGB10_CSI2P' : 1332x990 [120.05 fps - (696, 528)/2664x1980 crop]
-####       'SRGGB12_CSI2P' : 2028x1080 [50.03 fps - (0, 440)/4056x2160 crop]
-####                         2028x1520 [40.01 fps - (0, 0)/4056x3040 crop]
-####                         4056x3040 [10.00 fps - (0, 0)/4056x3040 crop]
-
