@@ -92,6 +92,8 @@
     pip install setuptools==58.2.0
     sudo apt install ros-humble-rmw-cyclonedds-cpp
     sudo apt install ros-humble-test-msgs
+    sudo apt install ros-humble-geographic-msgs
+    sudo apt install ros-humble-libg2o
     
 
 # SLAM
