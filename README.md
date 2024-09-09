@@ -95,6 +95,9 @@
     sudo apt install ros-humble-geographic-msgs
     sudo apt install ros-humble-libg2o
     sudo apt install ros-humble-pcl-ros
+    sudo apt install ros-humble-diagnostic-updater
+    sudo apt install libgeographic-dev
+    sudo apt install python3-serial
     
 
 # SLAM
