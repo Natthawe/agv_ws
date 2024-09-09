@@ -94,6 +94,7 @@
     sudo apt install ros-humble-test-msgs
     sudo apt install ros-humble-geographic-msgs
     sudo apt install ros-humble-libg2o
+    sudo apt install ros-humble-pcl-ros
     
 
 # SLAM
