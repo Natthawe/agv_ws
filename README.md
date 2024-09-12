@@ -112,46 +112,48 @@
     ros2 run nav2_map_server map_saver_cli -f <map_name>
 
 # UDEV   
-#### 50-bno055.rules
+#### 99-bno055.rules
     #KERNEL=="ttyUSB*", KERNELS=="1-6.1", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666", SYMLINK+="bno055"
 
     ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", RUN+="/sbin/modprobe usbserial vendor=0x0403 product=0x6001", MODE="0666", GROUP="dialout"
 
-#### 50-omron.rules
+#### 99-omron.rules
     #SUBSYSTEMS=="tty", KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", GROUP="dialout", MODE="0666"
 
     #KERNEL=="ttyUSB*", KERNELS=="1-5", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", MODE:="0666", SYMLINK+="omron"
 
     #ACTION=="add", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", RUN+="/sbin/modprobe usbserial vendor=0x0590 product=0x00ca", MODE="0666", GROUP="dialout"    
 
-    ACTION=="add", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", RUN+="/sbin/modprobe usbserial vendor=0x0590 product=0x00ca", MODE="0666", GROUP="dialout"
+    ACTION=="add", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", RUN+="/sbin/modprobe usbserial vendor=0x0590 product=0x00ca", MODE="0777", GROUP="dialout"
     
     ACTION=="add", KERNELS=="1-1", SUBSYSTEM=="tty", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", SYMLINK+="omron_front"
 
     ACTION=="add", KERNELS=="2-1", SUBSYSTEM=="tty", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", SYMLINK+="omron_back"
 
+    # Rule to ensure Omron B5L is assigned to /dev/ttyUSB0
+    ACTION=="add", KERNELS=="5-1.3", ATTRS{idVendor}=="0590", ATTRS{idProduct}=="00ca", KERNEL=="ttyUSB[0-9]*", RUN+="/bin/sh -c 'ln -sf /dev/%k /dev/ttyUSB0'", MODE="0777", GROUP="dialout"
 
 
-#### 50-teensy.rules
+
+#### 99-teensy.rules
     #KERNEL=="ttyACM*", KERNELS=="1-6.2", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="0483", MODE:="0666", SYMLINK+="teensy"
 
     ACTION=="add", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="0483", RUN+="/sbin/modprobe usbserial vendor=0x16c0 product=0x0483", MODE="0666", GROUP="dialout"
 
-#### 50-rplidar.rules
+#### 99-rplidar.rules
     #KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="rplidar"
 
     ACTION=="add", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="/sbin/modprobe usbserial vendor=0x10c4 product=0xea60", MODE="0666", GROUP="dialout"    
 
-#### 50-stm32.rules
+#### 99-stm32.rules
     ACTION=="add", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", RUN+="/sbin/modprobe usbserial vendor=0x0483 product=0x374b", MODE="0666", GROUP="dialout"
 
-#### 50-esp32_driver.rules    
+#### 99-esp32_driver.rules    
     KERNEL=="ttyUSB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE:="0666", SYMLINK+="motor"
 
 #### reload udev
     sudo udevadm info -a -p $(udevadm info -q path -n /dev/ttyUSB1)
-    sudo udevadm control --reload-rules
-    sudo udevadm trigger --subsystem-match=tty 
+    sudo udevadm control --reload-rules && sudo udevadm trigger && sudo udevadm trigger --subsystem-match=tty
 
 
 wheelchair001@wheelchair001:~/ros2_bridge$  `ros2 launch rosbridge_server rosbridge_websocket_launch.xml`
