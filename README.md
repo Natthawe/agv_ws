@@ -53,7 +53,7 @@
     ros2 pkg create static_broadcaster --dependencies rclpy --build-type ament_python
     
 #### ROSDEP
-    rosdep install -r -y --from-path src
+    rosdep install -r -y --from-paths src
     rosdep install --from-paths src -y --ignore-src
     rosdep install -q -y -r --from-paths src --ignore-src
 
