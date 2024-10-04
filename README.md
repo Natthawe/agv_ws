@@ -97,6 +97,8 @@
     sudo apt install ros-humble-pcl-ros
     sudo apt install ros-humble-diagnostic-updater
     sudo apt install ros-humble-laser-geometry*
+    sudo apt install ros-humble-test-msgs
+    sudo apt install ros-humble-tf2-sensor-msgs
     sudo apt install libgeographic-dev
     sudo apt install python3-serial
     sudo apt install python3-smbus
