@@ -44,6 +44,7 @@
 - teb_local_planner
 
 # Create Packages Cpp
+    ros2 pkg create --build-type ament_cmake --license Apache-2.0 antbot_description
     ros2 pkg create <package_name> --build-type ament_cmake --dependencies rclcpp
     ros2 pkg create static_broadcaster --build-type ament_cmake --dependencies rclcpp
     ros2 pkg create --build-type ament_cmake agv_bot_description
