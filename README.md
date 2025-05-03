@@ -65,6 +65,7 @@
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
     colcon build --packages-select <name-of-pkg>
     colcon build --packages-select static_broadcaster
+    colcon build --symlink-install --parallel-workers 1
     
 # Teleop_Twist_Keyboard
     ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/cmd_vel/remap
