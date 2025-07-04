@@ -52,6 +52,7 @@
 # Create Packages Python
     ros2 pkg create <pkg-name> --dependencies [deps] --build-type ament_python
     ros2 pkg create static_broadcaster --dependencies rclpy --build-type ament_python
+    ros2 pkg create conveyor_control_topic --build-type ament_python --dependencies rclpy std_msgs
     
 #### ROSDEP
     rosdep install -r -y --from-paths src
